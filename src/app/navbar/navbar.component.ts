@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { ContentComponent } from '../content/content.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [ContentComponent],
+  imports: [],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
