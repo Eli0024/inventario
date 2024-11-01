@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormcompComponent } from './formcomp/formcomp.component';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: '/content', pathMatch: 'full' },
@@ -9,4 +9,5 @@ export const routes: Routes = [
     { path: 'form1', loadChildren: () => import('./formcomp/formcomp.module').then(m => m.FormcompModule) },
     { path: 'form2', loadChildren: () => import('./formuser/formuser.module').then(m => m.FormuserModule) },
     { path: 'form3', loadChildren: () => import('./formoff/formoff.module').then(m => m.FormoffModule) },
+    { path: 'info', loadChildren: () => import('./info/info.module').then(m => m.InfoModule) },
 ];
