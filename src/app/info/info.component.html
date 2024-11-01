@@ -1,0 +1,37 @@
+  <h1 class="text-3xl font-extrabold text-center mt-6 text-gray-800">REGISTROS DE MEDICIONES</h1>
+  <div class="flex justify-between items-stretch mt-6">  
+    <div class="flex flex-wrap space-x-4">
+        <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" routerLink="/form-mediciones">Nuevo Registro</button>
+        <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded shadow" type="button" routerLink="/dashboard">Volver</button>
+      <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded shadow" type="button">Generar reporte</button>
+    </div>
+  </div>
+    <div class="overflow-x-auto mt-8">
+    <table class="w-11/12  max-w-3xl mx-auto bg-white border border-gray-200 rounded-lg shadow-lg">
+        <thead>
+            <tr class="bg-blue-600 text-white uppercase text-sm leading-normal">
+              <th  class="py-2 px-3 text-center">ID</th>
+              <th  class="py-2 px-3 text-center">Temperatura</th>
+              <th  class="py-2 px-3 text-center">Humedad</th>
+              <th  class="py-2 px-3 text-center">Fecha</th>
+              <th  class="py-2 px-3 text-center">Hora</th>
+              <th  class="py-2 px-3 text-center">Editar</th>
+              <th  class="py-2 px-3 text-center">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-800 text-sm font-light">
+            <tr *ngFor="let medicion of mediciones">
+              <th class="py-2 px-3 text-left">{{medicion.id_medicion}}</th>
+              <td class="py-2 px-3 text-left">{{medicion.temperatura}}</td>
+              <td class="py-2 px-3 text-left">{{medicion.humedad}}</td>
+              <td class="py-2 px-3 text-left">{{medicion.fecha}}</td>
+              <td class="py-2 px-3 text-left">{{medicion.hora}}</td>
+              <td class="py-2 px-3 text-center">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded shadow" type="button" name="button "class="btn btn-primary" [routerLink]="['/form-mediciones', medicion.id_medicion]">Editar</button></td>
+              <td class="py-2 px-3 text-center">
+                <button class ="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded shadow" type="button" name="button "class="btn btn-danger" (click)="delete(medicion.id_medicion)">Eliminar</button></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+   
