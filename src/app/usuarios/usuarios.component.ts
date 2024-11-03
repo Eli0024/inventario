@@ -1,32 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
-import { Equipo } from '../models/computer';
+import { Component, OnInit } from '@angular/core';
+import { Usuario } from '../models/users';
+import { UsersService } from '../services/users.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import { ComputersService } from '../services/computers.service';
 
 @Component({
-  selector: 'app-info',
+  selector: 'app-usuarios',
   standalone: true,
-  imports: [NavbarComponent, CommonModule],
-  templateUrl: './info.component.html',
-  styleUrl: './info.component.css'
+  imports: [CommonModule],
+  templateUrl: './usuarios.component.html',
+  styleUrl: './usuarios.component.css'
 })
-export class InfoComponent implements OnInit {
+export class UsuariosComponent implements OnInit {
 
-  equipos: Equipo[] = []; // inicializa con un array vacío
+  usuarios: Usuario[] = []; // inicializa con un array vacío
 
    
-  constructor(private computersService: ComputersService) {  }
+  constructor(private usersService: UsersService) {  }
 
   ngOnInit(): void {
-    this.getEquipos();
+    this.getUsuarios();
     }
-    getEquipos():void{
-      this.computersService.getAll().subscribe(
+    getUsuarios():void{
+      this.usersService.getAll().subscribe(
         (data:any)=>{
-          this.equipos=data;
+          this.usuarios=data;
         }
       )
     }
@@ -43,7 +42,7 @@ export class InfoComponent implements OnInit {
         confirmButtonText: "Sí, ¡elimínalo!"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.computersService.delete(id).subscribe({
+          this.usersService.delete(id).subscribe({
             next: () => {
               Swal.fire({
                 title: "¡Eliminado!",
@@ -65,3 +64,4 @@ export class InfoComponent implements OnInit {
       });
     }
 }
+

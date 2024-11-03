@@ -12,7 +12,7 @@
         <path d="M1 2a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-2H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 9H1V8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6H1V5H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 2zm1 11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"/>
       </svg>
       </div>
-      <input type="text" id="marca" name="marca" placeholder="Marca" required />
+      <input type="text" id="marca" name="marca" placeholder="Marca" [(ngModel)]="equipo.marca" required />
     </div>
     <div class="input-container">
       <div
@@ -24,9 +24,10 @@
       </div>
       <input
         type="text"
-        id="model"
-        name="model"
+        id="modelo"
+        name="modelo"
         placeholder="Modelo"
+        [(ngModel)]="equipo.modelo"
         required
       />
     </div>
@@ -40,9 +41,10 @@
       </div>
       <input
         type="text"
-        id="memory"
-        name="memory"
+        id="memoria"
+        name="memoria"
         placeholder="Memoria"
+        [(ngModel)]="equipo.memoria"
         required
       />
     </div>
@@ -60,6 +62,7 @@
         id="procesador"
         name="procesador"
         placeholder="Procesador"
+        [(ngModel)]="equipo.procesador"
         required
       />
     </div>
@@ -76,6 +79,7 @@
         id="office"
         name="office"
         placeholder="Office"
+        [(ngModel)]="equipo.office"
         required
       />
     </div>
@@ -92,6 +96,7 @@
         id="serial"
         name="serial"
         placeholder="Serial"
+        [(ngModel)]="equipo.serial"
         required
       />
     </div>
@@ -104,14 +109,15 @@
       </svg>
       </div>
       <input
-        type="date"
-        id="fecha"
-        name="fecha"
+        type="text"
+        id="text"
+        name="text"
         placeholder="Fecha de Adquisicion"
+        [(ngModel)]="equipo.fecha_adquisicion"
         required
       />
     </div>
-    <!-- <div class="input-container">
+    <div class="input-container">
       <div
         class="icon-container bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40"
       >
@@ -132,9 +138,10 @@
         id="vida_util"
         name="vida_util"
         placeholder="Vida Util"
+        [(ngModel)]="equipo.vida_util"
         required
       />
-    </div> -->
+    </div> 
     <div class="input-container">
       <div
         class="icon-container bg-black/60 to-white/5 text-white"
@@ -149,6 +156,7 @@
         id="estado"
         name="estado"
         placeholder="Estado"
+        [(ngModel)]="equipo.estado"
         required
       />
     </div>
@@ -173,6 +181,7 @@
         id="responsable"
         name="responsable"
         placeholder="Responsable"
+        [(ngModel)]="equipo.responsable"
         required
       />
     </div>
@@ -188,13 +197,14 @@
         id="archivo"
         name="archivo"
         placeholder="Archivo"
+        [(ngModel)]="equipo.archivo"
         required
       />
     </div>
-    <button class="btn btn-primary" type="button">Registrar</button>
+    <button class="btn btn-primary" type="button" (click)="create()" *ngIf="!equipo.id_equipo; else elseBlock">Registrar</button>
 
     <ng-template #elseBlock>
-      <button class="btn btn-primary" type="button">Actualizar</button>
+      <button class="btn btn-primary" type="button" (click)="update()">Actualizar</button>
     </ng-template>
   </form>
 </div>

@@ -11,7 +11,7 @@
         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5M9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8m1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5m-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96q.04-.245.04-.5M7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/>
       </svg>
       </div>
-      <input type="text" id="name" name="name" placeholder="Nombre" required />
+      <input type="text" id="nombre" name="nombre" placeholder="Nombre" [(ngModel)]="usuario.nombre" required />
     </div>
     <div class="input-container">
       <div
@@ -23,9 +23,10 @@
       </div>
       <input
         type="text"
-        id="last_name"
-        name="last_name"
+        id="apellido"
+        name="apellido"
         placeholder="Apellido"
+        [(ngModel)]="usuario.apellido"
         required
       />
     </div>
@@ -42,6 +43,7 @@
         id="empresa"
         name="empresa"
         placeholder="Empresa"
+        [(ngModel)]="usuario.empresa"
         required
       />
     </div>
@@ -58,6 +60,7 @@
         id="area"
         name="area"
         placeholder="Area"
+        [(ngModel)]="usuario.area"
         required
       />
     </div>
@@ -75,6 +78,7 @@
         id="cargo"
         name="cargo"
         placeholder="Cargo"
+        [(ngModel)]="usuario.cargo"
         required
       />
     </div>
@@ -89,16 +93,17 @@
       </div>
       <input
         type="number"
-        id="Licencia"
-        name="Licencia"
+        id="licencia"
+        name="licencia"
         placeholder="Licencia de Office"
+        [(ngModel)]="usuario.licencia"
         required
       />
     </div>
-    <button class="btn btn-primary" type="button">Registrar</button>
+    <button class="btn btn-primary" type="button" (click)="create()" *ngIf="!usuario.id_usuario; else elseBlock">Registrar</button>
 
     <ng-template #elseBlock>
-      <button class="btn btn-primary" type="button">Actualizar</button>
+      <button class="btn btn-primary" type="button" (click)="update()">Actualizar</button>
     </ng-template>
   </form>
 </div>

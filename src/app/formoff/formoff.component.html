@@ -12,7 +12,7 @@
         <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
       </svg>
       </div>
-      <input type="text" id="name" name="name" placeholder="Nombre" required />
+      <input type="text" id="name" name="name" placeholder="Nombre"  [(ngModel)]="licence.nombre" required />
     </div>
     <div class="input-container">
       <div
@@ -27,18 +27,19 @@
       </svg>
       </div>
       <input
-        type="password"
-        id="password"
-        name="password"
+        type="text"
+        id="contraseña"
+        name="contraseña"
         placeholder="Contraseña"
+        [(ngModel)]="licence.contrasena"
         required
       />
     </div>
     
-    <button class="btn btn-primary" type="button">Registrar</button>
+    <button class="btn btn-primary" type="button" (click)="create()" *ngIf="!licence.id; else elseBlock">Registrar</button>
 
     <ng-template #elseBlock>
-      <button class="btn btn-primary" type="button">Actualizar</button>
+      <button class="btn btn-primary" type="button" (click)="update()">Actualizar</button>
     </ng-template>
   </form>
 </div>

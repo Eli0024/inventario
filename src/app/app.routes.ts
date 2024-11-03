@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LicenciasComponent } from './licencias/licencias.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 
 export const routes: Routes = [
@@ -10,4 +12,6 @@ export const routes: Routes = [
     { path: 'form2', loadChildren: () => import('./formuser/formuser.module').then(m => m.FormuserModule) },
     { path: 'form3', loadChildren: () => import('./formoff/formoff.module').then(m => m.FormoffModule) },
     { path: 'info', loadChildren: () => import('./info/info.module').then(m => m.InfoModule) },
+    { path: 'licencias', component: LicenciasComponent },
+    { path: 'usuarios', component: UsuariosComponent },
 ];

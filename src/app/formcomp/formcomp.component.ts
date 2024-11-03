@@ -1,19 +1,26 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { Equipo } from '../models/computer';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import 'sweetalert2/src/sweetalert2.scss';
+import { ComputersService } from '../services/computers.service';
 
 @Component({
   selector: 'app-formcomp',
   standalone: true,
-  imports: [NavbarComponent],
+  imports: [NavbarComponent, FormsModule, CommonModule], 
   templateUrl: './formcomp.component.html',
   styleUrl: './formcomp.component.css'
 })
 export class FormcompComponent {
 
-  parametro: Parametro = new Parametro();
+  equipo: Equipo = new Equipo();
  
 
-  constructor(private parametrosService: ParametrosService, private router: Router, private activatedRoute:ActivatedRoute) { }
+  constructor(private computersService: ComputersService, private router: Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargar();
@@ -25,8 +32,8 @@ export class FormcompComponent {
       e=>{
         let id=e['id_config'];
         if(id){
-          this.parametrosService.get(id).subscribe(
-            parametro => this.parametro = parametro
+          this.computersService.get(id).subscribe(
+            equipo => this.equipo = equipo
           );
         }
       }
@@ -34,38 +41,57 @@ export class FormcompComponent {
   }
 
   create(): void {
-    this.parametrosService.create(this.parametro).subscribe(
-      () => this.router.navigate(['/establecer']),
-      Swal.fire({
-        title: "Registro Exitoso",
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `
-        }
-      })
+    this.computersService.create(this.equipo).subscribe(
+      () => {
+        Swal.fire({
+          title: "Registro Exitoso",
+          showClass: {
+            popup: `
+              animate__animated
+              animate__fadeInUp
+              animate__faster
+            `
+          },
+          hideClass: {
+            popup: `
+              animate__animated
+              animate__fadeOutDown
+              animate__faster
+            `
+          }
+        });
+        this.router.navigate(['/info']);
+      },
+      error => {
+        Swal.fire({
+          title: "Error al registrar",
+          text: error.message,
+          icon: "error"
+        });
+      }
     );
   }
-
+  
   update(): void {
-    this.parametrosService.update(this.parametro).subscribe(
-      () => this.router.navigate(['/establecer']),
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Registro Actualizado",
-        showConfirmButton: false,
-        timer: 1500
-      })  
+    this.computersService.update(this.equipo).subscribe(
+      () => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Registro Actualizado",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.router.navigate(['/info']);
+      },
+      error => {
+        Swal.fire({
+          title: "Error al actualizar",
+          text: error.message,
+          icon: "error"
+        });
+      }
     );
   }
 }
+  
