@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { Equipo } from '../models/computer';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 import { ComputersService } from '../services/computers.service';
+import { Equipo } from '../models/computer';
 
 @Component({
   selector: 'app-formcomp',
@@ -93,5 +93,13 @@ export class FormcompComponent {
       }
     );
   }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0]; // Obtener el archivo seleccionado
+    if (file) {
+      this.equipo.archivo = file;
+    }
+  }
+  
 }
   

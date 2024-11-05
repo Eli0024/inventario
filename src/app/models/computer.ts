@@ -1,15 +1,12 @@
 export class Equipo {
-    id_equipo!: number;
+    id_equipo?: number;
     marca!: string;
-    modelo!: string;
-    memoria!: string;
-    procesador!: string;
     office!: string;
     serial!: string;
-    serial_office!: string;
+    sistema_operativo!: string;
     fecha_adquisicion!: string;
-    vida_util!: number;
     estado!: string;
-    responsable!: { id: number; nombre: string }; 
-    archivo!: File;
-}
+    responsable: any;  // Puedes usar un modelo más específico aquí si es necesario
+    archivo!: File | null;  // Asegúrate de que sea 'File' o 'null'
+  }
+  
