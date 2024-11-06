@@ -7,11 +7,12 @@ import 'sweetalert2/src/sweetalert2.scss';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-formoff',
   standalone: true,
-  imports: [NavbarComponent,  CommonModule, FormsModule],
+  imports: [NavbarComponent,  CommonModule, FormsModule, SidebarComponent],
   templateUrl: './formoff.component.html',
   styleUrl: './formoff.component.css'
 })

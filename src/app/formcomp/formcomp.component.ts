@@ -7,11 +7,12 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 import { ComputersService } from '../services/computers.service';
 import { Equipo } from '../models/computer';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-formcomp',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, CommonModule], 
+  imports: [NavbarComponent, FormsModule, CommonModule, SidebarComponent], 
   templateUrl: './formcomp.component.html',
   styleUrl: './formcomp.component.css'
 })

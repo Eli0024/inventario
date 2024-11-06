@@ -7,11 +7,12 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-formuser',
   standalone: true,
-  imports: [NavbarComponent,  FormsModule, CommonModule],
+  imports: [NavbarComponent,  FormsModule, CommonModule, SidebarComponent],
   templateUrl: './formuser.component.html',
   styleUrl: './formuser.component.css'
 })

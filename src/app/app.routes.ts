@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LicenciasComponent } from './licencias/licencias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { ListaComponent } from './lista/lista.component';
 
 
 export const routes: Routes = [
@@ -14,4 +16,6 @@ export const routes: Routes = [
     { path: 'info', loadChildren: () => import('./info/info.module').then(m => m.InfoModule) },
     { path: 'licencias', component: LicenciasComponent },
     { path: 'usuarios', component: UsuariosComponent },
+    { path: 'sidebar', component: SidebarComponent },
+    { path: 'lista', component: ListaComponent },
 ];

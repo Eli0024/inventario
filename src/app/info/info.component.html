@@ -1,44 +1,52 @@
-<div id="last-users">
-    <h1 class="font-bold py-4 uppercase">Registros de Equipos</h1>
-    <div class="overflow-x-scroll">
-      <table class="w-full whitespace-nowrap">
-        <thead class="bg-black/60">
-          <tr>
-            <th class="text-left py-3 px-2">Id_Equipo</th>
-            <th class="text-left py-3 px-2">Marca</th>
-            <th class="text-left py-3 px-2">Office</th>
-            <th class="text-left py-3 px-2">Serial</th>
-            <th class="text-left py-3 px-2">Sistema Operativo</th>
-            <th class="text-left py-3 px-2">Fecha de adquisicion</th>
-            <th class="text-left py-3 px-2">Estado</th>
-            <th class="text-left py-3 px-2">Responsable</th>
-            <th class="text-left py-3 px-2">Archivo</th>
-            <th class="text-left py-3 px-2">Acciones</th> <!-- Agregado campo de acciones -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let equipo of equipos" class="border-b border-gray-700">
-            <td class="py-3 px-2">{{ equipo.id_equipo }}</td>
-            <td class="py-3 px-2">{{ equipo.marca }}</td>
-            <td class="py-3 px-2">{{ equipo.office }}</td>
-            <td class="py-3 px-2">{{ equipo.serial }}</td>
-            <td class="py-3 px-2">{{ equipo.sistema_operativo }}</td>
-            <td class="py-3 px-2">{{ equipo.fecha_adquisicion }}</td>
-            <td class="py-3 px-2">{{ equipo.estado }}</td>
-            <td class="py-3 px-2">{{ equipo.responsable }}</td>
-            <td class="py-3 px-2">{{ equipo.archivo }}</td>
-            <td class="py-3 px-2">
-              <div class="inline-flex items-center space-x-3">
-                <a href="" title="Edit" class="hover:text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                  </svg>
-                </a>
-                <!-- Aquí puedes agregar más acciones (eliminar, ver detalles, etc.) -->
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">EQUIPOS</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <th>ID</th>
+                  <th>MARCA</th>
+                  <th>OFFICE</th>
+                  <th>SERIAL</th>
+                  <th>SISTEMA_OPERATIVO</th>
+                  <th>FECHA_ADQUISICION</th>
+                  <th>ESTADO</th>
+                  <th>RESPONSABLE</th>
+                  <th>ARCHIVO</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let equipo of equipos">
+                    <td>{{ equipo.id_equipo }}</td>
+                    <td>{{ equipo.marca }}</td>
+                    <td>{{ equipo.office }}</td>
+                    <td>{{ equipo.serial }}</td>
+                    <td>{{ equipo.sistema_operativo }}</td>
+                    <td>{{ equipo.fecha_adquisicion }}</td>
+                    <td>{{ equipo.estado }}</td>
+                    <td>{{ equipo.responsable }}</td>
+                    <td class="text-primary"> <a href="{{ equipo.archivo }}" target="_blank" class="text-blue-500 hover:underline">
+                        Ver Archivo
+                      </a></td>
+                      <td class="py-3 px-2">
+                        <div class="inline-flex items-center space-x-3">
+                          <a href="" title="Edit" class="hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
+                          </a>
+                          <!-- Aquí puedes agregar más acciones (eliminar, ver detalles, etc.) -->
+                        </div>
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
