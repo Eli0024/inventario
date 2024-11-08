@@ -4,18 +4,22 @@ import { Usuario } from '../models/users';
 import { UsersService } from '../services/users.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavbarComponent, SidebarComponent, FormsModule, RouterLink],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
 export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = []; // inicializa con un array vacío
-
+  filter: any = { searchTerm: '' };
    
   constructor(private usersService: UsersService) {  }
 
@@ -62,6 +66,17 @@ export class UsuariosComponent implements OnInit {
           });
         }
       });
+    }
+
+    filterUsuarios(): Usuario[] {
+      if (this.usuarios && this.usuarios.length) {
+        return this.usuarios.filter(Usuario =>
+          Usuario.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+          Usuario.apellido.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+          Usuario.empresa.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
+        );
+      }
+      return [];
     }
 }
 

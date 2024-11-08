@@ -12,67 +12,61 @@
     <div class="flex flex-col w-full">
   
       <!-- Main content header -->
-      <div id="main" class="main-content flex-1  ">
+      <div id="main" class="main-content flex-1 bg-gray-200">
         
-        <div class="bg-gray-800 pt-3">
-          <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
-            <h1 class="font-bold pl-2">TICS</h1>
+        <div class="bg-gray-800">
+          <div class="bg-white p-3 shadow text-2xl text-gray-600">
+            <i class="fa fa-tachometer-alt fa-2x"></i>
+            <span> Panel de Administracion</span>
           </div>
         </div>
         
         <!-- Grid container for metric cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
           
           <!-- Metric Card 1: Total Revenue -->
-          <div class="p-6">
-            <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
-              <div class="flex flex-row items-center">
-                <div class="flex-shrink pr-4">
-                  <div class="rounded-full p-5 bg-green-600">
-                    <a routerLink="/form1">
-                      <i class="fa fa-laptop fa-2x"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class="flex-1 text-right md:text-center">
-                  <h2 class="font-bold text-xl text-gray-600">REGISTRAR EQUIPO</h2>
-                  <p class="font-bold text-3xl"><span class="text-green-500"><i class="fas fa-caret-up"></i></span></p>
+          <div class="card mb-3 w-96 h-50 mx-auto">
+            <div class="row g-0">
+              <div class="col-md-4 h-53 flex justify-center items-center bg-green-600">
+                <a routerLink="/form1">
+                  <i class="fa fa-laptop fa-2x text-white"></i>
+                </a>
+              </div>
+              <div class="col-md-8 p-2">
+                <div class="card-body">
+                  <h5 class="card-title text-xl font-bold text-gray-600">Registrar Equipo</h5>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Metric Card 2: Total Users -->
-          <div class="p-6">
-            <div class="bg-gradient-to-b from-blue-200 to-blue-100 border-b-4 border-blue-500 rounded-lg shadow-xl p-5">
-              <div class="flex flex-row items-center">
-                <div class="flex-shrink pr-4">
-                  <div class="rounded-full p-5 bg-blue-600">
-                    <a routerLink="/form2">
-                    <i class="fas fa-users fa-2x fa-inverse"></i></a>
-                  </div>
-                </div>
-                <div class="flex-1 text-right md:text-center">
-                  <h2 class="font-bold uppercase text-xl text-gray-600">REGISTRAR USUARIO</h2>
-                  <p class="font-bold text-3xl"><span class="text-blue-500"><i class="fas fa-exchange-alt"></i></span></p>
+          <div class="card mb-3 w-96 h-50 mx-auto">
+            <div class="row g-0">
+              <div class="col-md-4 h-53 flex justify-center items-center bg-blue-600">
+                <a routerLink="/form2">
+                  <i class="fas fa-users fa-2x text-white"></i>
+                </a>
+              </div>
+              <div class="col-md-8 p-1">
+                <div class="card-body">
+                  <h5 class="card-title text-xl font-bold text-gray-600">Registrar Usuario</h5>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Metric Card 3: New Users -->
-          <div class="p-6">
-            <div class="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
-              <div class="flex flex-row items-center">
-                <div class="flex-shrink pr-4">
-                  <div class="rounded-full p-5 bg-yellow-600">
-                    <a routerLink="/form3">
-                    <i class="fa fa-file-alt fa-2x"></i></a>
-                  </div>
-                </div>
-                <div class="flex-1 text-right md:text-center">
-                  <h2 class="font-bold uppercase text-xl text-gray-600">REGISTRAR LICENCIA</h2>
-                  <p class="font-bold text-3xl"><span class="text-yellow-600"><i class="fas fa-caret-up"></i></span></p>
+          <div class="card mb-3 w-96 h-50">
+            <div class="row g-0">
+              <div class="col-md-4 h-50 flex justify-center items-center bg-yellow-600">
+                <a routerLink="/form3">
+                  <i class="fa fa-file-alt fa-2x text-white"></i>
+                </a>
+              </div>
+              <div class="col-md-8 p-4">
+                <div class="card-body">
+                  <h5 class="card-title text-xl font-bold text-gray-600">Registrar Licencia</h5>
                 </div>
               </div>
             </div>
