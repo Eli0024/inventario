@@ -1,8 +1,11 @@
 export class Equipo {
     id_equipo?: number;
     marca!: string;
+    memoria!: string;
+    procesador!: string;
     office!: string;
     serial!: string;
+    serial_office!: string;
     sistema_operativo!: string;
     fecha_adquisicion!: string;
     estado!: string;

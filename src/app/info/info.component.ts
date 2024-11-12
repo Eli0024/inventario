@@ -5,18 +5,22 @@ import { Equipo } from '../models/computer';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import { ComputersService } from '../services/computers.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FormcompComponent } from '../formcomp/formcomp.component';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-info',
   standalone: true,
-  imports: [NavbarComponent, CommonModule],
+  imports: [NavbarComponent, CommonModule, NavbarComponent, SidebarComponent,FormcompComponent, FormsModule, RouterLink],
   templateUrl: './info.component.html',
   styleUrl: './info.component.css'
 })
 export class InfoComponent implements OnInit {
 
   equipos: Equipo[] = []; // inicializa con un array vacío
-
+  filter: any = { searchTerm: '' };
    
   constructor(private computersService: ComputersService) {  }
 
@@ -31,8 +35,8 @@ export class InfoComponent implements OnInit {
       )
     }
   
-   delete(id: number) {
-      console.log(id);
+   delete(id_equipo : number) {
+      console.log(id_equipo);
       
       Swal.fire({
         title: "¿Desea eliminar este registro?",
@@ -43,7 +47,7 @@ export class InfoComponent implements OnInit {
         confirmButtonText: "Sí, ¡elimínalo!"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.computersService.delete(id).subscribe({
+          this.computersService.delete(id_equipo).subscribe({
             next: () => {
               Swal.fire({
                 title: "¡Eliminado!",
@@ -64,4 +68,4 @@ export class InfoComponent implements OnInit {
         }
       });
     }
-}
+  }

@@ -101,6 +101,15 @@ export class FormcompComponent {
       this.equipo.archivo = file;
     }
   }
-  
+
+  isModalOpen: boolean = false;
+
+  openModal(): void {
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
 }
   

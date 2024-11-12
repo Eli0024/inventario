@@ -8,11 +8,12 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { FormuserComponent } from '../formuser/formuser.component';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, SidebarComponent, FormsModule, RouterLink],
+  imports: [CommonModule, NavbarComponent, SidebarComponent, FormsModule, RouterLink, FormuserComponent],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })

@@ -5,11 +5,15 @@ import { Licence } from '../models/licence';
 import { LicenceService } from '../services/licence.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FormoffComponent } from '../formoff/formoff.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-licencias',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NavbarComponent, SidebarComponent, FormoffComponent, RouterLink],
   templateUrl: './licencias.component.html',
   styleUrl: './licencias.component.css'
 })

@@ -10,63 +10,127 @@
 
     <!-- Main content area -->
     <div class="flex flex-col w-full">
-  
       <!-- Main content header -->
       <div id="main" class="main-content flex-1 bg-gray-200">
-        
         <div class="bg-gray-800">
           <div class="bg-white p-3 shadow text-2xl text-gray-600">
-            <i class="fa fa-tachometer-alt fa-2x"></i>
+            <i class="fa fa-user-cog fa-2x"></i>
             <span> Lista de Usuarios</span>
           </div>
         </div>
 
-        <div class="flex justify-center items-center mt-16">  
+        <!-- Button trigger modal -->
+
+        <div class="flex justify-center items-center mt-16">
           <div class="flex flex-wrap space-x-4">
-              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" routerLink="/form2">Nuevo Registro</button>
-              <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded shadow" type="button" routerLink="/content">Volver</button>
-            <div class="col">
-              <input class="rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full" type="search" placeholder="Search" [(ngModel)]="filter.searchTerm" name="searchTerm"> 
+            <button
+          type="button"
+          class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Registrar Usuario
+        </button>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5 text-2xl font-bold text-gray-900" id="exampleModalLabel">
+                  Registrar Usuario
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body"><app-formuser></app-formuser></div>
             </div>
           </div>
+        </div>
+            <button
+              class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
+              type="button"
+              routerLink="/content"
+            >
+              Volver
+            </button>
+            <div class="col">
+              <input
+                class="rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
+                type="search"
+                placeholder="Search"
+                [(ngModel)]="filter.searchTerm"
+                name="searchTerm"
+              />
+            </div>
           </div>
-<div class="col-md-12">
-    <div class="card card-plain m-20">
-      <div class="card-header card-header-danger">
-        <h4 class="card-title text-center mt-0"></h4>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <thead class="">
-              <th>ID</th>
-              <th>NOMBRE</th>
-              <th>APELLIDO</th>
-              <th>EMPRESA</th>
-              <th>AREA</th>
-              <th>CARGO</th>
-              <th>LICENCIA</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let usuario of filterUsuarios()">
-                <td>{{usuario.id_usuario}}</td>
-                <td>{{usuario.nombre}}</td>
-                <td>{{usuario.apellido}}</td>
-                <td>{{usuario.empresa}}</td>
-                <td>{{usuario.area}}</td>
-                <td>{{usuario.cargo}}</td>
-                <td>{{usuario.licencia}}</td>
-                <td class="py-2 px-3 text-center">
-                  <button type="button" name="button "class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded shadow" [routerLink]="['/form2', usuario.id_usuario]">Editar</button></td>
-                <td class="py-2 px-3 text-center">
-                  <button type="button" name="button "class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded shadow" (click)="delete(usuario.id_usuario)">Eliminar</button></td>
-              </tr>
-            </tbody>
-          </table>
+        </div>
+        <div class="col-md-12">
+          <div class="card card-plain m-20">
+            <div class="card-header card-header-danger">
+              <h4 class="card-title text-center mt-0"></h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="">
+                    <th>ID</th>
+                    <th>NOMBRE</th>
+                    <th>APELLIDO</th>
+                    <th>EMPRESA</th>
+                    <th>AREA</th>
+                    <th>CARGO</th>
+                    <th>LICENCIA</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let usuario of filterUsuarios()">
+                      <td>{{ usuario.id_usuario }}</td>
+                      <td>{{ usuario.nombre }}</td>
+                      <td>{{ usuario.apellido }}</td>
+                      <td>{{ usuario.empresa }}</td>
+                      <td>{{ usuario.area }}</td>
+                      <td>{{ usuario.cargo }}</td>
+                      <td>{{ usuario.licencia }}</td>
+                      <td class="py-2 px-3 text-center">
+                        <button
+                          type="button"
+                          name="button "
+                          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded shadow"
+                          [routerLink]="['/form2', usuario.id_usuario]"
+                        >
+                        <i class="fa fa-edit"></i>
+                        </button>
+                      </td>
+                      <td class="py-2 px-3 text-center">
+                        <button
+                          type="button"
+                          name="button "
+                          class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded shadow"
+                          (click)="delete(usuario.id_usuario)"
+                        >
+                        <i class="fa fa-trash"></i> 
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
-

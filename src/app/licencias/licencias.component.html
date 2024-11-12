@@ -1,34 +1,120 @@
-<div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
+<div class="min-h-screen flex flex-col bg-white text-white">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <div class="flex flex-1">
+    <!-- Sidebar -->
+    <div class="w-full md:w-64 bg-gray-800 text-white">
+      <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Main content area -->
+    <div class="flex flex-col w-full">
+      <!-- Main content header -->
+      <div id="main" class="main-content flex-1 bg-gray-200">
+        <div class="bg-gray-800">
+          <div class="bg-white p-3 shadow text-2xl text-gray-600">
+            <i class="fa fa-user-cog fa-2x"></i>
+            <span> Lista de Licencias</span>
+          </div>
+        </div>
+
+        <!-- Button trigger modal -->
+
+        <div class="flex justify-center items-center mt-16">
+          <div class="flex flex-wrap space-x-4">
+            <button
+          type="button"
+          class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Registrar Licencia
+        </button>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5 text-2xl font-bold text-gray-900" id="exampleModalLabel">
+                  Registrar Licencia
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body"><app-formoff></app-formoff></div>
+            </div>
+          </div>
+        </div>
+            <button
+              class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
+              type="button"
+              routerLink="/content"
+            >
+              Volver
+            </button>
+            <div class="col">
+              <input
+                class="rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
+                type="search"
+                placeholder="Search"
+                
+                name="searchTerm"
+              />
+            </div>
+          </div>
+        </div>
         <div class="col-md-12">
-          <div class="card">
+          <div class="card card-plain m-20">
             <div class="card-header card-header-danger">
-              <h4 class="card-title">LICENCIAS</h4>
+              <h4 class="card-title text-center mt-0"></h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table">
-                  <thead>
+                <table class="table table-hover">
+                  <thead class="">
                     <th>ID</th>
                     <th>NOMBRE</th>
                     <th>CONTRASEÑA</th>
+                    <th>EDITAR</th>
+                    <th>ELIMINAR</th>
                   </thead>
                   <tbody>
                     <tr *ngFor="let licence of licences">
                       <td>{{ licence.id }}</td>
                       <td>{{ licence.nombre }}</td>
                       <td>{{ licence.contrasena }}</td>
-                        <td class="py-3 px-2">
-                          <div class="inline-flex items-center space-x-3">
-                            <a href="" title="Edit" class="hover:text-white">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                              </svg>
-                            </a>
-                            <!-- Aquí puedes agregar más acciones (eliminar, ver detalles, etc.) -->
-                          </div>
-                        </td>
+                      <td class="py-2 px-3 text-center">
+                        <button
+                          type="button"
+                          name="button"
+                          class="text-white font-bold py-1 px-2 rounded shadow"
+                        >
+                        <a [routerLink]="['/form3', licence.id]">
+                        <i class="fa fa-edit"></i></a>
+                        </button>
+                      </td>
+                      <td class="py-2 px-3 text-center">
+                        <button
+                          type="button"
+                          name="button"
+                          class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded shadow"
+                          (click)="delete(licence.id)"
+                        >
+                        <i class="fa fa-trash"></i> 
+                        </button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -36,3 +122,7 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
