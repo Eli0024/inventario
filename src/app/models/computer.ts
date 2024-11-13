@@ -1,6 +1,7 @@
 export class Equipo {
     id_equipo?: number;
     marca!: string;
+    modelo!: string;
     memoria!: string;
     procesador!: string;
     office!: string;

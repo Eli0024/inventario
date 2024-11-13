@@ -5,6 +5,9 @@ import { Licence } from '../models/licence';
 import { LicenceService } from '../services/licence.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
+import { RouterLink } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormoffComponent } from '../formoff/formoff.component';
@@ -13,6 +16,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-licencias',
   standalone: true,
+  imports: [FormsModule, CommonModule, RouterLink, NavbarComponent, SidebarComponent],
   imports: [FormsModule, CommonModule, NavbarComponent, SidebarComponent, FormoffComponent, RouterLink],
   templateUrl: './licencias.component.html',
   styleUrl: './licencias.component.css'
@@ -20,7 +24,7 @@ import { RouterLink } from '@angular/router';
 export class LicenciasComponent implements OnInit {
 
     licences: Licence[] = []; // inicializa con un array vacío
-  
+    filter: any = { searchTerm: '' };
      
     constructor(private licenceService: LicenceService) {  }
   
@@ -67,5 +71,14 @@ export class LicenciasComponent implements OnInit {
             });
           }
         });
+      }
+
+      filterLicences(): Licence[] {
+        if (this.licences && this.licences.length) {
+          return this.licences.filter( Licence =>
+            Licence.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) 
+          );
+        }
+        return [];
       }
   }

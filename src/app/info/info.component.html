@@ -10,6 +10,83 @@
 
     <!-- Main content area -->
     <div class="flex flex-col w-full">
+  
+      <!-- Main content header -->
+      <div id="main" class="main-content flex-1 bg-gray-200">
+        
+        <div class="bg-gray-800">
+          <div class="bg-white p-3 shadow text-2xl text-gray-600">
+            <i class="fa fa-tachometer-alt fa-2x"></i>
+            <span> Lista de Usuarios</span>
+          </div>
+        </div>
+
+        <div class="flex justify-center items-center mt-16">  
+          <div class="flex flex-wrap space-x-4">
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" routerLink="/form1">Nuevo Registro</button>
+              <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded shadow" type="button" routerLink="/content">Volver</button>
+            <div class="col">
+              <input class="rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full" type="search" placeholder="Search" [(ngModel)]="filter.searchTerm" name="searchTerm"> 
+            </div>
+          </div>
+          </div>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">EQUIPOS</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <th>ID</th>
+                  <th>MARCA</th>
+                  <th>OFFICE</th>
+                  <th>SERIAL</th>
+                  <th>SISTEMA_OPERATIVO</th>
+                  <th>FECHA_ADQUISICION</th>
+                  <th>ESTADO</th>
+                  <th>RESPONSABLE</th>
+                  <th>ARCHIVO</th>
+                  <th>Editar</th>
+                 <th>Eliminar</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let equipo of filterEquipos">
+                    <td>{{ equipo.id_equipo }}</td>
+                    <td>{{ equipo.marca }}</td>
+                    <td>{{ equipo.office }}</td>
+                    <td>{{ equipo.serial }}</td>
+                    <td>{{ equipo.sistema_operativo }}</td>
+                    <td>{{ equipo.fecha_adquisicion }}</td>
+                    <td>{{ equipo.estado }}</td>
+                    <td>{{ equipo.responsable }}</td>
+                    <td class="py-2 px-3 text-center">
+                      <button type="button" name="button "class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded shadow" [routerLink]="['/form1', equipo.id_equipo]">Editar</button></td>
+                    <td class="py-2 px-3 text-center">
+                      <button type="button" name="button "class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded shadow" (click)="delete(equipo.id_equipo)">Eliminar</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+<div class="min-h-screen flex flex-col bg-white text-white">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <div class="flex flex-1">
+    <!-- Sidebar -->
+    <div class="w-full md:w-64 bg-gray-800 text-white">
+      <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Main content area -->
+    <div class="flex flex-col w-full">
       <!-- Main content header -->
       <div id="main" class="main-content flex-1 bg-gray-200">
         <div class="bg-gray-800">

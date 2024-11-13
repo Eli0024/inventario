@@ -5,6 +5,9 @@ import { Equipo } from '../models/computer';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import { ComputersService } from '../services/computers.service';
+import { RouterLink } from '@angular/router';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormcompComponent } from '../formcomp/formcomp.component';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +16,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-info',
   standalone: true,
+  imports: [NavbarComponent, CommonModule, RouterLink, NavbarComponent, SidebarComponent, FormsModule], 
   imports: [NavbarComponent, CommonModule, NavbarComponent, SidebarComponent,FormcompComponent, FormsModule, RouterLink],
   templateUrl: './info.component.html',
   styleUrl: './info.component.css'
@@ -20,6 +24,8 @@ import { RouterLink } from '@angular/router';
 export class InfoComponent implements OnInit {
 
   equipos: Equipo[] = []; // inicializa con un array vacío
+  filter: any = { searchTerm: '' };
+
   filter: any = { searchTerm: '' };
    
   constructor(private computersService: ComputersService) {  }
@@ -68,4 +74,16 @@ export class InfoComponent implements OnInit {
         }
       });
     }
+
+    filterEquipos(): Equipo[] {
+      if (this.equipos && this.equipos.length) {
+        return this.equipos.filter( Equipo =>
+          Equipo.marca.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+          Equipo.modelo.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+          Equipo.responsable.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
+        );
+      }
+      return [];
+    }
+}
   }
