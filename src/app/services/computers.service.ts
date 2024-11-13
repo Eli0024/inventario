@@ -9,6 +9,7 @@ import { Equipo } from '../models/computer';
 export class ComputersService {
 
   private apiUrl = 'http://127.0.0.1:8000/registrarequipo/';
+  
 
   constructor(private http: HttpClient) { }
 
@@ -77,6 +78,6 @@ export class ComputersService {
   }
 
   delete(id: number): Observable<Equipo> {
-    return this.http.delete<Equipo>(`${this.apiUrl}${id}`);
+    return this.http.delete<Equipo>(`${this.apiUrl}${id}/`); // Agregar barra al final
   }
 }

@@ -8,15 +8,12 @@ import 'sweetalert2/src/sweetalert2.scss';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormoffComponent } from '../formoff/formoff.component';
-import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-licencias',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink, NavbarComponent, SidebarComponent],
   imports: [FormsModule, CommonModule, NavbarComponent, SidebarComponent, FormoffComponent, RouterLink],
   templateUrl: './licencias.component.html',
   styleUrl: './licencias.component.css'
