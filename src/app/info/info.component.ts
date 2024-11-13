@@ -7,16 +7,13 @@ import 'sweetalert2/src/sweetalert2.scss';
 import { ComputersService } from '../services/computers.service';
 import { RouterLink } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormcompComponent } from '../formcomp/formcomp.component';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-info',
-  standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterLink, NavbarComponent, SidebarComponent, FormsModule], 
+  standalone: true, 
   imports: [NavbarComponent, CommonModule, NavbarComponent, SidebarComponent,FormcompComponent, FormsModule, RouterLink],
   templateUrl: './info.component.html',
   styleUrl: './info.component.css'
@@ -26,7 +23,6 @@ export class InfoComponent implements OnInit {
   equipos: Equipo[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
 
-  filter: any = { searchTerm: '' };
    
   constructor(private computersService: ComputersService) {  }
 
@@ -86,4 +82,4 @@ export class InfoComponent implements OnInit {
       return [];
     }
 }
-  }
+  
