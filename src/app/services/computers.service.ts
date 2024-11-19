@@ -17,6 +17,10 @@ export class ComputersService {
     return this.http.get<Equipo[]>(this.apiUrl);
   }
 
+  getEquipo(id: number): Observable<Equipo> {
+    return this.http.get<Equipo>(`${this.apiUrl}${id}/`);
+  }
+
   create(equipo: Equipo): Observable<Equipo> {
     const formData = new FormData();
   
@@ -33,8 +37,11 @@ export class ComputersService {
   
     // Agregar otros campos
     formData.append('marca', equipo.marca);
+    formData.append('memoria', equipo.memoria);
+    formData.append('procesador', equipo.procesador);
     formData.append('office', equipo.office);
     formData.append('serial', equipo.serial);
+    formData.append('serial_office', equipo.serial_office);
     formData.append('sistema_operativo', equipo.sistema_operativo);
     formData.append('fecha_adquisicion', equipo.fecha_adquisicion);
     formData.append('estado', equipo.estado);
@@ -73,9 +80,35 @@ export class ComputersService {
     return this.http.get(`${this.apiUrl}${id}/`);
   }
 
+  
   update(equipo: Equipo): Observable<Equipo> {
-    return this.http.put<Equipo>(`${this.apiUrl}${equipo.id_equipo}/`, equipo);
+    // Verificación preliminar de datos (puedes agregar más validaciones según sea necesario)
+    if (!equipo.id_equipo) {
+      console.error('El ID del equipo es obligatorio para actualizar');
+      return throwError(() => new Error('El ID del equipo es obligatorio'));
+    }
+  
+    return this.http.put<Equipo>(`${this.apiUrl}${equipo.id_equipo}/`, equipo).pipe(
+      catchError(error => {
+        console.error('Error al actualizar el equipo:', error);
+        
+        // Puedes manejar diferentes tipos de errores dependiendo del código de respuesta
+        if (error.status === 400) {
+          // Manejo específico de error de validación
+          console.error('Detalles del error 400:', error.error);
+        } else if (error.status === 404) {
+          // Si el equipo no fue encontrado
+          console.error('El equipo no fue encontrado');
+        }
+  
+        // Puedes mostrar un mensaje más amigable al usuario o realizar alguna acción adicional
+        alert('Ocurrió un error al actualizar el equipo. Por favor, revisa los datos e intenta nuevamente.');
+        
+        return throwError(() => new Error('Error al actualizar el equipo'));
+      })
+    );
   }
+  
 
   delete(id: number): Observable<Equipo> {
     return this.http.delete<Equipo>(`${this.apiUrl}${id}/`); // Agregar barra al final

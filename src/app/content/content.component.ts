@@ -5,11 +5,12 @@ import { InfoComponent } from '../info/info.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormcompComponent } from '../formcomp/formcomp.component';
 
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [NavbarComponent, RouterLink, InfoComponent, SidebarComponent, FormsModule, CommonModule],
+  imports: [NavbarComponent, RouterLink, InfoComponent, SidebarComponent, FormsModule, CommonModule,FormcompComponent],
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })

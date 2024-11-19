@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -18,7 +18,22 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 })
 export class FormcompComponent {
 
-  equipo: Equipo = new Equipo();
+  equipo: Equipo = {
+    id_equipo: 0,
+    marca: '',
+    memoria: '',
+    procesador: '',
+    office: '',
+    serial: '',
+    serial_office: '',
+    sistema_operativo: '',
+    fecha_adquisicion: '',
+    estado: '',
+    responsable: null,  // O el valor adecuado si tienes un objeto 'Responsable'
+    archivo: null
+  };
+  
+  @Input() equipoSeleccionado: any;
  
 
   constructor(private computersService: ComputersService, private router: Router, private activatedRoute:ActivatedRoute) { }
@@ -31,7 +46,7 @@ export class FormcompComponent {
 
     this.activatedRoute.params.subscribe(
       e=>{
-        let id=e['id_config'];
+        let id=e['id'];
         if(id){
           this.computersService.get(id).subscribe(
             equipo => this.equipo = equipo
@@ -72,6 +87,12 @@ export class FormcompComponent {
       }
     );
   }
+  
+  guardarEquipo() {
+    // Aquí puedes implementar la lógica para guardar los cambios.
+    // Puedes emitir un evento hacia el componente padre o llamar a un servicio para actualizar el equipo en la base de datos.
+    console.log("Datos guardados:", this.equipoSeleccionado);
+  } 
   
   update(): void {
     this.computersService.update(this.equipo).subscribe(

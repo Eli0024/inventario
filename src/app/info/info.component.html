@@ -86,88 +86,101 @@
               <div class="table-responsive">
                 <table class="table table-hover">
                   <thead class="">
-                    <th>ID</th>
-                    <th>MARCA</th>
-                    <th>MEMORIA</th>
-                    <th>PROCESADOR</th>
-                    <th>OFFICE</th>
-                    <th>SERIAL</th>
-                    <th>SERIAL_OFFICE</th>
-                    <th>SISTEMA_OPERATIVO</th>
-                    <th>FECHA_ADQUISICION</th>
-                    <th>ESTADO</th>
-                    <th>RESPONSABLE</th>
-                    <th>ARCHIVO</th>
-                    <th>EDITAR</th>
-                    <th>ELIMINAR</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">MARCA</th>
+                    <th class="text-center">MEMORIA</th>
+                    <th class="text-center">PROCESADOR</th>
+                    <th class="text-center">OFFICE</th>
+                    <th class="text-center">SERIAL</th>
+                    <th class="text-center">SERIAL_OFFICE</th>
+                    <th class="text-center">SISTEMA_OPERATIVO</th>
+                    <th class="text-center">FECHA_ADQUISICION</th>
+                    <th class="text-center">ESTADO</th>
+                    <th class="text-center">RESPONSABLE</th>
+                    <th class="text-center">ARCHIVO</th>
+                    <th class="text-center">EDITAR</th>
+                    <th class="text-center">ELIMINAR</th>
                   </thead>
                   <tbody>
                     <tr *ngFor="let equipo of equipos">
-                      <td>{{ equipo.id_equipo }}</td>
-                      <td>{{ equipo.marca }}</td>
-                      <td>{{ equipo.memoria }}</td>
-                      <td>{{ equipo.procesador }}</td>
-                      <td>{{ equipo.office }}</td>
-                      <td>{{ equipo.serial }}</td>
-                      <td>{{ equipo.serial_office }}</td>
-                      <td>{{ equipo.sistema_operativo }}</td>
-                      <td>{{ equipo.fecha_adquisicion }}</td>
-                      <td>{{ equipo.estado }}</td>
-                      <td>{{ equipo.responsable }}</td>
-                      <td class="text-primary">
+                      <td class="text-center">{{ equipo?.id_equipo }}</td>
+                      <td class="text-center">{{ equipo?.marca }}</td>
+                      <td class="text-center">{{ equipo?.memoria }}</td>
+                      <td class="text-center">{{ equipo?.procesador }}</td>
+                      <td class="text-center">{{ equipo?.office }}</td>
+                      <td class="text-center">{{ equipo?.serial }}</td>
+                      <td class="text-center">{{ equipo?.serial_office }}</td>
+                      <td class="text-center">
+                        {{ equipo?.sistema_operativo }}
+                      </td>
+                      <td class="text-center">
+                        {{ equipo?.fecha_adquisicion }}
+                      </td>
+                      <td class="text-center">{{ equipo?.estado }}</td>
+                      <td class="text-center">{{ equipo?.responsable }}</td>
+                      <td class="text-primary text-center">
                         <a
-                          href="{{ equipo.archivo }}"
+                          href="{{ equipo?.archivo }}"
                           target="_blank"
-                          class="text-blue-500 hover:underline"
+                          class="text-blue-900"
                         >
-                          Ver Archivo
+                          <!-- Ícono de archivo -->
+                          <i class="fa fa-file text-2xl"></i>
+                          <!-- Ícono de archivo -->
                         </a>
                       </td>
+
                       <td class="py-2 px-3 text-center">
-                            <button
+                        <button
                           type="button"
-                          class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
+                          class="text-xl py-2 px-4 text-center"
                           data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
+                          (click)="editarEquipo(equipo)"
                         >
-                        <a [routerLink]="['/form1', licence.id]">
-                          <i class="fa fa-edit"></i></a>
+                          <i class="fa fa-edit text-blue-500 text-center text-2xl"></i>
                         </button>
-              
                         <!-- Modal -->
-                        <div
-                          class="modal fade"
-                          id="exampleModal"
-                          tabindex="-1"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h1 class="modal-title fs-5 text-2xl font-bold text-gray-900" id="exampleModalLabel">
-                                  Actualizar Licencia
-                                </h1>
-                                <button
-                                  type="button"
-                                  class="btn-close"
-                                  data-bs-dismiss="modal"
-                                  aria-label="Close"
-                                ></button>
-                              </div>
-                              <div class="modal-body"><app-formcomp></app-formcomp></div>
-                            </div>
-                          </div>
-                        </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-2xl font-bold text-gray-900" id="exampleModalLabel">
+          Actualizar Equipo
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="equipoSeleccionado">
+          <!-- Campos de formulario solo con inputs, sin etiquetas -->
+          <input [(ngModel)]="equipoSeleccionado.marca" placeholder="Marca">
+          <input [(ngModel)]="equipoSeleccionado.memoria" placeholder="Memoria">
+          <input [(ngModel)]="equipoSeleccionado.procesador" placeholder="Procesador">
+          <input [(ngModel)]="equipoSeleccionado.sistema_operativo" placeholder="Sistema Operativo">
+          <input [(ngModel)]="equipoSeleccionado.serial" placeholder="Serial">
+          <input [(ngModel)]="equipoSeleccionado.serial_office" placeholder="Serial Office">
+          <input [(ngModel)]="equipoSeleccionado.fecha_adquisicion" placeholder="Fecha Adquisición">
+          <input [(ngModel)]="equipoSeleccionado.estado" placeholder="Estado">
+          <input [(ngModel)]="equipoSeleccionado.responsable" placeholder="Responsable">
+        </div>                
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
                       </td>
                       <td class="py-2 px-3 text-center">
                         <button
                           type="button"
                           name="button"
-                          class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded shadow"
+                          class="text-center font-bold py-1 px-2"
                           (click)="delete(equipo.id_equipo)"
                         >
-                        <i class="fa fa-trash"></i> 
+                          <i class="fa fa-trash text-red-600 text-center text-2xl"></i>
                         </button>
                       </td>
                     </tr>
