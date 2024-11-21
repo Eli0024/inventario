@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -9,6 +9,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormcompComponent } from '../formcomp/formcomp.component';
 import { FormsModule } from '@angular/forms';
 import { Equipo } from '../models/computer';
+
 
 @Component({
   selector: 'app-info',
@@ -21,6 +22,7 @@ import { Equipo } from '../models/computer';
     FormcompComponent,
     FormsModule,
     RouterLink,
+
   ],
   templateUrl: './info.component.html',
   styleUrl: './info.component.css',
@@ -29,7 +31,6 @@ export class InfoComponent implements OnInit {
 
   equipos: Equipo[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
-  equipoSeleccionado: any = {};
   equipo: Equipo = {
     id_equipo: 0,
     marca: '',
@@ -45,20 +46,21 @@ export class InfoComponent implements OnInit {
     archivo: null,
   };
 
-  // equipoSeleccionado: Equipo = {
-  //   id_equipo: 0,
-  //   marca: '',
-  //   memoria: '',
-  //   procesador: '',
-  //   office: '',
-  //   serial: '',
-  //   serial_office: '',
-  //   sistema_operativo: '',
-  //   fecha_adquisicion: '',
-  //   estado: '',
-  //   responsable: null,
-  //   archivo: null,
-  // };
+   equipoSeleccionado: Equipo = {
+    id_equipo: 0,  // Type assertion (unsafe, but works)
+     marca: '',
+     memoria: '',
+     procesador: '',
+     office: '',
+     serial: '',
+     serial_office: '',
+     sistema_operativo: '',
+     fecha_adquisicion: '',
+     estado: '',
+     responsable: null,
+     archivo: null,
+   };
+
 
   constructor(
     private computersService: ComputersService,
@@ -69,48 +71,60 @@ export class InfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEquipos();
+    this.loadEquipos();
+    
   }
   getEquipos(): void {
-    this.computersService.getAll().subscribe((data: any) => {
+    this.computersService.getEquipos().subscribe((data: any) => {
       this.equipos = data;
     });
   }
 
   editarEquipo(equipo: any) {
     this.equipoSeleccionado = { ...equipo };
-    console.log("Equipo para editar:", this.equipoSeleccionado);  // Verifica aquí
+    this.equipo = { ...equipo }; // También actualizamos 'this.equipo'
     this.cdr.detectChanges();  // Asegura que la vista se actualice
   }
-  
-  
 
-  guardarEquipo() {
-    // Aquí puedes implementar la lógica para guardar los cambios.
-    // Puedes emitir un evento hacia el componente padre o llamar a un servicio para actualizar el equipo en la base de datos.
-    console.log('Datos guardados:', this.equipoSeleccionado);
-  }
+  modalAbierto: boolean = false; 
 
-  update(): void {
-    this.computersService.update(this.equipo).subscribe(
-      () => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Registro Actualizado',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.router.navigate(['/info']);
+  loadEquipos(): void {
+    this.computersService.getEquipos().subscribe(
+      (response: Equipo[]) => {
+        this.equipos = response;
       },
-      (error) => {
-        Swal.fire({
-          title: 'Error al actualizar',
-          text: error.message,
-          icon: 'error',
-        });
+      (error: any) => {
+        console.error('Error al obtener los equipos', error);
       }
     );
   }
+
+  // Abre el modal
+  openModal(): void {
+    this.modalAbierto = true;
+  }
+
+  // Cierra el modal
+  closeModal(): void {
+    this.modalAbierto = false;
+  }
+
+  // Actualizar el equipo
+  update(): void {
+    if (this.equipoSeleccionado) {
+      this.computersService.update(this.equipoSeleccionado).subscribe(
+        (response: Equipo) => {
+          console.log('Equipo actualizado', response);
+          this.loadEquipos(); // Recargar los equipos
+          this.closeModal(); // Cerrar el modal
+        },
+        (error: any) => {
+          console.error('Error al actualizar equipo', error);
+        }
+      );
+    }
+  }
+              
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0]; // Obtener el archivo seleccionado

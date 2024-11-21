@@ -13,7 +13,8 @@ export class ComputersService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Equipo[]> {
+  
+  getEquipos(): Observable<Equipo[]> {
     return this.http.get<Equipo[]>(this.apiUrl);
   }
 
@@ -70,45 +71,58 @@ export class ComputersService {
       })
     );
   }
-  
-  
-  
-  
-    
+      
 
   get(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}${id}/`);
   }
 
-  
   update(equipo: Equipo): Observable<Equipo> {
-    // Verificación preliminar de datos (puedes agregar más validaciones según sea necesario)
-    if (!equipo.id_equipo) {
-      console.error('El ID del equipo es obligatorio para actualizar');
-      return throwError(() => new Error('El ID del equipo es obligatorio'));
+    const formData = new FormData();
+    
+    // Verificación de archivo (si lo estás enviando)
+    if (equipo.archivo instanceof File) {
+      let archivo = equipo.archivo;
+      if (archivo.name.length > 100) {
+        archivo = new File([archivo], archivo.name.substring(0, 100), { type: archivo.type });
+      }
+      formData.append('archivo', archivo);
     }
   
-    return this.http.put<Equipo>(`${this.apiUrl}${equipo.id_equipo}/`, equipo).pipe(
-      catchError(error => {
-        console.error('Error al actualizar el equipo:', error);
-        
-        // Puedes manejar diferentes tipos de errores dependiendo del código de respuesta
-        if (error.status === 400) {
-          // Manejo específico de error de validación
-          console.error('Detalles del error 400:', error.error);
-        } else if (error.status === 404) {
-          // Si el equipo no fue encontrado
-          console.error('El equipo no fue encontrado');
-        }
+    // Agregar otros campos
+    formData.append('marca', equipo.marca);
+    formData.append('memoria', equipo.memoria);
+    formData.append('procesador', equipo.procesador);
+    formData.append('office', equipo.office);
+    formData.append('serial', equipo.serial);
+    formData.append('serial_office', equipo.serial_office);
+    formData.append('sistema_operativo', equipo.sistema_operativo);
+    formData.append('fecha_adquisicion', equipo.fecha_adquisicion);
+    formData.append('estado', equipo.estado);
   
-        // Puedes mostrar un mensaje más amigable al usuario o realizar alguna acción adicional
-        alert('Ocurrió un error al actualizar el equipo. Por favor, revisa los datos e intenta nuevamente.');
-        
-        return throwError(() => new Error('Error al actualizar el equipo'));
+    // Agregar responsable (Asegurarse de enviar el ID como cadena)
+    if (equipo.responsable != null) {
+      formData.append('responsable', equipo.responsable.toString());
+    } else {
+      console.error('El campo "responsable" es obligatorio y debe contener un ID válido');
+      alert('El campo "responsable" es obligatorio y debe contener un ID válido.');
+      return throwError(() => new Error('El campo "responsable" es obligatorio y debe contener un ID válido.'));
+    }
+  
+    // Enviar la solicitud de actualización (PUT)
+    return this.http.put<Equipo>(`${this.apiUrl}${equipo.id_equipo}/`, formData).pipe(
+      catchError(error => {
+        console.error('Error de solicitud:', error);
+        alert('Ocurrió un error al enviar los datos. Revisa los campos e intenta de nuevo.');
+        if (error.status === 400) {
+          console.error('Detalles del error 400:', error.error);
+        }
+        return throwError(() => new Error(error));
       })
     );
   }
   
+    
 
   delete(id: number): Observable<Equipo> {
     return this.http.delete<Equipo>(`${this.apiUrl}${id}/`); // Agregar barra al final
