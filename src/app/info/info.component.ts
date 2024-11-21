@@ -178,10 +178,10 @@ export class InfoComponent implements OnInit {
             .toLowerCase()
             .includes(this.filter.searchTerm.toLowerCase()) ||
           Equipo.responsable
-            .toLowerCase()
-            .includes(this.filter.searchTerm.toLowerCase())
+            .toString() // Convertimos el número a cadena
+            .includes(this.filter.searchTerm) // No es necesario `toLowerCase` porque es un número
       );
     }
     return [];
   }
-}
+}  
