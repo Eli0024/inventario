@@ -28,8 +28,8 @@ export class LicenceService {
     return this.http.put<Licence>(`${this.apiUrl}${licence.id}/`, Licence);
   }
 
-  delete(id:number): Observable<Licence> {
-    return this.http.delete<Licence>(`${this.apiUrl}${id}`);
+  delete(id: number): Observable<Licence> {
+    return this.http.delete<Licence>(`${this.apiUrl}${id}/`);
   }
 
 }

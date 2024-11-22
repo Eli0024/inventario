@@ -36,35 +36,35 @@ export class LicenciasComponent implements OnInit {
         )
       }
     
-     delete(id: number) {
+      delete(id: number) {
         console.log(id);
-        
+    
         Swal.fire({
-          title: "¿Desea eliminar este registro?",
-          icon: "warning",
+          title: '¿Desea eliminar este registro?',
+          icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Sí, ¡elimínalo!"
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, ¡elimínalo!',
         }).then((result) => {
           if (result.isConfirmed) {
             this.licenceService.delete(id).subscribe({
               next: () => {
                 Swal.fire({
-                  title: "¡Eliminado!",
-                  text: "El registro ha sido eliminado.",
-                  icon: "success"
+                  title: '¡Eliminado!',
+                  text: 'El registro ha sido eliminado.',
+                  icon: 'success',
                 });
                 this.ngOnInit(); // Actualiza la vista
               },
               error: (err) => {
                 console.error('Error:', err);
                 Swal.fire({
-                  title: "Error",
-                  text: "Hubo un problema al eliminar el registro.",
-                  icon: "error"
+                  title: 'Error',
+                  text: 'Hubo un problema al eliminar el registro.',
+                  icon: 'error',
                 });
-              }
+              },
             });
           }
         });

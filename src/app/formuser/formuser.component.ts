@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UsersService } from '../services/users.service';
 import { Usuario } from '../models/users';
@@ -18,7 +18,17 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 })
 export class FormuserComponent {
 
-  usuario: Usuario = new Usuario();
+  usuario: Usuario = {
+    id_usuario: 0,
+    nombre: '',
+    apellido: '',
+    empresa: '',
+    area: '',
+    cargo: '',
+    licencia: null,
+  };
+  
+  @Input() usuarioSeleccionado: any;
  
 
   constructor(private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute) { }

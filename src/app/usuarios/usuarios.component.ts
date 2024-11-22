@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Usuario } from '../models/users';
 import { UsersService } from '../services/users.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -21,12 +21,34 @@ export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
+  usuario: Usuario = {
+    id_usuario: 0,
+    nombre: '',
+    apellido: '',
+    empresa: '',
+    area: '',
+    cargo: '',
+    licencia: null,
+  };
+
+  usuarioSeleccionado: Usuario = {
+    id_usuario: 0,
+    nombre: '',
+    apellido: '',
+    empresa: '',
+    area: '',
+    cargo: '',
+    licencia: null,
+   };
    
-  constructor(private usersService: UsersService) {  }
+  constructor(private usersService: UsersService, private cdr: ChangeDetectorRef) {  }
 
   ngOnInit(): void {
     this.getUsuarios();
+    this.loadUsuarios();
     }
+
+
     getUsuarios():void{
       this.usersService.getAll().subscribe(
         (data:any)=>{
@@ -34,6 +56,52 @@ export class UsuariosComponent implements OnInit {
         }
       )
     }
+
+    editarUsuario(usuario:any) {
+      this.usuarioSeleccionado = {...usuario};
+      this.usuario = {...usuario};
+      this.cdr.detectChanges();
+    }
+
+    modalAbierto: boolean = false; 
+
+  loadUsuarios(): void {
+    this.usersService.getAll().subscribe(
+      (response: Usuario[]) => {
+        this.usuarios = response;
+      },
+      (error: any) => {
+        console.error('Error al obtener los usuarios', error);
+      }
+    );
+  }
+
+  // Abre el modal
+  openModal(): void {
+    this.modalAbierto = true;
+  }
+
+  // Cierra el modal
+  closeModal(): void {
+    this.modalAbierto = false;
+  }
+
+  // Actualizar el usuario
+  update(): void {
+    if (this.usuarioSeleccionado) {
+      this.usersService.update(this.usuarioSeleccionado).subscribe(
+        (response: Usuario) => {
+          console.log('Usuaario actualizado', response);
+          this.loadUsuarios(); // Recargar los equipos
+          this.closeModal(); // Cerrar el modal
+        },
+        (error: any) => {
+          console.error('Error al actualizar usuario', error);
+        }
+      );
+    }
+  }
+     
   
    delete(id: number) {
       console.log(id);
