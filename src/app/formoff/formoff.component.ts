@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, Input, NgModule } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Licence } from '../models/licence';
 import { LicenceService } from '../services/licence.service';
@@ -19,7 +19,13 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 
 export class FormoffComponent {
 
-  licence: Licence = new Licence();
+  licence: Licence = {
+    id: 0,
+    nombre: '',
+    contrasena: '',
+  };
+  
+  @Input() licenceSeleccionado: any;
  
 
   constructor(private licenceService: LicenceService, private router: Router, private activatedRoute:ActivatedRoute) { }

@@ -1,5 +1,5 @@
-export class Licence {
-    id!: number;
-    nombre!: string;
-    contrasena!: string;
+export interface Licence {
+    id: number;
+    nombre: string;
+    contrasena: string;
 }
