@@ -44,24 +44,23 @@ export class UsuariosComponent implements OnInit {
   constructor(private usersService: UsersService, private cdr: ChangeDetectorRef) {  }
 
   ngOnInit(): void {
-    this.getUsuarios();
     this.loadUsuarios();
     }
 
 
-    getUsuarios():void{
-      this.usersService.getAll().subscribe(
-        (data:any)=>{
-          this.usuarios=data;
-        }
-      )
+    editarUsuario(usuario: Usuario): void {
+      this.usuarioSeleccionado = { ...usuario };  // Crea una copia del usuario a editar
+      this.openModal();  // Abre el modal
     }
-
-    editarUsuario(usuario:any) {
-      this.usuarioSeleccionado = {...usuario};
-      this.usuario = {...usuario};
-      this.cdr.detectChanges();
+    
+    openModal(): void {
+      this.modalAbierto = true;
     }
+    
+    closeModal(): void {
+      this.modalAbierto = false;
+    }
+    
 
     modalAbierto: boolean = false; 
 
@@ -74,16 +73,6 @@ export class UsuariosComponent implements OnInit {
         console.error('Error al obtener los usuarios', error);
       }
     );
-  }
-
-  // Abre el modal
-  openModal(): void {
-    this.modalAbierto = true;
-  }
-
-  // Cierra el modal
-  closeModal(): void {
-    this.modalAbierto = false;
   }
 
   // Actualizar el usuario

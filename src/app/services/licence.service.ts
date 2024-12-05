@@ -20,10 +20,10 @@ export class LicenceService {
     return this.http.post<Licence>(this.apiUrl,licence);
   }
 
-  get(id:number): Observable<any> {
-    return this.http.get(`${this.apiUrl}${id}/`);
+  get(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}${id}/`);  // Aquí se debe pasar un id válido
   }
-
+  
   update(licence: Licence): Observable<Licence> {
     return this.http.put<Licence>(`${this.apiUrl}${licence.id}/`, licence);
   }

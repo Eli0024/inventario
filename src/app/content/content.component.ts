@@ -15,17 +15,11 @@ import { FormcompComponent } from '../formcomp/formcomp.component';
   styleUrl: './content.component.css'
 })
 export class ContentComponent {
-  isModalOpen: boolean = false;
-  equipo: any = { marca: '', modelo: '', procesador: '', office: '',
-    serial: '', serial_office: '', sistema_operativo: '', fecha_adquisicion: '',
-    estado: '', responsable: '', archivo: '' }; // Puedes agregar más propiedades según lo necesites
+ 
+  showSidebar = true; // Controla la visibilidad del sidebar
 
-  openModal(): void {
-    this.isModalOpen = true;
-  }
-
-  closeModal(): void {
-    this.isModalOpen = false;
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
   }
 }
 

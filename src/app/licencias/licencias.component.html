@@ -105,7 +105,7 @@
                           class="text-xl py-2 px-4 text-center"
                           data-bs-toggle="modal"
                           data-bs-target="#myModal"
-                          (click)="editarUsuario(usuario)"
+                          (click)="editarLicence(licence)"
                           (click)="openModal()"
                         >
                           <i
@@ -161,7 +161,7 @@
                                           id="nombre"
                                           name="nombre"
                                           placeholder="Nombre"
-                                          [(ngModel)]="licenciaSeleccionado.nombre"
+                                          [(ngModel)]="licenceSeleccionado.nombre"
                                           required
                                         />
                                       </div>
@@ -188,7 +188,7 @@
                                           name="contrasena"
                                           placeholder="Contraseña"
                                           [(ngModel)]="
-                                          licenciaSeleccionado.contrasena
+                                          licenceSeleccionado.contrasena
                                           "
                                           required
                                         />

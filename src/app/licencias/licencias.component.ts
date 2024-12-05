@@ -38,23 +38,15 @@ export class LicenciasComponent implements OnInit {
     constructor(private licenceService: LicenceService, private cdr: ChangeDetectorRef) {  }
   
     ngOnInit(): void {
-      this.getLicences();
       this.loadLicenses();
       }
-
-      getLicences():void{
-        this.licenceService.getAll().subscribe(
-          (data:any)=>{
-            this.licences=data;
-          }
-        )
-      }
-
-      editarLicence(licence:any) {
-        this.licenceSeleccionado = {...licence};
-        this.licence = {...licence};
+      
+      editarLicence(licence: any) {
+        this.licenceSeleccionado = { ...licence };
+        this.licence = { ...licence };
         this.cdr.detectChanges();
       }
+      
   
       modalAbierto: boolean = false; 
   
@@ -80,19 +72,22 @@ export class LicenciasComponent implements OnInit {
     }
     
     update(): void {
-      if (this.licenceSeleccionado) {
+      if (this.licenceSeleccionado && this.licenceSeleccionado.id) {  // Asegúrate de que el id esté presente
         this.licenceService.update(this.licenceSeleccionado).subscribe(
           (response: Licence) => {
-            console.log('Usuaario actualizado', response);
-            this.loadLicenses(); // Recargar los equipos
-            this.closeModal(); // Cerrar el modal
+            console.log('Licencia actualizada', response);
+            this.loadLicenses();  // Recargar las licencias
+            this.closeModal();  // Cerrar el modal
           },
           (error: any) => {
-            console.error('Error al actualizar usuario', error);
+            console.error('Error al actualizar la licencia', error);
           }
         );
+      } else {
+        console.error('El id de la licencia es necesario para actualizar.');
       }
     }
+    
        
     
      delete(id: number) {

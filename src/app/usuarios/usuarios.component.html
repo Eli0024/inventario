@@ -1,13 +1,11 @@
 <div class="min-h-screen flex flex-col bg-white text-white">
   <!-- Navbar -->
   <app-navbar></app-navbar>
-
   <div class="flex flex-1">
     <!-- Sidebar -->
     <div class="w-full md:w-64 bg-gray-800 text-white">
       <app-sidebar></app-sidebar>
     </div>
-
     <!-- Main content area -->
     <div class="flex flex-col w-full">
       <!-- Main content header -->
@@ -18,45 +16,45 @@
             <span> Lista de Usuarios</span>
           </div>
         </div>
-
         <!-- Button trigger modal -->
-
         <div class="flex justify-center items-center mt-16">
           <div class="flex flex-wrap space-x-4">
             <button
-          type="button"
-          class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Registrar Usuario
-        </button>
-
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5 text-2xl font-bold text-gray-900" id="exampleModalLabel">
-                  Registrar Usuario
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+              type="button"
+              class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Registrar Usuario
+            </button>
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1
+                      class="modal-title fs-5 text-2xl font-bold text-gray-900"
+                      id="exampleModalLabel"
+                    >
+                      Registrar Usuario
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body"><app-formuser></app-formuser></div>
+                </div>
               </div>
-              <div class="modal-body"><app-formuser></app-formuser></div>
             </div>
-          </div>
-        </div>
             <button
               class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
               type="button"
@@ -110,7 +108,6 @@
                           data-bs-toggle="modal"
                           data-bs-target="#myModal"
                           (click)="editarUsuario(usuario)"
-                          (click)="openModal()"
                         >
                           <i
                             class="fa fa-edit text-blue-500 text-center text-2xl"
@@ -165,7 +162,9 @@
                                           id="nombre"
                                           name="nombre"
                                           placeholder="Nombre"
-                                          [(ngModel)]="usuarioSeleccionado.nombre"
+                                          [(ngModel)]="
+                                            usuarioSeleccionado.nombre
+                                          "
                                           required
                                         />
                                       </div>
@@ -192,7 +191,7 @@
                                           name="apellido"
                                           placeholder="Apellido"
                                           [(ngModel)]="
-                                          usuarioSeleccionado.apellido
+                                            usuarioSeleccionado.apellido
                                           "
                                           required
                                         />
@@ -220,7 +219,7 @@
                                           name="empresa"
                                           placeholder="empresa"
                                           [(ngModel)]="
-                                          usuarioSeleccionado.empresa
+                                            usuarioSeleccionado.empresa
                                           "
                                           required
                                         />
@@ -245,9 +244,7 @@
                                           id="area"
                                           name="area"
                                           placeholder="Area"
-                                          [(ngModel)]="
-                                          usuarioSeleccionado.area
-                                          "
+                                          [(ngModel)]="usuarioSeleccionado.area"
                                           required
                                         />
                                       </div>
@@ -302,7 +299,7 @@
                                           name="licencia"
                                           placeholder="Licencia"
                                           [(ngModel)]="
-                                          usuarioSeleccionado.licencia
+                                            usuarioSeleccionado.licencia
                                           "
                                           required
                                         />
@@ -320,9 +317,7 @@
                                           type="button"
                                           class="btn btn-primary"
                                           (click)="update()"
-                                        >
-                                          Actualizar
-                                        </button>
+                                        > Actualizar </button>
                                       </div>
                                     </form>
                                   </div>
