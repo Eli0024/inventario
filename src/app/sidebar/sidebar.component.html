@@ -1,27 +1,24 @@
 <!-- sidebar.component.html -->
-<div class="nav-items">
-    <div class="nav-item">
-      <a routerLink="/info">
-      <i class="fa fa-laptop fa-2x text-white"></i></a> <!-- Icono para Dashboard -->
-      <span>Equipos</span>
-    </div>
-    <div class="nav-item">
-        <a routerLink="/usuarios">
-          <i class="fa fa-address-book fa-2x text-white"></i></a> <!-- Icono para Shops -->
-      <span>Usuarios</span>
-    </div>
-    <div class="nav-item">
-      <a routerLink="/licencias">
-      <i class="fa fa-file-alt fa-2x text-white"></i></a> <!-- Icono para Products -->
-      <span>Licencias</span>
-    </div>
-    <div class="nav-item">
-      <i class="fa fa-map-marker-alt fa-2x"></i> <!-- Icono para Sales -->
-      <span>Mapa</span>
-    </div>
-    <div class="nav-item">
-      <i class="fa fa-camera fa-2x"></i> <!-- Icono para Statistics -->
-      <span>Cam</span>
-    </div>
-  </div>
-  
+<div class="sidebar">
+  <a class="active text-center font-manrope text-lg" routerLink="/info"
+    >Equipos <i class="fa fa-laptop fa-x"></i
+  ></a>
+  <a class="text-center font-manrope text-lg" routerLink="/usuarios"
+    >Usuarios <i class="fa fa-address-book fa-x"></i
+  ></a>
+  <a class="text-center font-manrope text-lg" routerLink="/licencias"
+    >Licencias <i class="fa fa-file-alt fa-x"></i
+  ></a>
+  <a class="text-center font-manrope text-lg" routerLink="/licencias"
+    >Impresoras <i class="fa fa-print fa-x"></i
+  ></a>
+  <a class="text-center font-manrope text-lg" routerLink="/licencias"
+    >Mantenimiento <i class="fa fa-tools fa-x"></i
+  ></a>
+  <a href="#about" class="text-center font-manrope text-lg"
+    >Mapa<i class="fa fa-map-marker-alt fa-x"></i
+  ></a>
+</div>
+
+<!-- Page content -->
+<div class="content">..</div>
