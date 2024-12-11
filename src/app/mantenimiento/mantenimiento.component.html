@@ -96,19 +96,19 @@
                       <th class="text-center">ELIMINAR</th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let equipo of filterEquipos()">
-                        <td class="text-center">{{ equipo?.id}}</td>
-                        <td class="text-center">{{ equipo?.equipo}}</td>
-                        <td class="text-center">{{ equipo?.fecha }}</td>
-                        <td class="text-center">{{ equipo?.tipo}}</td>
-                        <td class="text-center">{{ equipo?.descripcion}}</td>
+                      <tr *ngFor="let mantenimiento of filterMantenimientos()">
+                        <td class="text-center">{{ mantenimiento?.id}}</td>
+                        <td class="text-center">{{ mantenimiento?.equipo}}</td>
+                        <td class="text-center">{{ mantenimiento?.fecha }}</td>
+                        <td class="text-center">{{ mantenimiento?.tipo}}</td>
+                        <td class="text-center">{{ mantenimiento?.descripcion}}</td>
                         <td class="py-2 px-3 text-center">
                           <button
                             type="button"
                             class="text-xl py-2 px-4 text-center"
                             data-bs-toggle="modal"
                             data-bs-target="#myModal"
-                            (click)="editarEquipo(equipo)"
+                            (click)="editarMantenimiento(mantenimiento)"
                             (click)="openModal()"
                           >
                             <i
@@ -164,7 +164,7 @@
                                             id="equipo"
                                             name="equipo"
                                             placeholder="equipo"
-                                            [(ngModel)]="equipoSeleccionado.equipo"
+                                            [(ngModel)]="mantenimientoSeleccionado.equipo"
                                             required
                                           />
                                         </div>
@@ -191,7 +191,7 @@
                                             name="fecha"
                                             placeholder="fecha"
                                             [(ngModel)]="
-                                              equipoSeleccionado.fecha
+                                            mantenimientoSeleccionado.fecha
                                             "
                                             required
                                           />
@@ -219,7 +219,7 @@
                                             name="tipo"
                                             placeholder="tipo"
                                             [(ngModel)]="
-                                              equipoSeleccionado.tipo
+                                              mantenimientoSeleccionado.tipo
                                             "
                                             required
                                           />
@@ -245,7 +245,7 @@
                                             name="descripcion"
                                             placeholder="descripcion"
                                             [(ngModel)]="
-                                              equipoSeleccionado.descripcion
+                                            mantenimientoSeleccionado.descripcion
                                             "
                                             required
                                           />
@@ -280,7 +280,7 @@
                             type="button"
                             name="button"
                             class="text-center font-bold py-1 px-2"
-                            (click)="delete(equipo.id_equipo)"
+                            (click)="delete(mantenimiento.id)"
                           >
                             <i
                               class="fa fa-trash text-red-600 text-center text-2xl"

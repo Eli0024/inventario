@@ -1,29 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MantenService } from '../services/manten.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Mantenimiento } from '../models/manten';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/src/sweetalert2.scss';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-formmante',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './formmante.component.html',
   styleUrl: './formmante.component.css'
 })
 export class FormmanteComponent {
 
 
-  usuario: Usuario = {
-    id_usuario: 0,
-    nombre: '',
-    apellido: '',
-    empresa: '',
-    area: '',
-    cargo: '',
-    licencia: null,
-  };
+  mantenimiento: Mantenimiento = {
+    id: 0,
+    equipo: '',
+    fecha: '',
+    tipo: '',
+    descripcion: '',
+    };
   
-  @Input() usuarioSeleccionado: any;
+  @Input() mantenimientoSeleccionado: any;
  
 
-  constructor(private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute) { }
+  constructor(private mantenService: MantenService, private router: Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargar();
@@ -35,8 +41,8 @@ export class FormmanteComponent {
       e=>{
         let id=e['id'];
         if(id){
-          this.usersService.get(id).subscribe(
-            usuario => this.usuario = usuario
+          this.mantenService.get(id).subscribe(
+            mantenimiento => this.mantenimiento = mantenimiento
           );
         }
       }
@@ -44,7 +50,7 @@ export class FormmanteComponent {
   }
 
   create(): void {
-    this.usersService.create(this.usuario).subscribe(
+    this.mantenService.create(this.mantenimiento).subscribe(
       () => {
         Swal.fire({
           title: "Registro Exitoso",
@@ -76,7 +82,7 @@ export class FormmanteComponent {
   }
   
   update(): void {
-    this.usersService.update(this.usuario).subscribe(
+    this.mantenService.update(this.mantenimiento).subscribe(
       () => {
         Swal.fire({
           position: "top-end",
@@ -85,7 +91,7 @@ export class FormmanteComponent {
           showConfirmButton: false,
           timer: 1500
         });
-        this.router.navigate(['/usuarios']);
+        this.router.navigate(['/manten']);
       },
       error => {
         Swal.fire({
