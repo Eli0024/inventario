@@ -7,6 +7,9 @@ import { ListaComponent } from './lista/lista.component';
 import { FormcompComponent } from './formcomp/formcomp.component';
 import { FormuserComponent } from './formuser/formuser.component';
 import { FormoffComponent } from './formoff/formoff.component';
+import { MapaComponent } from './mapa/mapa.component';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
+import { FormmanteComponent } from './formmante/formmante.component';
 
 
 export const routes: Routes = [
@@ -20,9 +23,12 @@ export const routes: Routes = [
     { path: 'form3', loadChildren: () => import('./formoff/formoff.module').then(m => m.FormoffModule) },
     { path: 'form3/:id', component: FormoffComponent },
     { path: 'info', loadChildren: () => import('./info/info.module').then(m => m.InfoModule) },
+    { path: 'manten', component: MantenimientoComponent },
+    { path: 'form4/:id', component: FormmanteComponent },
     { path: 'licencias', component: LicenciasComponent },
     { path: 'usuarios', component: UsuariosComponent },
     { path: 'sidebar', component: SidebarComponent },
     { path: 'lista', component: ListaComponent },
+    { path: 'mapa', component: MapaComponent },
 ];
 

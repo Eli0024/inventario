@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, OnInit, output } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
-import { SidebarService } from '../sidebar.service';
+import { SidebarService } from '../services/sidebar.service';
 import { MatIconModule } from '@angular/material/icon';
 
 
