@@ -7,11 +7,19 @@ import { Observable } from 'rxjs';
 })
 export class RecursoService {
 
-private apiUrl = 'http://localhost:8000/recursos/';
+  private apiUrl = 'http://localhost:8000/api';  // Cambia esta URL según sea necesario
 
   constructor(private http: HttpClient) {}
 
-  getRecursos(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getNodos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/nodos/`);
+  }
+
+  getSwitches(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/switches/`);
+  }
+
+  getConexiones(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/conexiones/`);
   }
 }

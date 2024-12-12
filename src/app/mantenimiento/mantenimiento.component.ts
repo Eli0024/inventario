@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgModule, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Mantenimiento } from '../models/manten';
 import { MantenService } from '../services/manten.service';
@@ -22,7 +22,7 @@ export class MantenimientoComponent implements OnInit {
   mantenimientos: Mantenimiento[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
   mantenimiento: Mantenimiento = {
-    id: 0,
+    id_mantenimiento: 0,
     equipo: '',
     fecha: '',
     tipo: '',
@@ -30,7 +30,7 @@ export class MantenimientoComponent implements OnInit {
   };
 
   mantenimientoSeleccionado: Mantenimiento = {
-    id: 0,
+    id_mantenimiento: 0,
     equipo: '',
     fecha: '',
     tipo: '',
@@ -40,7 +40,7 @@ export class MantenimientoComponent implements OnInit {
   constructor(private mantenService: MantenService, private cdr: ChangeDetectorRef) {  }
 
   ngOnInit(): void {
-    this.loadmantenimientos();
+    this.loadMantenimientos();
     }
 
 
@@ -60,7 +60,7 @@ export class MantenimientoComponent implements OnInit {
 
     modalAbierto: boolean = false; 
 
-  loadmantenimientos(): void {
+  loadMantenimientos(): void {
     this.mantenService.getAll().subscribe(
       (response: Mantenimiento[]) => {
         this.mantenimientos = response;
@@ -77,7 +77,7 @@ export class MantenimientoComponent implements OnInit {
       this.mantenService.update(this.mantenimientoSeleccionado).subscribe(
         (response: Mantenimiento) => {
           console.log('Usuario actualizado', response);
-          this.loadmantenimientos(); // Recargar los equipos
+          this.loadMantenimientos(); // Recargar los equipos
           this.closeModal(); // Cerrar el modal
         },
         (error: any) => {

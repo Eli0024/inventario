@@ -1,5 +1,5 @@
 export interface Impresora {
-    id: number;
+    id_impre: number;
     nombre: string;
     ip : string;
 }

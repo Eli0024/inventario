@@ -1,6 +1,3 @@
-<div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
 <div class="min-h-screen flex flex-col bg-white text-white">
   <!-- Navbar -->
   <app-navbar></app-navbar>
@@ -69,10 +66,10 @@
             </button>
             <div class="col">
               <input
-                class="rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
+                class="rounded-full text-black border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
                 type="search"
                 placeholder="Search"
-                
+                [(ngModel)]="filter.searchTerm"
                 name="searchTerm"
               />
             </div>
@@ -94,8 +91,8 @@
                     <th>ELIMINAR</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let licence of licences">
-                      <td>{{ licence.id }}</td>
+                    <tr *ngFor="let licence of filterLicences()">
+                      <td>{{ licence.id_licencia }}</td>
                       <td>{{ licence.nombre }}</td>
                       <td>{{ licence.contrasena }}</td>
     
@@ -223,7 +220,7 @@
                           type="button"
                           name="button"
                           class="text-center font-bold py-1 px-2"
-                          (click)="delete(licence.id)"
+                          (click)="delete(licence.id_licencia)"
                         >
                           <i
                             class="fa fa-trash text-red-600 text-center text-2xl"

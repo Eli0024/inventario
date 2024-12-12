@@ -97,7 +97,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let mantenimiento of filterMantenimientos()">
-                        <td class="text-center">{{ mantenimiento?.id}}</td>
+                        <td class="text-center">{{ mantenimiento?.id_mantenimiento}}</td>
                         <td class="text-center">{{ mantenimiento?.equipo}}</td>
                         <td class="text-center">{{ mantenimiento?.fecha }}</td>
                         <td class="text-center">{{ mantenimiento?.tipo}}</td>
@@ -143,21 +143,9 @@
                                           <div
                                             class="icon-container bg-cyan-500 text-white"
                                           >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="30"
-                                              height="30"
-                                              fill="currentColor"
-                                              class="bi bi-motherboard"
-                                              viewBox="0 0 16 16"
-                                            >
-                                              <path
-                                                d="M11.5 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-10 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zM5 3a1 1 0 0 0-1 1h-.5a.5.5 0 0 0 0 1H4v1h-.5a.5.5 0 0 0 0 1H4a1 1 0 0 0 1 1v.5a.5.5 0 0 0 1 0V8h1v.5a.5.5 0 0 0 1 0V8a1 1 0 0 0 1-1h.5a.5.5 0 0 0 0-1H9V5h.5a.5.5 0 0 0 0-1H9a1 1 0 0 0-1-1v-.5a.5.5 0 0 0-1 0V3H6v-.5a.5.5 0 0 0-1 0zm0 1h3v3H5zm6.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
-                                              />
-                                              <path
-                                                d="M1 2a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-2H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 9H1V8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6H1V5H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 2zm1 11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"
-                                              />
-                                            </svg>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-laptop" viewBox="0 0 16 16">
+                                            <path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"/>
+                                          </svg>
                                           </div>
                                           <input
                                             type="text"
@@ -172,18 +160,9 @@
                                           <div
                                             class="icon-container bg-cyan-500 text-white"
                                           >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="30"
-                                              height="30"
-                                              fill="currentColor"
-                                              class="bi bi-memory"
-                                              viewBox="0 0 16 16"
-                                            >
-                                              <path
-                                                d="M12 1.5H4a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5zm-1 1v10H5V2h6z"
-                                              />
-                                            </svg>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar2-week-fill" viewBox="0 0 16 16">
+                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5M8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                          </svg>
                                           </div>
                                           <input
                                             type="text"
@@ -200,18 +179,9 @@
                                           <div
                                             class="icon-container bg-cyan-500 text-white"
                                           >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="30"
-                                              height="30"
-                                              fill="currentColor"
-                                              class="bi bi-cpu"
-                                              viewBox="0 0 16 16"
-                                            >
-                                              <path
-                                                d="M5.5 0a.5.5 0 0 1 .5.5v1h4V.5a.5.5 0 0 1 1 0v1h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1v4h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1v1a.5.5 0 0 1-1 0v-1H6v1a.5.5 0 0 1-1 0v-1H4a.5.5 0 0 1-.5-.5v-1h1V9H4a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 5.5 0zM6 5V4h4v1H6z"
-                                              />
-                                            </svg>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+                                            <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z"/>
+                                          </svg>
                                           </div>
                                           <input
                                             type="text"
@@ -225,18 +195,9 @@
                                           />
                                         </div>
                                         <div class="input-container">
-                                          <div class="icon-container bg-cyan-500">
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="30"
-                                              height="30"
-                                              fill="currentColor"
-                                              class="bi bi-laptop"
-                                              viewBox="0 0 16 16"
-                                            >
-                                              <path
-                                                d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"
-                                              />
+                                          <div class="icon-container bg-cyan-500 text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-blockquote-right" viewBox="0 0 16 16">
+                                              <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1zm10.113-5.373a7 7 0 0 0-.445-.275l.21-.352q.183.111.452.287.27.176.51.428.234.246.398.562.164.31.164.692 0 .54-.216.873-.217.328-.721.328-.322 0-.504-.211a.7.7 0 0 1-.188-.463q0-.345.211-.521.205-.182.569-.182h.281a1.7 1.7 0 0 0-.123-.498 1.4 1.4 0 0 0-.252-.37 2 2 0 0 0-.346-.298m-2.168 0A7 7 0 0 0 10 6.352L10.21 6q.183.111.452.287.27.176.51.428.234.246.398.562.164.31.164.692 0 .54-.216.873-.217.328-.721.328-.322 0-.504-.211a.7.7 0 0 1-.188-.463q0-.345.211-.521.206-.182.569-.182h.281a1.8 1.8 0 0 0-.117-.492 1.4 1.4 0 0 0-.258-.375 2 2 0 0 0-.346-.3z"/>
                                             </svg>
                                           </div>
                                           <input
@@ -280,7 +241,7 @@
                             type="button"
                             name="button"
                             class="text-center font-bold py-1 px-2"
-                            (click)="delete(mantenimiento.id)"
+                            (click)="delete(mantenimiento.id_mantenimiento)"
                           >
                             <i
                               class="fa fa-trash text-red-600 text-center text-2xl"

@@ -19,7 +19,7 @@ export class FormmanteComponent {
 
 
   mantenimiento: Mantenimiento = {
-    id: 0,
+    id_mantenimiento: 0,
     equipo: '',
     fecha: '',
     tipo: '',
@@ -69,7 +69,7 @@ export class FormmanteComponent {
             `
           }
         });
-        this.router.navigate(['/usuarios']);
+        this.router.navigate(['/manten']);
       },
       error => {
         Swal.fire({

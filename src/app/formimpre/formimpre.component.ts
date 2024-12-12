@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class FormimpreComponent {
 
   impresora : Impresora = {
-    id: 0,
+    id_impre: 0,
     nombre: '',
     ip: '',
     };

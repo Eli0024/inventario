@@ -25,7 +25,7 @@ export class LicenceService {
   }
   
   update(licence: Licence): Observable<Licence> {
-    return this.http.put<Licence>(`${this.apiUrl}${licence.id}/`, licence);
+    return this.http.put<Licence>(`${this.apiUrl}${licence.id_licencia}/`, licence);
   }
 
   delete(id: number): Observable<Licence> {

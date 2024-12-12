@@ -25,8 +25,8 @@ export class UsuariosComponent implements OnInit {
     id_usuario: 0,
     nombre: '',
     apellido: '',
-    empresa: '',
-    area: '',
+    empresa: null,
+    area: null,
     cargo: '',
     licencia: null,
   };
@@ -35,8 +35,8 @@ export class UsuariosComponent implements OnInit {
     id_usuario: 0,
     nombre: '',
     apellido: '',
-    empresa: '',
-    area: '',
+    empresa: null,
+    area: null,
     cargo: '',
     licencia: null,
    };
@@ -130,8 +130,7 @@ export class UsuariosComponent implements OnInit {
       if (this.usuarios && this.usuarios.length) {
         return this.usuarios.filter(Usuario =>
           Usuario.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
-          Usuario.apellido.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
-          Usuario.empresa.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
+          Usuario.apellido.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
         );
       }
       return [];

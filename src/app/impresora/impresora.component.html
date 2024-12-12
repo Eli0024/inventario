@@ -90,7 +90,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let impresora of filterImpresoras()">
-                        <td class="text-center">{{ impresora.id }}</td>
+                        <td class="text-center">{{ impresora.id_impre }}</td>
                         <td class="text-center">{{ impresora.nombre }}</td>
                         <td class="text-center">{{ impresora.ip }}</td>
                         <td class="py-2 px-3 text-center">
@@ -133,21 +133,7 @@
                                           <div
                                             class="icon-container bg-cyan-500 text-white"
                                           >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="30"
-                                              height="30"
-                                              fill="currentColor"
-                                              class="bi bi-motherboard"
-                                              viewBox="0 0 16 16"
-                                            >
-                                              <path
-                                                d="M11.5 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-10 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zM5 3a1 1 0 0 0-1 1h-.5a.5.5 0 0 0 0 1H4v1h-.5a.5.5 0 0 0 0 1H4a1 1 0 0 0 1 1v.5a.5.5 0 0 0 1 0V8h1v.5a.5.5 0 0 0 1 0V8a1 1 0 0 0 1-1h.5a.5.5 0 0 0 0-1H9V5h.5a.5.5 0 0 0 0-1H9a1 1 0 0 0-1-1v-.5a.5.5 0 0 0-1 0V3H6v-.5a.5.5 0 0 0-1 0zm0 1h3v3H5zm6.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
-                                              />
-                                              <path
-                                                d="M1 2a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-2H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 9H1V8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6H1V5H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 2zm1 11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"
-                                              />
-                                            </svg>
+                                          <i class="fa fa-print fa-2x m-2 text-center"></i>
                                           </div>
                                           <input
                                             type="text"
@@ -164,18 +150,9 @@
                                           <div
                                             class="icon-container bg-cyan-500 text-white"
                                           >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="30"
-                                              height="30"
-                                              fill="currentColor"
-                                              class="bi bi-memory"
-                                              viewBox="0 0 16 16"
-                                            >
-                                              <path
-                                                d="M12 1.5H4a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5zm-1 1v10H5V2h6z"
-                                              />
-                                            </svg>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
+                                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5M9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8m1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5m-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96q.04-.245.04-.5M7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/>
+                                          </svg>
                                           </div>
                                           <input
                                             type="text"
@@ -216,7 +193,7 @@
                             type="button"
                             name="button"
                             class="text-center font-bold py-1 px-2"
-                            (click)="delete(impresora.id)"
+                            (click)="delete(impresora.id_impre)"
                           >
                             <i
                               class="fa fa-trash text-red-600 text-center text-2xl"

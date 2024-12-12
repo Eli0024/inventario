@@ -1,5 +1,5 @@
 export interface Mantenimiento {
-    id: number;
+    id_mantenimiento: number;
     equipo: string;
     fecha: string;
     tipo: string;

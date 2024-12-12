@@ -22,8 +22,8 @@ export class FormuserComponent {
     id_usuario: 0,
     nombre: '',
     apellido: '',
-    empresa: '',
-    area: '',
+    empresa: null,
+    area: null,
     cargo: '',
     licencia: null,
   };

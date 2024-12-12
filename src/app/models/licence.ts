@@ -1,5 +1,5 @@
 export interface Licence {
-    id: number;
+    id_licencia: number;
     nombre: string;
     contrasena: string;
 }

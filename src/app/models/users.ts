@@ -2,8 +2,8 @@ export interface Usuario {
     id_usuario: number;
     nombre: string;
     apellido: string;
-    empresa: string;
-    area: string;
+    empresa: null;
+    area: null;
     cargo: string;
     licencia: any;
 }

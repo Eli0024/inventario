@@ -25,7 +25,7 @@ export class MantenService {
   }
 
   update(mantenimiento: Mantenimiento): Observable<Mantenimiento> {
-    return this.http.put<Mantenimiento>(`${this.apiUrl}${mantenimiento.id}/`, mantenimiento);
+    return this.http.put<Mantenimiento>(`${this.apiUrl}${mantenimiento.id_mantenimiento}/`, mantenimiento);
   }
 
   delete(id:number): Observable<Mantenimiento> {
