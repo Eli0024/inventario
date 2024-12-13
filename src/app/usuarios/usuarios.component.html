@@ -184,23 +184,13 @@
                                         </svg>
                                         </div>
                                         <form>
-                                          <select class="form-select" id="empresa" [(ngModel)]="usuario.empresa" name="empresa">
-                                            <option value="" disabled selected>Seleccione...</option>  <!-- Opción para que el usuario elija -->
-                                            <option value="1">Químicos del Cauca</option>
-                                            <option value="2">Química Básica Colombiana</option>
-                                            <option value="3">EcoVitta</option>
-                                          </select>
+                                          <select class="form-select" id="empresa" [(ngModel)]="usuario.empresa" name="empresa" (ngModelChange)="onEmpresaChange($event)">
+                                            <option value="" disabled selected>Seleccione...</option> 
+                                            <option value="Químicos del Cauca">Químicos del Cauca</option>
+                                            <option value="Química Básica Colombiana">Química Básica Colombiana</option>
+                                            <option value="EcoVitta">EcoVitta</option>
+                                          </select>                                          
                                         </form>
-                                        <!-- <input
-                                          type="text"
-                                          id="empresa"
-                                          name="empresa"
-                                          placeholder="empresa"
-                                          [(ngModel)]="
-                                            usuarioSeleccionado.empresa
-                                          "
-                                          required
-                                        /> -->
                                       </div>
                                       <div class="input-container">
                                         <div class="icon-container bg-cyan-500 text-white">
@@ -208,14 +198,17 @@
                                             <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
                                           </svg>
                                         </div>
-                                        <input
-                                          type="text"
-                                          id="area"
-                                          name="area"
-                                          placeholder="Area"
-                                          [(ngModel)]="usuarioSeleccionado.area"
-                                          required
-                                        />
+                                        <form>
+                                          <select class="form-select" id="area" [(ngModel)]="usuario.area" name="area" (ngModelChange)="onAreaChange($event)">
+                                            <option value="" disabled selected>Seleccione...</option> 
+                                            <option value="Almacen">Almacen</option>
+                                            <option value="Compras">Compras</option>
+                                            <option value="Despachos">Contabilidad</option>
+                                            <option value="Despachos">Despachos</option>
+                                            <option value="Despachos">Mantenimiento</option>
+                                            <option value="Despachos">TIC</option>
+                                          </select>                                          
+                                        </form>
                                       </div>
                                       <div class="input-container">
                                         <div

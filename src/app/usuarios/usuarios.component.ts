@@ -135,5 +135,17 @@ export class UsuariosComponent implements OnInit {
       }
       return [];
     }
-}
+
+    onEmpresaChange(event: any) {
+      console.log("Empresa seleccionada:", event);  // Aquí puedes realizar más acciones si lo deseas.
+      this.usuarioSeleccionado.empresa = event;
+    }
+    
+    onAreaChange(event: any) {
+      console.log("Area seleccionada:", event);  // Aquí puedes realizar más acciones si lo deseas.
+      this.usuarioSeleccionado.area = event;
+    }
+    
+  }
+
 
