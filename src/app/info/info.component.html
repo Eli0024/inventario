@@ -93,7 +93,7 @@
                     <th class="text-center">PROCESADOR</th>
                     <th class="text-center">OFFICE</th>
                     <th class="text-center">SERIAL</th>
-                    <th class="text-center">SERIAL_OFFICE</th>
+                    <th class="text-center">WINDOWS</th>
                     <th class="text-center">SISTEMA_OPERATIVO</th>
                     <th class="text-center">FECHA_ADQUISICION</th>
                     <th class="text-center">ESTADO</th>
@@ -110,7 +110,7 @@
                       <td class="text-center">{{ equipo?.procesador }}</td>
                       <td class="text-center">{{ equipo?.office }}</td>
                       <td class="text-center">{{ equipo?.serial }}</td>
-                      <td class="text-center">{{ equipo?.serial_office }}</td>
+                      <td class="text-center">{{ equipo?.windows }}</td>
                       <td class="text-center">
                         {{ equipo?.sistema_operativo }}
                       </td>
@@ -118,7 +118,9 @@
                         {{ equipo?.fecha_adquisicion }}
                       </td>
                       <td class="text-center">{{ equipo?.estado }}</td>
-                      <td class="text-center">{{ equipo?.responsable }}</td>
+                      <td class="text-center">
+                        {{ equipo?.responsable?.nombre }} {{ equipo?.responsable?.apellido || 'Sin apellido' }}
+                      </td>
                       <td class="text-primary text-center">
                         <a
                           href="{{ equipo?.archivo }}"
@@ -297,11 +299,11 @@
                                         </div>
                                         <input
                                           type="text"
-                                          id="serial_office"
-                                          name="serial_office"
-                                          placeholder="Serial_Office"
+                                          id="windows"
+                                          name="windows"
+                                          placeholder="windows"
                                           [(ngModel)]="
-                                            equipoSeleccionado.serial_office
+                                            equipoSeleccionado.windows
                                           "
                                           required
                                         />

@@ -25,14 +25,16 @@ export class LicenciasComponent implements OnInit {
     filter: any = { searchTerm: '' };
     licence : Licence = {
       id_licencia: 0,
-      nombre: '',
+      correo: '',
       contrasena: '',
+      serial_office: '',
     };
   
     licenceSeleccionado: Licence = {
       id_licencia: 0,
-      nombre: '',
+      correo: '',
       contrasena: '',
+      serial_office: '',
      };
      
     constructor(private licenceService: LicenceService, private cdr: ChangeDetectorRef) {  }
@@ -127,7 +129,7 @@ export class LicenciasComponent implements OnInit {
       filterLicences(): Licence[] {
         if (this.licences && this.licences.length) {
           return this.licences.filter( Licence =>
-            Licence.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) 
+            Licence.correo.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) 
           );
         }
         return [];

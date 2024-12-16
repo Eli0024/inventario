@@ -44,16 +44,6 @@
         </select>
       </form>
       
-      
-      
-       <!-- <input
-        type="text"
-        id="empresa"
-        name="empresa"
-        placeholder="Empresa"
-        [(ngModel)]="usuario.empresa"
-        required
-      /> -->
     </div>
     <div class="input-container">
       <div
@@ -63,14 +53,17 @@
         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
       </svg>
       </div>
-      <input
-        type="text"
-        id="area"
-        name="area"
-        placeholder="Area"
-        [(ngModel)]="usuario.area"
-        required
-      />
+      <form>
+        <select class="form-select" id="area" [(ngModel)]="usuario.area" name="area" (ngModelChange)="onAreaChange($event)">
+          <option value="" disabled selected>Seleccione...</option> 
+          <option value="Almacen">Almacen</option>
+          <option value="Compras">Compras</option>
+          <option value="Despachos">Contabilidad</option>
+          <option value="Despachos">Despachos</option>
+          <option value="Despachos">Mantenimiento</option>
+          <option value="Despachos">TIC</option>
+        </select>                                          
+      </form>
     </div>
     <div class="input-container">
       <div

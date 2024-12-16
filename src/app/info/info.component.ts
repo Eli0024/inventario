@@ -38,7 +38,7 @@ export class InfoComponent implements OnInit {
     procesador: '',
     office: '',
     serial: '',
-    serial_office: '',
+    windows: '',
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
@@ -53,7 +53,7 @@ export class InfoComponent implements OnInit {
      procesador: '',
      office: '',
      serial: '',
-     serial_office: '',
+     windows: '',
      sistema_operativo: '',
      fecha_adquisicion: '',
      estado: '',
@@ -79,6 +79,8 @@ export class InfoComponent implements OnInit {
       this.equipos = data;
     });
   }
+
+
 
   editarEquipo(equipo: any) {
     this.equipoSeleccionado = { ...equipo };
@@ -177,9 +179,10 @@ export class InfoComponent implements OnInit {
           Equipo.memoria
             .toLowerCase()
             .includes(this.filter.searchTerm.toLowerCase()) ||
-          Equipo.responsable
-            .toString() // Convertimos el número a cadena
-            .includes(this.filter.searchTerm) // No es necesario `toLowerCase` porque es un número
+            (Equipo.responsable &&
+              Equipo.responsable.nombre
+                .toLowerCase()
+                .includes(this.filter.searchTerm.toLowerCase())) // No es necesario `toLowerCase` porque es un número
       );
     }
     return [];

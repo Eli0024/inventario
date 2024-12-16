@@ -25,7 +25,7 @@ export class FormcompComponent {
     procesador: '',
     office: '',
     serial: '',
-    serial_office: '',
+    windows: '',
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
@@ -87,6 +87,7 @@ export class FormcompComponent {
       }
     );
   }
+  
   
   guardarEquipo() {
     // Aquí puedes implementar la lógica para guardar los cambios.

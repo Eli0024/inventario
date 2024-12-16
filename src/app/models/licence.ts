@@ -1,5 +1,6 @@
 export interface Licence {
     id_licencia: number;
-    nombre: string;
+    correo: string;
     contrasena: string;
+    serial_office: string;
 }

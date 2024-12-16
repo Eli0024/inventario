@@ -16,6 +16,10 @@ export class LicenceService {
     return this.http.get<Licence[]>(this.apiUrl);
   }
 
+  getTotalLicencias(): Observable<number> {
+    return this.http.get<number>('http://127.0.0.1:8000/registrarlicencia/total');
+  }
+
   create(licence:Licence):Observable<Licence>{
     return this.http.post<Licence>(this.apiUrl,licence);
   }

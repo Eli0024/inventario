@@ -21,8 +21,9 @@ export class FormoffComponent {
 
   licence: Licence = {
     id_licencia: 0,
-    nombre: '',
+    correo: '',
     contrasena: '',
+    serial_office: '',
   };
   
   @Input() licenceSeleccionado: any;

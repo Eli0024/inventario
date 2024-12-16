@@ -16,6 +16,10 @@ export class UsersService {
     return this.http.get<Usuario[]>(this.apiUrl);
   }
 
+  getTotalUsuarios(): Observable<number> {
+    return this.http.get<number>('http://127.0.0.1:8000/registrarusuario/total');
+  }
+
   create(usuario:Usuario):Observable<Usuario>{
     return this.http.post<Usuario>(this.apiUrl,usuario);
   }

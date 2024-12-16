@@ -5,7 +5,7 @@ export interface Equipo {
     procesador: string;
     office: string;
     serial: string;
-    serial_office: string;
+    windows: string;
     sistema_operativo: string;
     fecha_adquisicion: string;
     estado: string;
