@@ -1,18 +1,20 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 import { ComputersService } from '../services/computers.service';
-import { Equipo } from '../models/computer';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { Usuario } from '../models/users';
+import { UsersService } from '../services/users.service';
+import { Equipo } from '../models/computer';
 
 @Component({
   selector: 'app-formcomp',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, CommonModule, SidebarComponent], 
+  imports: [NavbarComponent, FormsModule, CommonModule, SidebarComponent, ReactiveFormsModule], 
   templateUrl: './formcomp.component.html',
   styleUrl: './formcomp.component.css'
 })
@@ -21,6 +23,7 @@ export class FormcompComponent {
   equipo: Equipo = {
     id_equipo: 0,
     marca: '',
+    modelo: '',
     memoria: '',
     procesador: '',
     office: '',
@@ -29,18 +32,45 @@ export class FormcompComponent {
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
-    responsable: null,  // O el valor adecuado si tienes un objeto 'Responsable'
+    responsable: { nombre: '', apellido: '' }, // Valor inicial vacío
     archivo: null
   };
+  
+
+   usuario: Usuario = {
+      id_usuario: 0,
+      nombre: '',
+      apellido: '',
+      empresa: null,
+      area: null,
+      cargo: '',
+      licencia: null,
+    };
+    
+
+  responsables: any[] = [];
+  usuarios: Usuario[] = [];
   
   @Input() equipoSeleccionado: any;
  
 
-  constructor(private computersService: ComputersService, private router: Router, private activatedRoute:ActivatedRoute) { }
+  constructor(private computersService: ComputersService, private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargar();
+    this.loadUsuarios();
    }
+
+   loadUsuarios(): void {
+    this.usersService.getAll().subscribe(
+      (response: Usuario[]) => {
+        this.usuarios = response;
+      },
+      (error: any) => {
+        console.error('Error al obtener los usuarios', error);
+      }
+    );
+  }
 
   cargar():void{
 

@@ -25,6 +25,16 @@
       <div
         class="icon-container bg-cyan-500 text-white "
       >
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-memory" viewBox="0 0 16 16">
+        <path d="M12 1.5H4a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5zm-1 1v10H5V2h6z"/>
+      </svg>      
+      </div>
+      <input type="text" id="modelo" name="modelo" placeholder="Modelo" [(ngModel)]="equipo.modelo" required />
+    </div>
+    <div class="input-container">
+      <div
+        class="icon-container bg-cyan-500 text-white "
+      >
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cpu" viewBox="0 0 16 16">
         <path d="M5.5 0a.5.5 0 0 1 .5.5v1h4V.5a.5.5 0 0 1 1 0v1h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1v4h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1v1a.5.5 0 0 1-1 0v-1H6v1a.5.5 0 0 1-1 0v-1H4a.5.5 0 0 1-.5-.5v-1h1V9H4a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 5.5 0zM6 5V4h4v1H6z"/>
       </svg>      
@@ -146,13 +156,13 @@
         </svg>
       </div>
       <input
-        type="text"
-        id="responsable"
-        name="responsable"
-        placeholder="Responsable"
-        [(ngModel)]="equipo.responsable"
-        required
-      />
+      type="text"
+      id="responsable"
+      name="responsable"
+      placeholder="Responsable"
+      [(ngModel)]="equipo.responsable"
+      required
+    />
     </div>
     <div class="input-container">
       <div
@@ -161,7 +171,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-arrow-up-fill" viewBox="0 0 16 16">
         <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707z"/>
       </svg></div>
-      <input type="file" id="archivo" name="archivo"  (change)="onFileSelected($event)" required />
+      <input type="file" id="archivo" name="archivo" class="text-gray-600"  (change)="onFileSelected($event)" required />
     </div>
     
     <button class="btn btn-primary" type="button" (click)="create()">Registrar</button>

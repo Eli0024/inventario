@@ -31,10 +31,11 @@ export class InfoComponent implements OnInit {
 
   equipos: Equipo[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
-  equipo: Equipo = {
+  equipo: Equipo ={
     id_equipo: 0,
     marca: '',
     memoria: '',
+    modelo: '',
     procesador: '',
     office: '',
     serial: '',
@@ -42,13 +43,18 @@ export class InfoComponent implements OnInit {
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
-    responsable: null, // O el valor adecuado si tienes un objeto 'Responsable'
-    archivo: null,
+    responsable: { // Objeto Responsable por defecto
+      nombre: '',
+      apellido: ''
+    },
+    archivo: null
   };
+  // Ejemplo en el componente
 
    equipoSeleccionado: Equipo = {
     id_equipo: 0,  // Type assertion (unsafe, but works)
      marca: '',
+     modelo: '',
      memoria: '',
      procesador: '',
      office: '',
@@ -57,7 +63,10 @@ export class InfoComponent implements OnInit {
      sistema_operativo: '',
      fecha_adquisicion: '',
      estado: '',
-     responsable: null,
+     responsable: { // Objeto Responsable por defecto
+      nombre: '',
+      apellido: ''
+    },
      archivo: null,
    };
 
@@ -178,11 +187,8 @@ export class InfoComponent implements OnInit {
             .includes(this.filter.searchTerm.toLowerCase()) ||
           Equipo.memoria
             .toLowerCase()
-            .includes(this.filter.searchTerm.toLowerCase()) ||
-            (Equipo.responsable &&
-              Equipo.responsable.nombre
-                .toLowerCase()
-                .includes(this.filter.searchTerm.toLowerCase())) // No es necesario `toLowerCase` porque es un número
+            .includes(this.filter.searchTerm.toLowerCase())
+             // No es necesario `toLowerCase` porque es un número
       );
     }
     return [];
