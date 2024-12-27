@@ -20,7 +20,9 @@ import { Equipo } from '../models/computer';
 })
 export class FormcompComponent {
 
+ 
   equipo: Equipo = {
+    responsable: { nombre: '', apellido: '' },
     id_equipo: 0,
     marca: '',
     modelo: '',
@@ -32,9 +34,9 @@ export class FormcompComponent {
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
-    responsable: { nombre: '', apellido: '' }, // Valor inicial vacío
     archivo: null
   };
+
   
 
    usuario: Usuario = {

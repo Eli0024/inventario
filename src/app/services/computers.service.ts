@@ -35,31 +35,35 @@ getTotalEquipos(): Observable<number> {
 create(equipo: Equipo): Observable<Equipo> {
   const formData = new FormData();
 
-  // Asegúrate de que todos los valores sean válidos antes de agregarlos
+  // Agregar campos principales
   formData.append('id_equipo', equipo.id_equipo?.toString() || '');
-  formData.append('marca', equipo.marca || '');
-  formData.append('modelo', equipo.modelo || '');
-  formData.append('memoria', equipo.memoria || '');
-  formData.append('procesador', equipo.procesador || '');
-  formData.append('office', equipo.office || '');
-  formData.append('serial', equipo.serial || '');
-  formData.append('windows', equipo.windows || '');
-  formData.append('sistema_operativo', equipo.sistema_operativo || '');
-  formData.append('fecha_adquisicion', equipo.fecha_adquisicion || '');
-  formData.append('estado', equipo.estado || '');
-  
-  // Responsable: descomponer en nombre y apellido si aplica
-  if (equipo.responsable) {
-    formData.append('responsable_nombre', equipo.responsable.nombre || '');
-    formData.append('responsable_apellido', equipo.responsable.apellido || '');
-  }
+  formData.append('marca', equipo.marca);
+  formData.append('modelo', equipo.modelo);
+  formData.append('memoria', equipo.memoria);
+  formData.append('procesador', equipo.procesador);
+  formData.append('office', equipo.office);
+  formData.append('serial', equipo.serial);
+  formData.append('windows', equipo.windows);
+  formData.append('sistema_operativo', equipo.sistema_operativo);
+  formData.append('fecha_adquisicion', equipo.fecha_adquisicion);
+  formData.append('estado', equipo.estado);
 
-  // Archivo: verifica si existe
+  // Agregar campos del responsable
+  formData.append('responsable.nombre', equipo.responsable?.nombre || '');
+  formData.append('responsable.apellido', equipo.responsable?.apellido || '');
+
+  // Agregar el archivo (si existe)
   if (equipo.archivo) {
     formData.append('archivo', equipo.archivo);
   }
 
-  return this.http.post<Equipo>(`${this.apiUrl}`, formData);
+  return this.http.post<Equipo>(`${this.apiUrl}`, formData).pipe(
+    catchError(error => {
+      console.error('Error en la solicitud:', error);
+      alert('Ocurrió un error al crear el equipo. Revisa los campos.');
+      return throwError(() => new Error(error));
+    })
+  );
 }
 
 
