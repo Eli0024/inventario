@@ -1,0 +1,36 @@
+<body>
+    <div id="contenedor">
+        <img class="jj" src="../assets/img/Mi proyecto-1.png" alt="Logo">
+      
+        <div id="central">
+           
+            <div class="n1">
+                REGISTRAR
+            </div>
+            <div id="login">
+                <div class="titulo">
+                    Bienvenido
+                </div>
+                <form id="registro-usuarios-form" usuarioForm="ngForm">
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre de Usuario" [(ngModel)]="username" required>
+                    <input type="text" id="email" name="email" placeholder="Email" [(ngModel)]="email" required>
+                    <input type="password" id="password" [(ngModel)]="password" name="password"  placeholder="password" required>
+                    <div class="form-group">
+                        <label class="custom-checkbox-label" for="is_staff">
+                            <input type="checkbox" id="is_staff" class="custom-checkbox" [(ngModel)]="is_staff" name="is_staff">
+                            <span class="custom-checkbox-box"></span>
+                            <p class="p">Es Administrador</p>
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-button" (click)="register()">Registrar</button>
+                </form>
+                <div *ngIf="successMessage" class="message success">
+                    {{ successMessage }}
+                </div>
+                <div *ngIf="errorMessage" class="message error">
+                    {{ errorMessage }}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

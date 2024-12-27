@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Equipo } from '../models/computer';
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +119,18 @@ create(equipo: Equipo): Observable<Equipo> {
     
 
   delete(id: number): Observable<Equipo> {
-    return this.http.delete<Equipo>(`${this.apiUrl}${id}/`); // Agregar barra al final
+    const token = localStorage.getItem('authToken'); // Recupera el token del almacenamiento local (o de otro lugar seguro)
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}` // Agrega el token al encabezado Authorization
+    });
+  
+    return this.http.delete<Equipo>(`${this.apiUrl}${id}/`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error al eliminar el registro:', error);
+        alert('No se pudo eliminar el registro. Verifica tu autenticación.');
+        return throwError(() => new Error(error));
+      })
+    );
   }
 }

@@ -1,0 +1,174 @@
+/* General body styles */
+body {
+    font-family: 'Overpass', sans-serif;
+    font-weight: normal;
+    font-size: 100%;
+    color: #1b262c;
+    margin: 0;
+    background: -webkit-linear-gradient(180deg, #4b1094,#4a47ff,#000000);                          
+    background: linear-gradient(180deg, #4b1094,#4a47ff,#000000);  
+}
+
+/* Styles for the logo image */
+.jj {
+    display: flex;
+    width: 170px;
+    height: 120px;
+    top: 1px;
+}
+.p{
+    color:#ffff ;
+}
+/* Container styles */
+#contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+
+/* Central content styles */
+#central {
+    max-width: 320px;
+    width: 100%;
+}
+
+/* Title styles */
+.n1 {
+    color: #bbe1fa;
+    text-align: center;
+    font-size: 250%;
+    margin-top: 50px;
+}
+
+/* Form title styles */
+.titulo {
+    font-size: 250%;
+    color: #bbe1fa;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Login form styles */
+#login {
+    width: 100%;
+    padding: 50px 30px;
+    background-color: transparent;
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* Input field styles */
+#login input {
+    font-family: 'Overpass', sans-serif;
+    font-size: 110%;
+    color: #1b262c;
+    display: block;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    padding: 5px 5px 5px 10px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 3px;
+}
+
+/* Placeholder styles */
+#login input::placeholder {
+    font-family: 'Overpass', sans-serif;
+    color: #E4E4E4;
+}
+
+/* Submit button styles */
+#login button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+#login button:hover {
+    background-color: #0f4c75;
+    color: #bbe1fa;
+}
+
+/* Footer form styles */
+.pie-form {
+    font-size: 90%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.pie-form a {
+    display: block;
+    text-decoration: none;
+    color: #bbe1fa;
+    margin-bottom: 3px;
+}
+
+.pie-form a:hover {
+    color: #0f4c75;
+}
+
+/* Custom checkbox styles */
+.custom-checkbox {
+    position: absolute;
+    opacity: 0; /* Oculta el checkbox real */
+    cursor: pointer;
+}
+
+.custom-checkbox-label {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding-left: 35px; /* Espacio para el checkbox */
+    line-height: 20px;
+    font-size: 16px; /* Tamaño del texto */
+}
+
+.custom-checkbox-box {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; /* Ancho del checkbox */
+    height: 20px; /* Alto del checkbox */
+    background: #fff; /* Fondo del checkbox */
+    border: 2px solid #007bff; /* Borde del checkbox */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.custom-checkbox:checked + .custom-checkbox-box {
+    background: #007bff; /* Fondo cuando está seleccionado */
+    border-color: #007bff; /* Borde cuando está seleccionado */
+}
+
+.custom-checkbox-box::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 10%;
+    width: 6px;
+    height: 12px;
+    border: solid #007bff;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.custom-checkbox:checked + .custom-checkbox-box::after {
+    opacity: 1; /* Mostrar la marca de verificación */
+}

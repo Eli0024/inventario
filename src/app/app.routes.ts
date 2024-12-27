@@ -13,6 +13,8 @@ import { FormmanteComponent } from './formmante/formmante.component';
 import { ImpresoraComponent } from './impresora/impresora.component';
 import { FormimpreComponent } from './formimpre/formimpre.component';
 import { FormapaComponent } from './formapa/formapa.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 export const routes: Routes = [
@@ -36,5 +38,7 @@ export const routes: Routes = [
     { path: 'lista', component: ListaComponent },
     { path: 'mapa', component: MapaComponent },
     { path: 'form6/:id', component: FormapaComponent },
+    { path: 'login', component: LoginComponent},
+    { path: 'register', component: RegisterComponent}
 ];
 
