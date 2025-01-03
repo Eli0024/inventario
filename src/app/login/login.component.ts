@@ -18,14 +18,15 @@ export class LoginComponent {
   password = '';
   errorMessage = ''; 
 
-  constructor(private authService: Authservice, private router: Router) {} 
+  constructor(private authService: Authservice, private router: Router) {}
 
+  
   login() {
     const user = { username: this.username, password: this.password};
     this.authService.login(user).subscribe(data => {
       this.authService.setToken(data.token)
      
-      this.router.navigate(['/info']);
+      this.router.navigate(['/dashboard']);
     },
     error => {
       Swal.fire({

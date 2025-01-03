@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -10,17 +11,20 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class Authservice {
 
-  private apiUrl = 'http://localhost:8000'; 
+  private apiUrl = 'http://127.0.0.1:8000/register/';
+
   constructor(private http: HttpClient, private cookies: CookieService ) {}
 
 
-  register(user: any): Observable<any> {
-    return this.http.post("http://127.0.0.1:8000/register/", user);
+  register(data: any): Observable<any> {
+    return this.http.post(this.apiUrl, data);  // Enviar los datos como JSON
   }
 
-  setToken(token:string){
-    this.cookies.set("token", token);
+  // Guardar el token en el localStorage o sessionStorage
+  setToken(token: string) {
+    localStorage.setItem('token', token);  // Ejemplo de guardado de token
   }
+
   getToken(){
     return this.cookies.get("token")
   }

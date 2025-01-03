@@ -1,28 +1,26 @@
-<body>
-    <div id="contenedor">
-        <img class="jj" src="../assets/img/Mi proyecto-1.png" alt="Logo">
-      
-        <div id="central">
-           
-            <div class="n1">
-                REGISTRAR
-            </div>
-            <div id="login">
-                <div class="titulo">
-                    Bienvenido
-                </div>
-                <form id="registro-usuarios-form" usuarioForm="ngForm">
-                    <input type="text" id="nombre" name="nombre" placeholder="Nombre de Usuario" [(ngModel)]="username" required>
-                    <input type="text" id="email" name="email" placeholder="Email" [(ngModel)]="email" required>
-                    <input type="password" id="password" [(ngModel)]="password" name="password"  placeholder="password" required>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-sm bg-white rounded-lg shadow-lg p-6">
+        <div class="flex justify-center mb-6">
+            <img
+                class="w-32"
+                src="https://media.licdn.com/dms/image/v2/D560BAQEdnHQHKn47SQ/company-logo_200_200/company-logo_200_200/0/1712241924456/qumica_bsica_colombiana_sa_logo?e=2147483647&v=beta&t=8i-mYEIaerHVASLmUsZVPOFJVtbwkaujLoUHagQENWw"
+                alt="Logo"
+            />
+        </div>
+        <h2 class="text-center text-2xl font-semibold text-gray-700 mb-4">Regístrate</h2>
+
+                <form id="registro-usuarios-form" usuarioForm="ngForm" class="space-y-4">
+                    <input type="text" id="username" name="username" placeholder="Nombre de Usuario" [(ngModel)]="username" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
+                    
+                    <input type="password" id="password" [(ngModel)]="password" name="password"  placeholder="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
+                    
                     <div class="form-group">
                         <label class="custom-checkbox-label" for="is_staff">
                             <input type="checkbox" id="is_staff" class="custom-checkbox" [(ngModel)]="is_staff" name="is_staff">
-                            <span class="custom-checkbox-box"></span>
-                            <p class="p">Es Administrador</p>
+                            <span class="custom-checkbox-box text-gray-700"> Es Administrador</span>
                         </label>
                     </div>
-                    <button type="submit" class="submit-button" (click)="register()">Registrar</button>
+                    <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition" (click)="register()">Registrar</button>
                 </form>
                 <div *ngIf="successMessage" class="message success">
                     {{ successMessage }}
@@ -30,7 +28,5 @@
                 <div *ngIf="errorMessage" class="message error">
                     {{ errorMessage }}
                 </div>
-            </div>
-        </div>
     </div>
 </body>
