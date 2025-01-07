@@ -20,13 +20,12 @@ export class LoginComponent {
 
   constructor(private authService: Authservice, private router: Router) {}
 
-  
   login() {
     const user = { username: this.username, password: this.password};
     this.authService.login(user).subscribe(data => {
       this.authService.setToken(data.token)
      
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/content']);
     },
     error => {
       Swal.fire({

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -22,12 +21,13 @@ export class Authservice {
 
   // Guardar el token en el localStorage o sessionStorage
   setToken(token: string) {
-    localStorage.setItem('token', token);  // Ejemplo de guardado de token
+    localStorage.setItem('token', token);  // Usa localStorage en ambos lados
   }
-
-  getToken(){
-    return this.cookies.get("token")
+  
+  getToken() {
+    return localStorage.getItem('token');  // También obtén el token desde localStorage
   }
+  
   getauthoken():boolean{
     return !!this.cookies.get("token")
   }

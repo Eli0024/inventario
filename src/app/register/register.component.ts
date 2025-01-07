@@ -34,7 +34,7 @@ export class RegisterComponent {
     this.authService.register(body).subscribe(
       (data: any) => {
         this.authService.setToken(data.token);
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
         Swal.fire("Registro Exitoso!");
       },
       (error: any) => {
