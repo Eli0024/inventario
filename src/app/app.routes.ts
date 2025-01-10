@@ -39,6 +39,7 @@ export const routes: Routes = [
     { path: 'mapa', component: MapaComponent },
     { path: 'form6/:id', component: FormapaComponent },
     { path: 'login', component: LoginComponent},
-    { path: 'register', component: RegisterComponent}
+    { path: 'register', component: RegisterComponent},
+    
 ];
 
