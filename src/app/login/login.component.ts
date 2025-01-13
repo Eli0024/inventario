@@ -14,28 +14,20 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
 
-  username = '';
-  password = '';
+  username: string = '';
+  password: string = '';
   errorMessage = ''; 
 
   constructor(private authService: Authservice, private router: Router) {}
 
   login() {
-    const user = { username: this.username, password: this.password};
-    this.authService.login(user).subscribe(data => {
-      this.authService.setToken(data.token)
-     
+    const user = { username: this.username, password: this.password}
+    this.authService.login(user).subscribe( data => {
+      this.authService.setToken(data.token);
       this.router.navigate(['/content']);
-    },
-    error => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Usuario o Contraseña Incorrecta!",
-      });
-    }
-  );
+    });
   }
+
   onSubmit() {
     this.login();
   }
