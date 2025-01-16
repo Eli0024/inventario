@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 import { ComputersService } from '../services/computers.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { Usuario } from '../models/users';
+import { Colaborador } from '../models/users';
 import { UsersService } from '../services/users.service';
 import { Equipo } from '../models/computer';
 
@@ -39,8 +39,8 @@ export class FormcompComponent {
 
   
 
-   usuario: Usuario = {
-      id_usuario: 0,
+  colaborador: Colaborador = {
+      id_colaborador: 0,
       nombre: '',
       apellido: '',
       empresa: null,
@@ -51,7 +51,7 @@ export class FormcompComponent {
     
 
   responsables: any[] = [];
-  usuarios: Usuario[] = [];
+  colaboradores: Colaborador[] = [];
   
   @Input() equipoSeleccionado: any;
  
@@ -65,8 +65,8 @@ export class FormcompComponent {
 
    loadUsuarios(): void {
     this.usersService.getAll().subscribe(
-      (response: Usuario[]) => {
-        this.usuarios = response;
+      (response: Colaborador[]) => {
+        this.colaboradores = response;
       },
       (error: any) => {
         console.error('Error al obtener los usuarios', error);

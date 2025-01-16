@@ -1,5 +1,5 @@
-export interface Usuario {
-    id_usuario: number;
+export interface Colaborador {
+    id_colaborador: number;
     nombre: string;
     apellido: string;
     empresa: null;

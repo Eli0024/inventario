@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UsersService } from '../services/users.service';
-import { Usuario } from '../models/users';
+import { Colaborador } from '../models/users';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
@@ -18,8 +18,8 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 })
 export class FormuserComponent {
 
-  usuario: Usuario = {
-    id_usuario: 0,
+  colaborador: Colaborador = {
+    id_colaborador: 0,
     nombre: '',
     apellido: '',
     empresa: null,
@@ -28,7 +28,7 @@ export class FormuserComponent {
     licencia: null,
   };
   
-  @Input() usuarioSeleccionado: any;
+  @Input() colaboradorSeleccionado: any;
  
 
   constructor(private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute) { }
@@ -44,7 +44,7 @@ export class FormuserComponent {
         let id=e['id'];
         if(id){
           this.usersService.get(id).subscribe(
-            usuario => this.usuario = usuario
+            colaborador => this.colaborador = colaborador
           );
         }
       }
@@ -52,7 +52,7 @@ export class FormuserComponent {
   }
 
   create(): void {
-    this.usersService.create(this.usuario).subscribe(
+    this.usersService.create(this.colaborador).subscribe(
       () => {
         Swal.fire({
           title: "Registro Exitoso",
@@ -84,7 +84,7 @@ export class FormuserComponent {
   }
   
   update(): void {
-    this.usersService.update(this.usuario).subscribe(
+    this.usersService.update(this.colaborador).subscribe(
       () => {
         Swal.fire({
           position: "top-end",
@@ -107,11 +107,11 @@ export class FormuserComponent {
 
   onEmpresaChange(event: any) {
     console.log("Empresa seleccionada:", event);  // Aquí puedes realizar más acciones si lo deseas.
-    this.usuarioSeleccionado.empresa = event;
+    this.colaboradorSeleccionado.empresa = event;
   }
   
   onAreaChange(event: any) {
     console.log("Area seleccionada:", event);  // Aquí puedes realizar más acciones si lo deseas.
-    this.usuarioSeleccionado.area = event;
+    this.colaboradorSeleccionado.area = event;
   }
 }

@@ -16,17 +16,19 @@ export class LoginComponent {
 
   username: string = '';
   password: string = '';
-  errorMessage = ''; 
+  errorMessage: string = '';
 
   constructor(private authService: Authservice, private router: Router) {}
 
-  login() {
-    const user = { username: this.username, password: this.password}
-    this.authService.login(user).subscribe( data => {
+   login(){
+    const user = { username: this.username, password: this.password};
+    this.authService.login(user).subscribe(data => {
       this.authService.setToken(data.token);
-      this.router.navigate(['/content']);
-    });
-  }
+      this.router.navigateByUrl("content")
+    })
+   }
+
+
 
   onSubmit() {
     this.login();

@@ -93,21 +93,21 @@
                     <th class="text-center">Eliminar</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let usuario of filterUsuarios()">
-                      <td class="text-center">{{ usuario.id_usuario }}</td>
-                      <td class="text-center">{{ usuario.nombre }}</td>
-                      <td class="text-center">{{ usuario.apellido }}</td>
-                      <td class="text-center">{{ usuario.empresa }}</td>
-                      <td class="text-center">{{ usuario.area }}</td>
-                      <td class="text-center">{{ usuario.cargo }}</td>
-                      <td class="text-center">{{ usuario.licencia }}</td>
+                    <tr *ngFor="let colaborador of filterColaboradores()">
+                      <td class="text-center">{{ colaborador.id_colaborador }}</td>
+                      <td class="text-center">{{ colaborador.nombre }}</td>
+                      <td class="text-center">{{ colaborador.apellido }}</td>
+                      <td class="text-center">{{ colaborador.empresa }}</td>
+                      <td class="text-center">{{ colaborador.area }}</td>
+                      <td class="text-center">{{ colaborador.cargo }}</td>
+                      <td class="text-center">{{ colaborador.licencia }}</td>
                       <td class="py-2 px-3 text-center">
                         <button
                           type="button"
                           class="text-xl py-2 px-4 text-center"
                           data-bs-toggle="modal"
                           data-bs-target="#myModal"
-                          (click)="editarUsuario(usuario)"
+                          (click)="editarColaborador(colaborador)"
                         >
                           <i
                             class="fa fa-edit text-blue-500 text-center text-2xl"
@@ -123,7 +123,7 @@
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title">Editar Usuario</h5>
+                                <h5 class="modal-title">Editar Colaborador</h5>
                                 <button
                                   type="button"
                                   class="close"
@@ -151,7 +151,7 @@
                                           name="nombre"
                                           placeholder="Nombre"
                                           [(ngModel)]="
-                                            usuarioSeleccionado.nombre
+                                          colaboradorSeleccionado.nombre
                                           "
                                           required
                                         />
@@ -170,7 +170,7 @@
                                           name="apellido"
                                           placeholder="Apellido"
                                           [(ngModel)]="
-                                            usuarioSeleccionado.apellido
+                                          colaboradorSeleccionado.apellido
                                           "
                                           required
                                         />
@@ -184,7 +184,7 @@
                                         </svg>
                                         </div>
                                         <form>
-                                          <select class="form-select" id="empresa" [(ngModel)]="usuario.empresa" name="empresa" (ngModelChange)="onEmpresaChange($event)">
+                                          <select class="form-select" id="empresa" [(ngModel)]="colaborador.empresa" name="empresa" (ngModelChange)="onEmpresaChange($event)">
                                             <option value="" disabled selected>Seleccione...</option> 
                                             <option value="Químicos del Cauca">Químicos del Cauca</option>
                                             <option value="Química Básica Colombiana">Química Básica Colombiana</option>
@@ -199,7 +199,7 @@
                                           </svg>
                                         </div>
                                         <form>
-                                          <select class="form-select" id="area" [(ngModel)]="usuario.area" name="area" (ngModelChange)="onAreaChange($event)">
+                                          <select class="form-select" id="area" [(ngModel)]="colaborador.area" name="area" (ngModelChange)="onAreaChange($event)">
                                             <option value="" disabled selected>Seleccione...</option> 
                                             <option value="Almacen">Almacen</option>
                                             <option value="Compras">Compras</option>
@@ -225,7 +225,7 @@
                                           name="cargo"
                                           placeholder="cargo"
                                           [(ngModel)]="
-                                            usuarioSeleccionado.cargo
+                                          colaboradorSeleccionado.cargo
                                           "
                                           required
                                         />
@@ -245,7 +245,7 @@
                                           name="licencia"
                                           placeholder="Licencia"
                                           [(ngModel)]="
-                                            usuarioSeleccionado.licencia
+                                          colaboradorSeleccionado.licencia
                                           "
                                           required
                                         />
@@ -278,7 +278,7 @@
                           type="button"
                           name="button"
                           class="text-center font-bold py-1 px-2"
-                          (click)="delete(usuario.id_usuario)"
+                          (click)="delete(colaborador.id_colaborador)"
                         >
                           <i
                             class="fa fa-trash text-red-600 text-center text-2xl"

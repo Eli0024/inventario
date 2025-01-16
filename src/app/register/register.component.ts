@@ -24,23 +24,10 @@ export class RegisterComponent {
   constructor(private authService: Authservice, private router: Router ) {}
 
   register() {
-    const body = {
-      username: this.username,
-      password: this.password,
-      is_staff: String(this.is_staff)
-    };
-  
-    // Llamar al servicio de autenticación y enviar los datos en formato JSON
-    this.authService.register(body).subscribe(
-      (data: any) => {
-        this.authService.setToken(data.token);
-        this.router.navigate(['/login']);
-        Swal.fire("Registro Exitoso!");
-      },
-      (error: any) => {
-        console.error('Error al registrar', error);
-      }
-    );
+    const user = { username: this.username, password: this.password, is_staff: this.is_staff};
+    this.authService.register(user).subscribe( data => {
+      this.authService.setToken(data.token);
+      this.router.navigateByUrl("login")
+    });
   }
-  
 }

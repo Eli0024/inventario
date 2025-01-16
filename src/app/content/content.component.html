@@ -41,7 +41,7 @@
               <i class="fas fa-users fa-2x m-2 text-center"></i></a>
               <div class="card-body">
                 <h5 class="card-title text-center">Usuarios</h5>
-                <p class="text-center text-xl">{{ totalUsuarios }}</p>
+                <p class="text-center text-xl">{{ totalColaboradores }}</p>
               </div>
               <div class="card-footer">
                 <small class="text-body-secondary"></small>
@@ -118,14 +118,14 @@
                 <th class="text-center">LICENCIA</th>
               </thead>
               <tbody>
-                <tr *ngFor="let usuario of filterUsuarios()">
-                  <td class="text-center">{{ usuario.id_usuario }}</td>
-                  <td class="text-center">{{ usuario.nombre }}</td>
-                  <td class="text-center">{{ usuario.apellido }}</td>
-                  <td class="text-center">{{ usuario.empresa }}</td>
-                  <td class="text-center">{{ usuario.area }}</td>
-                  <td class="text-center">{{ usuario.cargo }}</td>
-                  <td class="text-center">{{ usuario.licencia }}</td>
+                <tr *ngFor="let colaborador of filterColaboradores()">
+                  <td class="text-center">{{ colaborador.id_colaborador }}</td>
+                  <td class="text-center">{{ colaborador.nombre }}</td>
+                  <td class="text-center">{{ colaborador.apellido }}</td>
+                  <td class="text-center">{{ colaborador.empresa }}</td>
+                  <td class="text-center">{{ colaborador.area }}</td>
+                  <td class="text-center">{{ colaborador.cargo }}</td>
+                  <td class="text-center">{{ colaborador.licencia }}</td>
                 </tr>
               </tbody>
             </table>

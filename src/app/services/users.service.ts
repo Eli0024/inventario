@@ -1,39 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { Usuario } from '../models/users';
+import { Colaborador } from '../models/users';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  private apiUrl = 'http://127.0.0.1:8000/usuarios/';
+  private apiUrl = 'http://127.0.0.1:8000/colaborador/';
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.apiUrl);
+  getAll(): Observable<Colaborador[]> {
+    return this.http.get<Colaborador[]>(this.apiUrl);
   }
 
-  getTotalUsuarios(): Observable<number> {
-    return this.http.get<number>('http://127.0.0.1:8000/registrarusuario/total');
+  getTotalColaboradores(): Observable<number> {
+    return this.http.get<number>('http://127.0.0.1:8000/registrarcolaborador/total');
   }
 
-  create(usuario:Usuario):Observable<Usuario>{
-    return this.http.post<Usuario>(this.apiUrl,usuario);
+  create(colaborador:Colaborador):Observable<Colaborador>{
+    return this.http.post<Colaborador>(this.apiUrl,colaborador);
   }
 
   get(id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}${id}/`);
   }
 
-  update(usuario: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.apiUrl}${usuario.id_usuario}/`, usuario);
+  update(colaborador: Colaborador): Observable<Colaborador> {
+    return this.http.put<Colaborador>(`${this.apiUrl}${colaborador.id_colaborador}/`, colaborador);
   }
 
-  delete(id:number): Observable<Usuario> {
-    return this.http.delete<Usuario>(`${this.apiUrl}${id}/`);
+  delete(id:number): Observable<Colaborador> {
+    return this.http.delete<Colaborador>(`${this.apiUrl}${id}/`);
   }
 
 }

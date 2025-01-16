@@ -40,6 +40,7 @@ export const routes: Routes = [
     { path: 'form6/:id', component: FormapaComponent },
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
     
 ];
 

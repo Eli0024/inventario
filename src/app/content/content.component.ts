@@ -6,7 +6,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormcompComponent } from '../formcomp/formcomp.component';
-import { Usuario } from '../models/users';
+import { Colaborador } from '../models/users';
 import { UsersService } from '../services/users.service';
 import { ComputersService } from '../services/computers.service';
 import { ImprerService } from '../services/imprer.service';
@@ -22,7 +22,7 @@ import { ImprerService } from '../services/imprer.service';
 export class ContentComponent implements OnInit{
 
   totalEquipos: number = 0;
-  totalUsuarios: number = 0;
+  totalColaboradores: number = 0;
   totalLicencias: number = 0;
  
  
@@ -35,22 +35,22 @@ export class ContentComponent implements OnInit{
   constructor(private usersService: UsersService, private imprerService: ImprerService, private cdr: ChangeDetectorRef, private computersService : ComputersService) {  }
 
   ngOnInit(): void {
-    this.loadUsuarios();
+    this.loadColaboradores();
     this.computersService.getTotalEquipos().subscribe((total: number) => {
       this.totalEquipos = total;
     });
-    this.usersService.getTotalUsuarios().subscribe((total: number) => {
-      this.totalUsuarios = total;
+    this.usersService.getTotalColaboradores().subscribe((total: number) => {
+      this.totalColaboradores = total;
     });
     this.imprerService.getTotalLicencias().subscribe((total: number) => {
       this.totalLicencias = total;
     });
     }
 
-    loadUsuarios(): void {
+    loadColaboradores(): void {
       this.usersService.getAll().subscribe(
-        (response: Usuario[]) => {
-          this.usuarios = response;
+        (response: Colaborador[]) => {
+          this.colaboradores = response;
         },
         (error: any) => {
           console.error('Error al obtener los usuarios', error);
@@ -58,10 +58,10 @@ export class ContentComponent implements OnInit{
       );
     }
 
-  usuarios: Usuario[] = [];
+    colaboradores : Colaborador[] = [];
 
-  usuario: Usuario = {
-    id_usuario: 0,
+    colaborador: Colaborador= {
+    id_colaborador: 0,
     nombre: '',
     apellido: '',
     empresa: null,
@@ -72,11 +72,11 @@ export class ContentComponent implements OnInit{
 
   filter: any = { searchTerm: '' };
   
-  filterUsuarios(): Usuario[] {
-    if (this.usuarios && this.usuarios.length) {
-      return this.usuarios.filter(Usuario =>
-        Usuario.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
-        Usuario.apellido.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
+  filterColaboradores(): Colaborador[] {
+    if (this.colaboradores && this.colaboradores.length) {
+      return this.colaboradores.filter(Colaborador =>
+        Colaborador.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+        Colaborador.apellido.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
       );
     }
     return [];
