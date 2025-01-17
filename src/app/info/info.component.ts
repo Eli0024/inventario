@@ -22,7 +22,6 @@ import { Equipo } from '../models/computer';
     FormcompComponent,
     FormsModule,
     RouterLink,
-
   ],
   templateUrl: './info.component.html',
   styleUrl: './info.component.css',
@@ -30,6 +29,7 @@ import { Equipo } from '../models/computer';
 export class InfoComponent implements OnInit {
 
   equipos: Equipo[] = []; // inicializa con un array vacío
+  isStaff = false;
   filter: any = { searchTerm: '' };
   equipo: Equipo ={
     id_equipo: 0,
