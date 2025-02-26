@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Equipo } from '../models/computer';
 import { HttpHeaders } from '@angular/common/http';
+import { Authservice } from '../auth.service';
 
 
 @Injectable({
@@ -13,11 +14,25 @@ export class ComputersService {
   private apiUrl = 'http://127.0.0.1:8000/registrarequipo/';
   
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authservice : Authservice) { }
 
   
+  private getHeaders(): HttpHeaders {
+    const token = this.authservice.getToken();  // Obtén el token de autenticación
+    return new HttpHeaders({
+      'Authorization': `Token ${token}`,  // Envía el token en el encabezado
+    });
+  }
+  
   getEquipos(): Observable<Equipo[]> {
-    return this.http.get<Equipo[]>(this.apiUrl);
+    const headers = this.getHeaders();  // Obtén los headers con el token
+    return this.http.get<Equipo[]>(this.apiUrl, { headers }).pipe(
+      catchError(error => {
+        console.error('Error al obtener los equipos:', error);
+        alert('No se pudieron obtener los equipos. Verifica tu autenticación.');
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   getEquipo(id: number): Observable<Equipo> {
@@ -116,21 +131,12 @@ create(equipo: Equipo): Observable<Equipo> {
     );
   }
   
-    
 
-  delete(id: number): Observable<Equipo> {
-    const token = localStorage.getItem('authToken'); // Recupera el token del almacenamiento local (o de otro lugar seguro)
-  
+  delete(id: number) {
+    const token = localStorage.getItem('token');  // Obtén el token del almacenamiento local
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}` // Agrega el token al encabezado Authorization
+      'Authorization': `Bearer ${token}`,
     });
-  
-    return this.http.delete<Equipo>(`${this.apiUrl}${id}/`, { headers }).pipe(
-      catchError(error => {
-        console.error('Error al eliminar el registro:', error);
-        alert('No se pudo eliminar el registro. Verifica tu autenticación.');
-        return throwError(() => new Error(error));
-      })
-    );
+    return this.http.delete(`http://127.0.0.1:8000/registrarequipo/${id}/`, { headers, withCredentials: true });
   }
 }

@@ -144,38 +144,21 @@ export class InfoComponent implements OnInit {
     }
   }
 
-  delete(id_equipo: number) {
-    console.log(id_equipo);
-
-    Swal.fire({
-      title: '¿Desea eliminar este registro?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, ¡elimínalo!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.computersService.delete(id_equipo).subscribe({
-          next: () => {
-            Swal.fire({
-              title: '¡Eliminado!',
-              text: 'El registro ha sido eliminado.',
-              icon: 'success',
-            });
-            this.ngOnInit(); // Actualiza la vista
-          },
-          error: (err) => {
-            console.error('Error:', err);
-            Swal.fire({
-              title: 'Error',
-              text: 'Hubo un problema al eliminar el registro.',
-              icon: 'error',
-            });
-          },
-        });
+  delete(id: number) {
+    this.computersService.delete(id).subscribe(
+      () => {
+        alert('Equipo eliminado correctamente');
+        // Aquí puedes actualizar la lista de equipos
+      },
+      (error) => {
+        if (error.status === 403) {
+          alert('No tienes permisos para eliminar este equipo');
+        } else {
+          alert('Error al eliminar el equipo');
+        }
+        console.error(error);
       }
-    });
+    );
   }
 
   filterEquipos(): Equipo[] {
