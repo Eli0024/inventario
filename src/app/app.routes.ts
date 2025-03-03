@@ -15,11 +15,13 @@ import { FormimpreComponent } from './formimpre/formimpre.component';
 import { FormapaComponent } from './formapa/formapa.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { VermasComponent } from './vermas/vermas.component';
 
 
 export const routes: Routes = [
     { path: '', redirectTo: '/content', pathMatch: 'full' },
     { path: 'navbar', component: NavbarComponent },
+    { path: 'vermas/:id', component: VermasComponent },
     { path: 'content', loadChildren: () => import('./content/content.module').then(m => m.ContentModule) },
     { path: 'form1/:id', component: FormcompComponent },  // Asegúrate de que la ruta con parámetro esté antes
     { path: 'form1', loadChildren: () => import('./formcomp/formcomp.module').then(m => m.FormcompModule) },

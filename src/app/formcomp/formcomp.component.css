@@ -43,3 +43,15 @@ input[type="text"], input[type="number"] {
 .icon {
     fill: white; 
   }
+
+  .modal {
+    display: block; /* Asegúrate de que el modal sea visible cuando no esté oculto */
+  }
+  
+  .modal[hidden] {
+    display: none; /* Oculta el modal cuando [hidden] esté activo */
+  }
+
+  .hidden {
+    display: none;
+  }

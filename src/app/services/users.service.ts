@@ -16,6 +16,10 @@ export class UsersService {
     return this.http.get<Colaborador[]>(this.apiUrl);
   }
 
+  getColaboradorById(id: string): Observable<Colaborador> {
+    return this.http.get<Colaborador>(`${this.apiUrl}${id}/`);
+  }
+  
   getTotalColaboradores(): Observable<number> {
     return this.http.get<number>('http://127.0.0.1:8000/registrarcolaborador/total');
   }

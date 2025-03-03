@@ -49,7 +49,11 @@ export class LicenciasComponent implements OnInit {
         this.cdr.detectChanges();
       }
       
-  
+      openModalAndEdit(licence: any) {
+        this.licenceSeleccionado = { ...licence }; // Copia los valores de la licencia seleccionada
+        this.modalAbierto = true;
+      }
+     
       modalAbierto: boolean = false; 
   
     loadLicenses(): void {

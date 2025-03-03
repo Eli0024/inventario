@@ -47,6 +47,11 @@ export class UsuariosComponent implements OnInit {
     this.loadColaboradores();
     }
 
+    openModalAndEdit(colaborador: any) {
+      this.colaboradorSeleccionado = { ...colaborador }; // Copia los valores del colaborador seleccionado
+      this.modalAbierto = true;
+    }
+    
 
     editarColaborador(colaborador: Colaborador): void {
       this.colaboradorSeleccionado = { ...colaborador };  // Crea una copia del usuario a editar

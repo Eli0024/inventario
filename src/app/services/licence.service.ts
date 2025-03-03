@@ -12,6 +12,14 @@ export class LicenceService {
 
   constructor(private http: HttpClient) { }
 
+  getLicence(id: number): Observable<Licence> {
+      return this.http.get<Licence>(`${this.apiUrl}${id}/`);
+    }
+
+  getLicenciaById(id: string): Observable<Licence> {
+      return this.http.get<Licence>(`${this.apiUrl}${id}/`);
+    }
+
   getAll(): Observable<Licence[]> {
     return this.http.get<Licence[]>(this.apiUrl);
   }

@@ -102,6 +102,7 @@
                 <th class="text-center">AREA</th>
                 <th class="text-center">CARGO</th>
                 <th class="text-center">LICENCIA</th>
+                <th class="text-center">DETALLE</th>
               </thead>
               <tbody>
                 <tr *ngFor="let colaborador of filterColaboradores()">
@@ -112,6 +113,7 @@
                   <td class="text-center">{{ colaborador.area }}</td>
                   <td class="text-center">{{ colaborador.cargo }}</td>
                   <td class="text-center">{{ colaborador.licencia }}</td>
+                  <td [routerLink]="['/vermas', colaborador.id_colaborador]">Ver Más</td>
                 </tr>
               </tbody>
             </table>

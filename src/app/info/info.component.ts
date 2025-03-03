@@ -79,17 +79,27 @@ export class InfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.cargar();
     this.getEquipos();
     this.loadEquipos();
-    
   }
+
+  cargar(): void {
+    this.computersService.getEquipos().subscribe(
+      (equipos) => {
+        this.equipos = equipos;  // Actualizar la lista de equipos
+      },
+      (error) => {
+        console.error('Error al cargar los equipos:', error);
+      }
+    );
+  }
+
   getEquipos(): void {
     this.computersService.getEquipos().subscribe((data: any) => {
       this.equipos = data;
     });
   }
-
-
 
   editarEquipo(equipo: any) {
     this.equipoSeleccionado = { ...equipo };
@@ -97,6 +107,16 @@ export class InfoComponent implements OnInit {
     this.cdr.detectChanges();  // Asegura que la vista se actualice
   }
 
+  openModalAndEdit(equipo: any) {
+    this.equipoSeleccionado = { ...equipo }; // Copia los valores del equipo seleccionado
+    this.modalAbierto = true;
+  }
+  
+  closeModal() {
+    this.modalAbierto = false;
+  }
+
+  
   modalAbierto: boolean = false; 
 
   loadEquipos(): void {
@@ -115,10 +135,7 @@ export class InfoComponent implements OnInit {
     this.modalAbierto = true;
   }
 
-  // Cierra el modal
-  closeModal(): void {
-    this.modalAbierto = false;
-  }
+
 
   // Actualizar el equipo
   update(): void {
@@ -144,22 +161,51 @@ export class InfoComponent implements OnInit {
     }
   }
 
-  delete(id: number) {
-    this.computersService.delete(id).subscribe(
-      () => {
-        alert('Equipo eliminado correctamente');
-        // Aquí puedes actualizar la lista de equipos
-      },
-      (error) => {
-        if (error.status === 403) {
-          alert('No tienes permisos para eliminar este equipo');
-        } else {
-          alert('Error al eliminar el equipo');
-        }
-        console.error(error);
+  delete(id: number): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.computersService.delete(id).subscribe(
+          () => {
+            // Mostrar alerta de éxito
+            Swal.fire(
+              '¡Eliminado!',
+              'El equipo ha sido eliminado correctamente.',
+              'success'
+            );
+
+            // Actualizar la lista de equipos sin recargar la página
+            this.equipos = this.equipos.filter(equipo => equipo.id_equipo !== id);
+          },
+          (error) => {
+            if (error.status === 403) {
+              Swal.fire(
+                'Error',
+                'No tienes permisos para eliminar este equipo.',
+                'error'
+              );
+            } else {
+              Swal.fire(
+                'Error',
+                'Ocurrió un error al eliminar el equipo.',
+                'error'
+              );
+            }
+            console.error(error);
+          }
+        );
       }
-    );
+    });
   }
+
 
   filterEquipos(): Equipo[] {
     if (this.equipos && this.equipos.length) {

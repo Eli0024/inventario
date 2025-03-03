@@ -10,12 +10,15 @@ import { Colaborador } from '../models/users';
 import { UsersService } from '../services/users.service';
 import { ComputersService } from '../services/computers.service';
 import { ImprerService } from '../services/imprer.service';
+import { VermasComponent } from '../vermas/vermas.component';
 
 
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [NavbarComponent, RouterLink, InfoComponent, SidebarComponent, FormsModule, CommonModule,FormcompComponent],
+  imports: [NavbarComponent, RouterLink, InfoComponent, SidebarComponent, FormsModule, CommonModule,FormcompComponent,
+    VermasComponent
+  ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })

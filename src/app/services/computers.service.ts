@@ -23,7 +23,11 @@ export class ComputersService {
       'Authorization': `Token ${token}`,  // Envía el token en el encabezado
     });
   }
-  
+
+  getEquipoById(id: string): Observable<Equipo> {
+    return this.http.get<Equipo>(`${this.apiUrl}${id}/`);
+  }
+
   getEquipos(): Observable<Equipo[]> {
     const headers = this.getHeaders();  // Obtén los headers con el token
     return this.http.get<Equipo[]>(this.apiUrl, { headers }).pipe(

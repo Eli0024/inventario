@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -10,6 +10,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Colaborador } from '../models/users';
 import { UsersService } from '../services/users.service';
 import { Equipo } from '../models/computer';
+
 
 @Component({
   selector: 'app-formcomp',
@@ -54,13 +55,17 @@ export class FormcompComponent {
   colaboradores: Colaborador[] = [];
   
   @Input() equipoSeleccionado: any;
+
+
+  equipos: Equipo[] = [];
  
 
-  constructor(private computersService: ComputersService, private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute) { }
+  constructor(private computersService: ComputersService, private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute,private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.cargar();
     this.loadUsuarios();
+    this.loadEquipos();
    }
 
    loadUsuarios(): void {
@@ -74,80 +79,99 @@ export class FormcompComponent {
     );
   }
 
-  cargar():void{
-
-    this.activatedRoute.params.subscribe(
-      e=>{
-        let id=e['id'];
-        if(id){
-          this.computersService.get(id).subscribe(
-            equipo => this.equipo = equipo
-          );
-        }
+  cargar(): void {
+    this.computersService.getEquipos().subscribe(
+      (equipos) => {
+        this.equipos = equipos;  // Actualizar la lista de equipos
+      },
+      (error) => {
+        console.error('Error al cargar los equipos:', error);
       }
     );
   }
+
+  getEquipos(): void {
+    this.computersService.getEquipos().subscribe((data: any) => {
+      this.equipos = data;
+    });
+  }
+
+  // Método para manejar el evento "equipoCreado"
+  onEquipoCreado(equipo: Equipo): void {
+    this.equipos.push(equipo);  // Agregar el nuevo equipo a la lista
+  }
+
+  modalAbierto1: boolean = false; 
+
+  loadEquipos(): void {
+    this.computersService.getEquipos().subscribe(
+      (response: Equipo[]) => {
+        this.equipos = response;
+      },
+      (error: any) => {
+        console.error('Error al obtener los equipos', error);
+      }
+    );
+  }
+
+  // Abre el modal
+  openModal1(): void {
+    this.modalAbierto1 = true;
+  }
+
+  closeModal1(): void {
+    this.modalAbierto1 = false;
+  }
+
 
   create(): void {
+    console.log('Equipo a crear:', this.equipo);
+
     this.computersService.create(this.equipo).subscribe(
-      () => {
-        Swal.fire({
-          title: "Registro Exitoso",
-          showClass: {
-            popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `
-          },
-          hideClass: {
-            popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `
-          }
-        });
-        this.router.navigate(['/info']);
+      (nuevoEquipo) => {
+        console.log('Equipo creado:', nuevoEquipo);
+        Swal.fire('¡Creado!', 'El equipo ha sido creado correctamente.', 'success');
+
+        // Crear un nuevo arreglo para que Angular detecte el cambio
+        this.equipos = [...this.equipos, nuevoEquipo];
+        console.log('Lista de equipos actualizada:', this.equipos);
+
+        // Marcar el componente para verificación de cambios
+        this.cdr.markForCheck();
+
+        // Reiniciar el formulario
+        this.equipo = {
+          responsable: { nombre: '', apellido: '' },
+          id_equipo: 0,
+          marca: '',
+          modelo: '',
+          memoria: '',
+          procesador: '',
+          office: '',
+          serial: '',
+          windows: '',
+          sistema_operativo: '',
+          fecha_adquisicion: '',
+          estado: '',
+          archivo: null
+        };
+
+        // Cerrar el modal
+        this.closeModal1();
       },
-      error => {
-        Swal.fire({
-          title: "Error al registrar",
-          text: error.message,
-          icon: "error"
-        });
+      (error) => {
+        console.error('Error al crear el equipo:', error);
+        Swal.fire('Error', 'Ocurrió un error al crear el equipo.', 'error');
       }
     );
   }
-  
-  
+
+
   guardarEquipo() {
     // Aquí puedes implementar la lógica para guardar los cambios.
     // Puedes emitir un evento hacia el componente padre o llamar a un servicio para actualizar el equipo en la base de datos.
     console.log("Datos guardados:", this.equipoSeleccionado);
   } 
-  
-  update(): void {
-    this.computersService.update(this.equipo).subscribe(
-      () => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Registro Actualizado",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.router.navigate(['/info']);
-      },
-      error => {
-        Swal.fire({
-          title: "Error al actualizar",
-          text: error.message,
-          icon: "error"
-        });
-      }
-    );
-  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0]; // Obtener el archivo seleccionado
