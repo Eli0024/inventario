@@ -25,7 +25,7 @@ export class ComputersService {
   }
 
   getEquipoById(id: string): Observable<Equipo> {
-    return this.http.get<Equipo>(`${this.apiUrl}${id}/`);
+    return this.http.get<Equipo>(`${this.apiUrl}${id}/`,{ withCredentials: true });
   }
 
   getEquipos(): Observable<Equipo[]> {

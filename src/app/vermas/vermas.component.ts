@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UsersService } from '../services/users.service';
 import { ComputersService } from '../services/computers.service';
 import { LicenceService } from '../services/licence.service';
 import { Colaborador } from '../models/users';
 import { Equipo } from '../models/computer';
 import { Licence } from '../models/licence';
+import { ContentComponent } from '../content/content.component';
 
 @Component({
   selector: 'app-vermas',
   standalone: true,
-  imports: [SidebarComponent, NavbarComponent],
+  imports: [SidebarComponent, NavbarComponent, RouterLink, ContentComponent],
   templateUrl: './vermas.component.html',
   styleUrl: './vermas.component.css'
 })
