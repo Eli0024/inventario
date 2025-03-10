@@ -13,6 +13,7 @@ export class ComputersService {
 
   private apiUrl = 'http://127.0.0.1:8000/registrarequipo/';
   
+  
 
   constructor(private http: HttpClient, private authservice : Authservice) { }
 
@@ -24,8 +25,23 @@ export class ComputersService {
     });
   }
 
-  getEquipoById(id: string): Observable<Equipo> {
-    return this.http.get<Equipo>(`${this.apiUrl}${id}/`,{ withCredentials: true });
+  getEquipoPorColaborador(idColaborador: string): Observable<Equipo> {
+    const headers = this.getHeaders();  // Obtiene los headers con el token de autenticación
+    return this.http.get<Equipo>(`${this.apiUrl}por-colaborador/${idColaborador}/`, { headers }).pipe(
+      catchError(error => {
+        if (error.status === 404) {
+          console.error('Equipo no encontrado:', error);
+          alert('No se encontró ningún equipo para este colaborador.');
+        } else if (error.status === 401) {
+          console.error('No autorizado:', error);
+          alert('No tienes permiso para acceder a este recurso. Verifica tu autenticación.');
+        } else {
+          console.error('Error al obtener el equipo:', error);
+          alert('Ocurrió un error al obtener el equipo. Intenta de nuevo.');
+        }
+        return throwError(() => new Error(error));  // Relanza el error para que el componente lo maneje
+      })
+    );
   }
 
   getEquipos(): Observable<Equipo[]> {

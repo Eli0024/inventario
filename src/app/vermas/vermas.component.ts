@@ -66,7 +66,10 @@ export class VermasComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id'); // Obtener el ID de la URL
     if (id) {
       this.cargarDatosColaborador(id);
-      this.cargarDatosEquipo(id);
+      const idColaborador = this.route.snapshot.paramMap.get('id');  // Obtén el ID del colaborador de la URL
+    if (idColaborador) {
+      this.cargarDatosEquipoPorColaborador(idColaborador);  // Llama al método para cargar el equipo
+    }
       this.cargarDatosLicencia(id);
     }
   }
@@ -77,10 +80,16 @@ export class VermasComponent implements OnInit {
     });
   }
 
-  cargarDatosEquipo(id: string) {
-    this.computersService.getEquipoById(id).subscribe((data) => {
-      this.equipo = data;
-    });
+  cargarDatosEquipoPorColaborador(idColaborador: string) {
+    this.computersService.getEquipoPorColaborador(idColaborador).subscribe(
+      (data) => {
+        this.equipo = data;  // Asigna los datos del equipo a la variable del componente
+      },
+      (error) => {
+        console.error('Error al obtener el equipo:', error);
+        alert('No se encontró ningún equipo para este colaborador.');
+      }
+    );
   }
 
   cargarDatosLicencia(id: string) {
