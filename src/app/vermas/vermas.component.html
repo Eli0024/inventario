@@ -90,26 +90,22 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="text-center">{{ equipo?.id_equipo }}</td>
-                      <td class="text-center">{{ equipo?.marca }}</td>
-                      <td class="text-center">{{ equipo?.modelo }}</td>
-                      <td class="text-center">{{ equipo?.memoria }}</td>
-                      <td class="text-center">{{ equipo?.procesador }}</td>
-                      <td class="text-center">{{ equipo?.office }}</td>
-                      <td class="text-center">{{ equipo?.serial }}</td>
+                      <td class="text-center">{{ equipo.id_equipo }}</td>
+                      <td class="text-center">{{ equipo.marca }}</td>
+                      <td class="text-center">{{ equipo.modelo }}</td>
+                      <td class="text-center">{{ equipo.memoria }}</td>
+                      <td class="text-center">{{ equipo.procesador }}</td>
+                      <td class="text-center">{{ equipo.office }}</td>
+                      <td class="text-center">{{ equipo.serial }}</td>
                       <td class="text-center">
-                        {{ equipo?.sistema_operativo }}
+                        {{ equipo.sistema_operativo }}
                       </td>
                       <td class="text-center">
-                        {{ equipo?.fecha_adquisicion }}
+                        {{ equipo.fecha_adquisicion }}
                       </td>
-                      <td class="text-center">{{ equipo?.estado }}</td>
-                      <td class="text-center">
-                        {{ equipo?.responsable?.nombre || 'No asignado' }} {{ equipo?.responsable?.apellido || '' }}
-                      </td>
+                      <td class="text-center">{{ equipo.estado }}</td>
                       <td class="text-primary text-center">
-                        <a
-                          href="{{ equipo?.archivo }}"
+                        <a href ="{{ equipo.archivo}}"
                           target="_blank"
                           class="text-blue-900"
                         >

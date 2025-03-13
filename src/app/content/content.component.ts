@@ -27,6 +27,7 @@ export class ContentComponent implements OnInit{
   totalEquipos: number = 0;
   totalColaboradores: number = 0;
   totalLicencias: number = 0;
+  area: string = ''; 
  
  
   showSidebar = true; // Controla la visibilidad del sidebar
@@ -72,6 +73,32 @@ export class ContentComponent implements OnInit{
     cargo: '',
     licencia: null,
   };
+
+  descargarReporte() {
+    if (!this.area) {
+      alert('Por favor, selecciona un área.');
+      return;
+    }
+
+    this.usersService.generarReporteUsuariosPorArea(this.area).subscribe(
+      (data: Blob) => {
+        // Crear un enlace temporal para descargar el archivo
+        const url = window.URL.createObjectURL(data);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `usuarios_${this.area}.xlsx`; // Nombre del archivo
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al descargar el reporte:', error);
+        alert('Ocurrió un error al descargar el reporte.');
+      }
+    );
+  }
+
 
   filter: any = { searchTerm: '' };
   

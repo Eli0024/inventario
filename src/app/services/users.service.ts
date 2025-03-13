@@ -12,6 +12,13 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
+  generarReporteUsuariosPorArea(area: string) {
+    return this.http.get(`${this.apiUrl}/generar-reporte/`, {
+      params: { area }, // Pasar el área como parámetro
+      responseType: 'blob', // Indicar que la respuesta es un archivo binario
+    });
+  }
+
   getAll(): Observable<Colaborador[]> {
     return this.http.get<Colaborador[]>(this.apiUrl);
   }

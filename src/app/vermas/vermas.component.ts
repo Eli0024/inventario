@@ -66,11 +66,15 @@ export class VermasComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id'); // Obtener el ID de la URL
     if (id) {
       this.cargarDatosColaborador(id);
-      const idColaborador = this.route.snapshot.paramMap.get('id');  // Obtén el ID del colaborador de la URL
-    if (idColaborador) {
-      this.cargarDatosEquipoPorColaborador(idColaborador);  // Llama al método para cargar el equipo
-    }
+      this.cargarDatosEquipoPorColaborador(id); // Usar el mismo ID para cargar el equipo
       this.cargarDatosLicencia(id);
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0]; // Obtener el archivo seleccionado
+    if (file) {
+      this.equipo.archivo = file;
     }
   }
 
@@ -83,11 +87,37 @@ export class VermasComponent implements OnInit {
   cargarDatosEquipoPorColaborador(idColaborador: string) {
     this.computersService.getEquipoPorColaborador(idColaborador).subscribe(
       (data) => {
-        this.equipo = data;  // Asigna los datos del equipo a la variable del componente
+        if (data) {
+          this.equipo = data;  // Asigna los datos del equipo
+        } else {
+          console.warn('No se encontró ningún equipo para este colaborador.');
+          this.equipo = {
+            id_equipo: 0,
+            marca: '',
+            memoria: '',
+            modelo: '',
+            procesador: '',
+            office: '',
+            serial: '',
+            windows: '',
+            sistema_operativo: '',
+            fecha_adquisicion: '',
+            estado: '',
+            responsable: {
+              nombre: '',
+              apellido: ''
+            },
+            archivo: null
+          }; // Inicializar con valores por defecto
+        }
       },
       (error) => {
-        console.error('Error al obtener el equipo:', error);
-        alert('No se encontró ningún equipo para este colaborador.');
+        if (error.status === 404) {
+          alert('No se encontró ningún equipo para este colaborador.');
+        } else {
+          console.error('Error al obtener el equipo:', error);
+          alert('Ocurrió un error al cargar los datos del equipo.');
+        }
       }
     );
   }
