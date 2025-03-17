@@ -79,14 +79,14 @@ export class ContentComponent implements OnInit{
       alert('Por favor, selecciona un área.');
       return;
     }
-
+  
     this.usersService.generarReporteUsuariosPorArea(this.area).subscribe(
       (data: Blob) => {
         // Crear un enlace temporal para descargar el archivo
         const url = window.URL.createObjectURL(data);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `usuarios_${this.area}.xlsx`; // Nombre del archivo
+        a.download = `usuarios_y_equipos_${this.area}.xlsx`; // Nombre del archivo
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -94,11 +94,14 @@ export class ContentComponent implements OnInit{
       },
       (error) => {
         console.error('Error al descargar el reporte:', error);
-        alert('Ocurrió un error al descargar el reporte.');
+        if (error.status === 404) {
+          alert('No se encontró ningún usuario para el área especificada.');
+        } else {
+          alert('Ocurrió un error al descargar el reporte.');
+        }
       }
     );
   }
-
 
   filter: any = { searchTerm: '' };
   

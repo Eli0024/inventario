@@ -9,11 +9,12 @@ import { Colaborador } from '../models/users';
 export class UsersService {
 
   private apiUrl = 'http://127.0.0.1:8000/colaborador/';
+  private apiUrl1 = 'http://127.0.0.1:8000'; // Asegúrate de que sea la misma URL base
 
   constructor(private http: HttpClient) { }
 
   generarReporteUsuariosPorArea(area: string) {
-    return this.http.get(`${this.apiUrl}/generar-reporte/`, {
+    return this.http.get(`${this.apiUrl1}/api/generar-reporte/`, { 
       params: { area }, // Pasar el área como parámetro
       responseType: 'blob', // Indicar que la respuesta es un archivo binario
     });
