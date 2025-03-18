@@ -11,6 +11,9 @@ import { UsersService } from '../services/users.service';
 import { ComputersService } from '../services/computers.service';
 import { ImprerService } from '../services/imprer.service';
 import { VermasComponent } from '../vermas/vermas.component';
+import { MantenService } from '../services/manten.service';
+import { LicenceService } from '../services/licence.service';
+import { PerifeService } from '../services/perife.service';
 
 
 @Component({
@@ -27,6 +30,9 @@ export class ContentComponent implements OnInit{
   totalEquipos: number = 0;
   totalColaboradores: number = 0;
   totalLicencias: number = 0;
+  totalMantenimientos: number = 0;
+  totalImpresoras: number = 0;
+  totalPerifericos: number = 0;
   area: string = ''; 
  
  
@@ -36,7 +42,9 @@ export class ContentComponent implements OnInit{
     this.showSidebar = !this.showSidebar;
   }
   
-  constructor(private usersService: UsersService, private imprerService: ImprerService, private cdr: ChangeDetectorRef, private computersService : ComputersService) {  }
+  constructor(private usersService: UsersService, private imprerService: ImprerService, private cdr: ChangeDetectorRef, private computersService : ComputersService,
+    private licenceService: LicenceService, private mantenService: MantenService, private perifeService: PerifeService
+  ) {  }
 
   ngOnInit(): void {
     this.loadColaboradores();
@@ -46,7 +54,16 @@ export class ContentComponent implements OnInit{
     this.usersService.getTotalColaboradores().subscribe((total: number) => {
       this.totalColaboradores = total;
     });
-    this.imprerService.getTotalLicencias().subscribe((total: number) => {
+    this.licenceService.getTotalLicencias().subscribe((total: number) => {
+      this.totalLicencias = total;
+    });
+    this.mantenService.getTotalMantenimientos().subscribe((total: number) => {
+      this.totalMantenimientos = total;
+    });
+    this.imprerService.getTotalImpresoras().subscribe((total: number) => {
+      this.totalImpresoras = total;
+    });
+    this.perifeService.getTotalPerifericos().subscribe((total: number) => {
       this.totalLicencias = total;
     });
     }

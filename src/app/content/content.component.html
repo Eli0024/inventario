@@ -74,6 +74,7 @@
               </a>
               <div class="card-body">
                 <h5 class="card-title text-center">Mantenimiento</h5>
+                <p class="text-center text-xl">{{ totalMantenimientos }}</p>
                 <p class="card-text"></p>
               </div>
               <div class="card-footer">
@@ -83,12 +84,12 @@
           </div>
           <div class="col">
             <div class="card h-60">
-              <a routerLink="/usuarios" class="text-center">
+              <a routerLink="/impresoras" class="text-center">
                 <i class="fa fa-print fa-2x m-2 text-center"></i>
               </a>
               <div class="card-body">
                 <h5 class="card-title text-center">Impresoras</h5>
-                <p class="card-text"></p>
+                <p class="text-center text-xl">{{ totalImpresoras }}</p>
               </div>
               <div class="card-footer">
                 <small class="text-body-secondary"></small>
@@ -97,16 +98,16 @@
           </div>
           <div class="col">
             <div class="card h-60">
-              <a routerLink="/usuarios" class="text-center">
+              <a routerLink="/perifericos" class="text-center">
                 <i class="fa fa-print fa-2x m-2 text-center"></i>
               </a>
               <div class="card-body">
                 <h5 class="card-title text-center">Periféricos</h5>
-                <p class="card-text"></p>
+                <p class="text-center text-xl">{{ totalPerifericos }}</p>
               </div>
               <div class="card-footer">
                 <small class="text-body-secondary"></small>
-              </div>
+              </div> 
             </div>
           </div>
         </div>

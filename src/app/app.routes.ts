@@ -17,6 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { VermasComponent } from './vermas/vermas.component';
 import { ReportescomponentComponent } from './reportescomponent/reportescomponent.component';
+import { PerifericosComponent } from './perifericos/perifericos.component';
 
 
 export const routes: Routes = [
@@ -38,6 +39,8 @@ export const routes: Routes = [
     { path: 'form5/:id', component: FormimpreComponent },
     { path: 'licencias', component: LicenciasComponent },
     { path: 'usuarios', component: UsuariosComponent },
+    { path: 'impresoras', component: ImpresoraComponent },
+    { path: 'perifericos', component: PerifericosComponent },
     { path: 'sidebar', component: SidebarComponent },
     { path: 'lista', component: ListaComponent },
     { path: 'mapa', component: MapaComponent },

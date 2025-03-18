@@ -16,8 +16,8 @@ export class ImprerService {
     return this.http.get<Impresora[]>(this.apiUrl);
   }
 
-  getTotalLicencias(): Observable<number> {
-    return this.http.get<number>('http://127.0.0.1:8000/registrarlicencia/total');
+  getTotalImpresoras(): Observable<number> {
+    return this.http.get<number>('http://127.0.0.1:8000/impresora/total');
   }
 
   create(impresora:Impresora):Observable<Impresora>{
