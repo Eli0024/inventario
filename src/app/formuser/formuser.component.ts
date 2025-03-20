@@ -29,12 +29,15 @@ export class FormuserComponent {
   };
   
   @Input() colaboradorSeleccionado: any;
+
+  colaboradores : Colaborador[] = [];
  
 
   constructor(private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargar();
+    this.loadColaboradores();
    }
 
   cargar():void{
@@ -50,6 +53,18 @@ export class FormuserComponent {
       }
     );
   }
+
+  loadColaboradores(): void {
+    this.usersService.getAll().subscribe(
+      (response: Colaborador[]) => {
+        this.colaboradores = response;
+      },
+      (error: any) => {
+        console.error('Error al obtener los usuarios', error);
+      }
+    );
+  }
+
 
   create(): void {
     this.usersService.create(this.colaborador).subscribe(
@@ -71,7 +86,8 @@ export class FormuserComponent {
             `
           }
         });
-        this.router.navigate(['/usuarios']);
+        this.loadColaboradores(); // Recargar los equipos
+       
       },
       error => {
         Swal.fire({

@@ -17,7 +17,7 @@ export class PerifeService {
     }
   
     getTotalPerifericos(): Observable<number> {
-      return this.http.get<number>('http://127.0.0.1:8000/perificos/total');
+      return this.http.get<number>('http://127.0.0.1:8000/perifericos/total');
     }
   
     create(periferico:Periferico):Observable<Periferico>{

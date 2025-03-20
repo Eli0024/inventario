@@ -64,7 +64,7 @@ export class ContentComponent implements OnInit{
       this.totalImpresoras = total;
     });
     this.perifeService.getTotalPerifericos().subscribe((total: number) => {
-      this.totalLicencias = total;
+      this.totalPerifericos = total;
     });
     }
 

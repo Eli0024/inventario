@@ -35,7 +35,6 @@ export const routes: Routes = [
     { path: 'info', loadChildren: () => import('./info/info.module').then(m => m.InfoModule) },
     { path: 'manten', component: MantenimientoComponent },
     { path: 'form4/:id', component: FormmanteComponent },
-    { path: 'imprer', component: ImpresoraComponent },
     { path: 'form5/:id', component: FormimpreComponent },
     { path: 'licencias', component: LicenciasComponent },
     { path: 'usuarios', component: UsuariosComponent },

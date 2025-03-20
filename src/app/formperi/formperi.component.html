@@ -1,0 +1,109 @@
+<div class="container">
+    <form id="registro-parametros-form">
+      <div class="input-container">
+        <div
+          class="icon-container bg-cyan-500 text-white"
+        >
+        <i class="fa fa-print fa-2x m-2 text-center"></i>
+        </div>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre" [(ngModel)]="periferico.nombre" required />
+      </div>
+      <div class="input-container">
+        <div
+          class="icon-container bg-cyan-500 text-white"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-aspect-ratio-fill" viewBox="0 0 16 16">
+            <path d="M0 12.5v-9A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5M2.5 4a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 1 0V5h2.5a.5.5 0 0 0 0-1zm11 8a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-1 0V11h-2.5a.5.5 0 0 0 0 1z"/>
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="modelo"
+          name="modelo"
+          placeholder="Modelo"
+          [(ngModel)]="periferico.modelo"
+          required
+        />
+      </div>
+      <div class="input-container">
+        <div
+          class="icon-container bg-cyan-500 text-white"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-body-text" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m9 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m5 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-12 2A.5.5 0 0 1 .5 6h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-8 2A.5.5 0 0 1 .5 8h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-7 2a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="numero_serie"
+          name="numero_serie"
+          placeholder="Numero de serie"
+          [(ngModel)]="periferico.numero_serie"
+          required
+        />
+      </div>
+      <div class="input-container">
+        <div
+          class="icon-container bg-cyan-500 text-white"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16">
+            <path d="M6.445 11.688V6.354h-.633A13 13 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+          </svg>
+        </div>
+        <input
+          class="text-gray-600"
+          type="date"
+          id="fecha_adquisicion"
+          name="fecha_adquisicion"
+          placeholder="Fecha adquisicion"
+          [(ngModel)]="periferico.fecha_adquisicion"
+          required
+        />
+      </div>
+      <div class="input-container">
+        <div
+          class="icon-container bg-cyan-500 text-white "
+        >
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
+            />
+          </svg>
+        </div>
+          <input type="text" id="nombre"  placeholder="Nombre Responsable" [(ngModel)]="periferico.responsable.nombre" name="nombre" required>
+      </div>
+      <div class="input-container">
+        <div
+          class="icon-container bg-cyan-500 text-white "
+        >
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
+            />
+          </svg>
+        </div>
+        <input type="text" id="apellido" placeholder="Apellido Responsable"   [(ngModel)]="periferico.responsable.apellido" name="apellido" required>
+      </div>
+
+      <button class="btn btn-primary" type="button" (click)="create()" *ngIf="!periferico.id_peri; else elseBlock">Registrar</button>
+  
+      <ng-template #elseBlock>
+        <button class="btn btn-primary" type="button" (click)="update()">Actualizar</button>
+      </ng-template>
+    </form>
+  </div>
+  
+  

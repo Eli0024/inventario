@@ -65,7 +65,7 @@ export class FormimpreComponent {
             `
           }
         });
-        this.router.navigate(['/imprer']);
+        this.router.navigate(['/impresoras']);
       },
       error => {
         Swal.fire({

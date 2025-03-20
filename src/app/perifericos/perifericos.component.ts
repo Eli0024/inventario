@@ -9,11 +9,12 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RouterLink } from '@angular/router';
 import { FormoffComponent } from '../formoff/formoff.component';
+import { FormperiComponent } from '../formperi/formperi.component';
 
 @Component({
   selector: 'app-perifericos',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, NavbarComponent, RouterLink, FormoffComponent],
+  imports: [CommonModule, FormsModule, SidebarComponent, NavbarComponent, RouterLink, FormperiComponent],
   templateUrl: './perifericos.component.html',
   styleUrl: './perifericos.component.css'
 })
