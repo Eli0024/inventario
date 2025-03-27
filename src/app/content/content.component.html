@@ -145,14 +145,14 @@
               </thead>
               <tbody>
                 <tr *ngFor="let colaborador of filterColaboradores()">
-                  <td class="text-center">{{ colaborador.id_colaborador }}</td>
+                  <td class="text-center">{{ colaborador.id }}</td>
                   <td class="text-center">{{ colaborador.nombre }}</td>
                   <td class="text-center">{{ colaborador.apellido }}</td>
                   <td class="text-center">{{ colaborador.empresa }}</td>
                   <td class="text-center">{{ colaborador.area }}</td>
                   <td class="text-center">{{ colaborador.cargo }}</td>
                   <td class="text-center">{{ colaborador.licencia }}</td>
-                  <td [routerLink]="['/vermas', colaborador.id_colaborador]" class="text-center">Ver Más</td>
+                  <td [routerLink]="['/vermas', colaborador.id]" class="text-center">Ver Más</td>
                 </tr>
               </tbody>
             </table>

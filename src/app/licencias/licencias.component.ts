@@ -24,14 +24,14 @@ export class LicenciasComponent implements OnInit {
     licences: Licence[] = []; // inicializa con un array vacío
     filter: any = { searchTerm: '' };
     licence : Licence = {
-      id_licencia: 0,
+      id: 0,
       correo: '',
       contrasena: '',
       serial_office: '',
     };
   
     licenceSeleccionado: Licence = {
-      id_licencia: 0,
+      id: 0,
       correo: '',
       contrasena: '',
       serial_office: '',
@@ -78,7 +78,7 @@ export class LicenciasComponent implements OnInit {
     }
     
     update(): void {
-      if (this.licenceSeleccionado && this.licenceSeleccionado.id_licencia) {  // Asegúrate de que el id esté presente
+      if (this.licenceSeleccionado && this.licenceSeleccionado.id) {  // Asegúrate de que el id esté presente
         this.licenceService.update(this.licenceSeleccionado).subscribe(
           (response: Licence) => {
             console.log('Licencia actualizada', response);

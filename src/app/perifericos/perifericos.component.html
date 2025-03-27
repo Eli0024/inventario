@@ -103,7 +103,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let periferico of filterPerifericos()">
-                        <td>{{ periferico.id_peri }}</td>
+                        <td>{{ periferico.id }}</td>
                         <td>{{ periferico.nombre }}</td>
                         <td>{{ periferico.modelo }}</td>
                         <td>{{ periferico.numero_serie }}</td>
@@ -125,7 +125,7 @@
                             type="button"
                             name="button"
                             class="text-center font-bold py-1 px-2"
-                            (click)="delete(periferico.id_peri)"
+                            (click)="delete(periferico.id)"
                           >
                             <i class="fa fa-trash text-red-600 text-center text-2xl"></i>
                           </button>

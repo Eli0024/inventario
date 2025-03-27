@@ -19,7 +19,8 @@ export class FormmanteComponent {
 
 
   mantenimiento: Mantenimiento = {
-    id_mantenimiento: 0,
+    responsable: { nombre: '', apellido: '' },
+    id: 0,
     equipo: '',
     fecha: '',
     tipo: '',

@@ -29,7 +29,7 @@ export class ImprerService {
   }
 
   update(impresora: Impresora): Observable<Impresora> {
-    return this.http.put<Impresora>(`${this.apiUrl}${impresora.id_impre}/`, impresora);
+    return this.http.put<Impresora>(`${this.apiUrl}${impresora.id}/`, impresora);
   }
 
   delete(id:number): Observable<Impresora> {

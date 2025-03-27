@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class FormperiComponent {
 
  periferico: Periferico ={
-        id_peri: 0,
+        id: 0,
         nombre: '',
         modelo: '',
         numero_serie: '',

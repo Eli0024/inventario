@@ -2,7 +2,7 @@ export interface Periferico {
 
    responsable: Responsable;
    
-    id_peri: number;
+    id: number;
     nombre: string;
     modelo: string;
     numero_serie: string;

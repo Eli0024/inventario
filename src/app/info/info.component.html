@@ -109,7 +109,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let equipo of filterEquipos()">
-                      <td class="text-center">{{ equipo?.id_equipo }}</td>
+                      <td class="text-center">{{ equipo?.id}}</td>
                       <td class="text-center">{{ equipo?.marca }}</td>
                       <td class="text-center">{{ equipo?.modelo }}</td>
                       <td class="text-center">{{ equipo?.memoria }}</td>
@@ -145,7 +145,7 @@
                         </button>
                       </td>
                       <td class="py-2 px-3 text-center">
-                        <button *ngIf="equipo.id_equipo !== undefined" (click)="delete(equipo.id_equipo!)">
+                        <button *ngIf="equipo.id !== undefined" (click)="delete(equipo.id!)">
                           <i class="fa fa-trash text-red-500 text-center text-2xl"></i>
                         </button>
                       </td>

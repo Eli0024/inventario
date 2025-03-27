@@ -22,7 +22,8 @@ export class MantenimientoComponent implements OnInit {
   mantenimientos: Mantenimiento[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
   mantenimiento: Mantenimiento = {
-    id_mantenimiento: 0,
+    responsable: { nombre: '', apellido: '' },
+    id: 0,
     equipo: '',
     fecha: '',
     tipo: '',
@@ -30,7 +31,8 @@ export class MantenimientoComponent implements OnInit {
   };
 
   mantenimientoSeleccionado: Mantenimiento = {
-    id_mantenimiento: 0,
+    responsable: { nombre: '', apellido: '' },
+    id: 0,
     equipo: '',
     fecha: '',
     tipo: '',

@@ -29,7 +29,7 @@ export class PerifeService {
     }
   
     update(periferico: Periferico): Observable<Periferico> {
-      return this.http.put<Periferico>(`${this.apiUrl}${periferico.id_peri}/`, periferico);
+      return this.http.put<Periferico>(`${this.apiUrl}${periferico.id}/`, periferico);
     }
   
     delete(id:number): Observable<Periferico> {

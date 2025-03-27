@@ -41,7 +41,7 @@ export class UsersService {
   }
 
   update(colaborador: Colaborador): Observable<Colaborador> {
-    return this.http.put<Colaborador>(`${this.apiUrl}${colaborador.id_colaborador}/`, colaborador);
+    return this.http.put<Colaborador>(`${this.apiUrl}${colaborador.id}/`, colaborador);
   }
 
   delete(id:number): Observable<Colaborador> {

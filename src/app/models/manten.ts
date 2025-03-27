@@ -1,5 +1,13 @@
+export interface Responsable {
+  nombre: string;
+  apellido: string;
+}
+
 export interface Mantenimiento {
-    id_mantenimiento: number;
+
+   responsable: Responsable;
+   
+    id: number;
     equipo: string;
     fecha: string;
     tipo: string;

@@ -82,7 +82,7 @@ export class ContentComponent implements OnInit{
     colaboradores : Colaborador[] = [];
 
     colaborador: Colaborador= {
-    id_colaborador: 0,
+    id: 0,
     nombre: '',
     apellido: '',
     empresa: null,

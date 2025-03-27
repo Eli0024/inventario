@@ -3,16 +3,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LicenciasComponent } from './licencias/licencias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { ListaComponent } from './lista/lista.component';
 import { FormcompComponent } from './formcomp/formcomp.component';
 import { FormuserComponent } from './formuser/formuser.component';
 import { FormoffComponent } from './formoff/formoff.component';
-import { MapaComponent } from './mapa/mapa.component';
 import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 import { FormmanteComponent } from './formmante/formmante.component';
 import { ImpresoraComponent } from './impresora/impresora.component';
 import { FormimpreComponent } from './formimpre/formimpre.component';
-import { FormapaComponent } from './formapa/formapa.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { VermasComponent } from './vermas/vermas.component';
@@ -41,9 +38,6 @@ export const routes: Routes = [
     { path: 'impresoras', component: ImpresoraComponent },
     { path: 'perifericos', component: PerifericosComponent },
     { path: 'sidebar', component: SidebarComponent },
-    { path: 'lista', component: ListaComponent },
-    { path: 'mapa', component: MapaComponent },
-    { path: 'form6/:id', component: FormapaComponent },
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },

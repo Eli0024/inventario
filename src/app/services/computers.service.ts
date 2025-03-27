@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Equipo } from '../models/computer';
 import { HttpHeaders } from '@angular/common/http';
 import { Authservice } from '../auth.service';
+import { Equipo } from '../models/computer';
 
 
 @Injectable({
@@ -25,9 +25,9 @@ export class ComputersService {
     });
   }
 
-  getEquipoPorColaborador(idColaborador: string): Observable<Equipo> {
+  getEquipoPorColaborador(id: string): Observable<Equipo> {
     const headers = this.getHeaders();  // Obtiene los headers con el token de autenticación
-    return this.http.get<Equipo>(`${this.apiUrl}por-colaborador/${idColaborador}/`, { headers }).pipe(
+    return this.http.get<Equipo>(`${this.apiUrl}por-colaborador/${id}/`, { headers }).pipe(
       catchError(error => {
         if (error.status === 404) {
           console.error('Equipo no encontrado:', error);
@@ -73,7 +73,7 @@ create(equipo: Equipo): Observable<Equipo> {
   const formData = new FormData();
 
   // Agregar campos principales
-  formData.append('id_equipo', equipo.id_equipo?.toString() || '');
+  formData.append('id_equipo', equipo.id?.toString() || '');
   formData.append('marca', equipo.marca);
   formData.append('modelo', equipo.modelo);
   formData.append('memoria', equipo.memoria);
@@ -142,7 +142,7 @@ create(equipo: Equipo): Observable<Equipo> {
     formData.append('fecha_adquisicion', equipo.fecha_adquisicion);
     formData.append('estado', equipo.estado);
   
-    return this.http.put<Equipo>(`${this.apiUrl}${equipo.id_equipo}/`, formData).pipe(
+    return this.http.put<Equipo>(`${this.apiUrl}${equipo.id}/`, formData).pipe(
       catchError(error => {
         console.error('Error de solicitud:', error);
         alert('Ocurrió un error al enviar los datos. Revisa los campos e intenta de nuevo.');

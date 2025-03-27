@@ -9,7 +9,7 @@ export interface Equipo {
   responsable: Responsable;
   // otros campos que puedan existir en tu modelo `RegistrarEquipo`
   // por ejemplo:
-  id_equipo?: number;
+  id?: number;
   marca: string;
   memoria: string;
   modelo: string;

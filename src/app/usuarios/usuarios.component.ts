@@ -22,7 +22,7 @@ export class UsuariosComponent implements OnInit {
   colaboradores : Colaborador[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
   colaborador: Colaborador = {
-    id_colaborador: 0,
+    id: 0,
     nombre: '',
     apellido: '',
     empresa: null,
@@ -32,7 +32,7 @@ export class UsuariosComponent implements OnInit {
   };
 
   colaboradorSeleccionado: Colaborador = {
-    id_colaborador: 0,
+    id: 0,
     nombre: '',
     apellido: '',
     empresa: null,

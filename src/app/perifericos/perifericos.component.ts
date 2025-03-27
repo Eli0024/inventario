@@ -23,7 +23,7 @@ export class PerifericosComponent implements OnInit {
     perifericos: Periferico[] = []; // inicializa con un array vacío
     filter: any = { searchTerm: '' };
    periferico: Periferico ={
-       id_peri: 0,
+       id: 0,
        nombre: '',
        modelo: '',
        numero_serie: '',
@@ -36,7 +36,7 @@ export class PerifericosComponent implements OnInit {
      // Ejemplo en el componente
    
       perifericoSeleccionado: Periferico = {
-        id_peri: 0,
+        id: 0,
         nombre: '',
         modelo: '',
         numero_serie: '',
@@ -88,7 +88,7 @@ export class PerifericosComponent implements OnInit {
     }
     
     update(): void {
-      if (this.perifericoSeleccionado && this.perifericoSeleccionado.id_peri) {  // Asegúrate de que el id esté presente
+      if (this.perifericoSeleccionado && this.perifericoSeleccionado.id) {  // Asegúrate de que el id esté presente
         this.perifeService.update(this.perifericoSeleccionado).subscribe(
           (response: Periferico) => {
             console.log('Licencia actualizada', response);

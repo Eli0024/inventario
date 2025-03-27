@@ -19,7 +19,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 export class FormuserComponent {
 
   colaborador: Colaborador = {
-    id_colaborador: 0,
+    id: 0,
     nombre: '',
     apellido: '',
     empresa: null,

@@ -21,13 +21,13 @@ export class ImpresoraComponent implements OnInit {
   impresoras : Impresora[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
   impresora : Impresora = {
-    id_impre: 0,
+    id: 0,
     nombre: '',
     ip: '',
   };
 
   impresoraSeleccionado: Impresora = {
-    id_impre: 0,
+    id: 0,
     nombre: '',
     ip: '',
    };
@@ -68,7 +68,7 @@ export class ImpresoraComponent implements OnInit {
   }
   
   update(): void {
-    if (this.impresoraSeleccionado && this.impresoraSeleccionado.id_impre) {  // Asegúrate de que el id esté presente
+    if (this.impresoraSeleccionado && this.impresoraSeleccionado.id) {  // Asegúrate de que el id esté presente
       this.imprerService.update(this.impresoraSeleccionado).subscribe(
         (response: Impresora) => {
           console.log('Licencia actualizada', response);

@@ -87,21 +87,21 @@
                 <div class="table-responsive">
                   <table class="table table-hover">
                     <thead class="">
-                      <th class="text-center">ID</th>
                       <th class="text-center">EQUIPO</th>
                       <th class="text-center">FECHA</th>
                       <th class="text-center">TIPO</th>
                       <th class="text-center">DESCRIPCION</th>
+                      <th class="text-center">RESPONSABLE</th>
                       <th class="text-center">EDITAR</th>
                       <th class="text-center">ELIMINAR</th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let mantenimiento of filterMantenimientos()">
-                        <td class="text-center">{{ mantenimiento?.id_mantenimiento}}</td>
                         <td class="text-center">{{ mantenimiento?.equipo}}</td>
                         <td class="text-center">{{ mantenimiento?.fecha }}</td>
                         <td class="text-center">{{ mantenimiento?.tipo}}</td>
                         <td class="text-center">{{ mantenimiento?.descripcion}}</td>
+                        <td class="text-center">{{ mantenimiento?.responsable}}</td>
                         <td class="py-2 px-3 text-center">
                           <button
                             type="button"
@@ -241,7 +241,7 @@
                             type="button"
                             name="button"
                             class="text-center font-bold py-1 px-2"
-                            (click)="delete(mantenimiento.id_mantenimiento)"
+                            (click)="delete(mantenimiento.id)"
                           >
                             <i
                               class="fa fa-trash text-red-600 text-center text-2xl"

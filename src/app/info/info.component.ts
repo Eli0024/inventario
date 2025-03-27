@@ -32,7 +32,7 @@ export class InfoComponent implements OnInit {
   isStaff = false;
   filter: any = { searchTerm: '' };
   equipo: Equipo ={
-    id_equipo: 0,
+    id: 0,
     marca: '',
     memoria: '',
     modelo: '',
@@ -52,7 +52,7 @@ export class InfoComponent implements OnInit {
   // Ejemplo en el componente
 
    equipoSeleccionado: Equipo = {
-    id_equipo: 0,  // Type assertion (unsafe, but works)
+    id: 0,  // Type assertion (unsafe, but works)
      marca: '',
      modelo: '',
      memoria: '',
@@ -183,7 +183,7 @@ export class InfoComponent implements OnInit {
             );
 
             // Actualizar la lista de equipos sin recargar la página
-            this.equipos = this.equipos.filter(equipo => equipo.id_equipo !== id);
+            this.equipos = this.equipos.filter(equipo => equipo.id !== id);
           },
           (error) => {
             if (error.status === 403) {

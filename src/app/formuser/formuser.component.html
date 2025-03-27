@@ -181,15 +181,8 @@
       class="btn btn-primary"
       type="button"
       (click)="create()"
-      *ngIf="!colaborador.id_colaborador; else elseBlock"
     >
       Registrar
     </button>
-
-    <ng-template #elseBlock>
-      <button class="btn btn-primary" type="button" (click)="update()">
-        Actualizar
-      </button>
-    </ng-template>
   </form>
 </div>

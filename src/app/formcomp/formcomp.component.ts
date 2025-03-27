@@ -24,7 +24,7 @@ export class FormcompComponent {
  
   equipo: Equipo = {
     responsable: { nombre: '', apellido: '' },
-    id_equipo: 0,
+    id: 0,
     marca: '',
     modelo: '',
     memoria: '',
@@ -41,7 +41,7 @@ export class FormcompComponent {
   
 
   colaborador: Colaborador = {
-      id_colaborador: 0,
+      id: 0,
       nombre: '',
       apellido: '',
       empresa: null,
@@ -142,7 +142,7 @@ export class FormcompComponent {
         // Reiniciar el formulario
         this.equipo = {
           responsable: { nombre: '', apellido: '' },
-          id_equipo: 0,
+          id: 0,
           marca: '',
           modelo: '',
           memoria: '',

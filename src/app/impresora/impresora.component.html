@@ -90,7 +90,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let impresora of filterImpresoras()">
-                        <td class="text-center">{{ impresora.id_impre }}</td>
+                        <td class="text-center">{{ impresora.id}}</td>
                         <td class="text-center">{{ impresora.nombre }}</td>
                         <td class="text-center">{{ impresora.ip }}</td>
                         <td class="py-2 px-3 text-center">
@@ -193,7 +193,7 @@
                             type="button"
                             name="button"
                             class="text-center font-bold py-1 px-2"
-                            (click)="delete(impresora.id_impre)"
+                            (click)="delete(impresora.id)"
                           >
                             <i
                               class="fa fa-trash text-red-600 text-center text-2xl"

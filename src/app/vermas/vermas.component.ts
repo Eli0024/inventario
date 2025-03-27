@@ -20,7 +20,7 @@ import { ContentComponent } from '../content/content.component';
 export class VermasComponent implements OnInit {
 
   colaborador: Colaborador = {
-    id_colaborador: 0,
+    id: 0,
     nombre: '',
     apellido: '',
     empresa: null,
@@ -30,7 +30,7 @@ export class VermasComponent implements OnInit {
   };
 
   equipo: Equipo ={
-    id_equipo: 0,
+    id: 0,
     marca: '',
     memoria: '',
     modelo: '',
@@ -49,7 +49,7 @@ export class VermasComponent implements OnInit {
   };
   
   licence : Licence = {
-    id_licencia: 0,
+    id: 0,
     correo: '',
     contrasena: '',
     serial_office: '',
@@ -92,7 +92,6 @@ export class VermasComponent implements OnInit {
         } else {
           console.warn('No se encontró ningún equipo para este colaborador.');
           this.equipo = {
-            id_equipo: 0,
             marca: '',
             memoria: '',
             modelo: '',
