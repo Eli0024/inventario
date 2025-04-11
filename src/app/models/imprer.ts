@@ -1,5 +1,6 @@
 export interface Impresora {
-    id: number;
+    id: number;  
     nombre: string;
-    ip : string;
-}
+    direccion_ip: string;   
+  }
+  

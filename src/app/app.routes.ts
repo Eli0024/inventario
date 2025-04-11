@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { VermasComponent } from './vermas/vermas.component';
 import { ReportescomponentComponent } from './reportescomponent/reportescomponent.component';
 import { PerifericosComponent } from './perifericos/perifericos.component';
+import { DetailsComponent } from './details/details.component';
 
 
 export const routes: Routes = [
@@ -40,6 +41,7 @@ export const routes: Routes = [
     { path: 'sidebar', component: SidebarComponent },
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
+    { path: 'details/:id', component: DetailsComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     
 ];

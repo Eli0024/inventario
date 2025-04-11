@@ -117,10 +117,22 @@
           <div class="flex items-center space-x-4 bg-white p-4 rounded-lg shadow">
             <label for="area" class="text-gray-700">Selecciona un área:</label>
             <select id="area" [(ngModel)]="area" class="p-2 border rounded bg-gray-600">
-              <option value="Almacen">Almacen</option>
-              <option value="Compras">Compras</option>
-              <option value="Despachos">Despachos</option>
-              <option value="Recursos Humanos">Recursos Humanos</option>
+              <option value="Abastecimiento">Abastecimiento</option>
+          <option value="Almacen">Almacen</option>
+          <option value="Calidad">Calidad</option>
+          <option value="Compras">Compras</option>
+          <option value="Contabilidad">Contabilidad</option>
+          <option value="Despachos">Despachos</option>
+          <option value="Gestion Humana">Gestion Humana</option>
+          <option value="Investigacion y Desarrollo">
+            Investigacion y Desarrollo
+          </option>
+          <option value="Logistica">Logistica</option>
+          <option value="Mantenimiento">Mantenimiento</option>
+          <option value="QBC">QBC</option>
+          <option value="QCS">QCS</option>
+          <option value="Surfactantes">Surfactantes</option>
+          <option value="TIC">TIC</option>
               <!-- Agrega más opciones según tus áreas -->
             </select>
             <button (click)="descargarReporte()" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
@@ -140,7 +152,6 @@
                 <th class="text-center">EMPRESA</th>
                 <th class="text-center">AREA</th>
                 <th class="text-center">CARGO</th>
-                <th class="text-center">LICENCIA</th>
                 <th class="text-center">DETALLE</th>
               </thead>
               <tbody>
@@ -151,7 +162,6 @@
                   <td class="text-center">{{ colaborador.empresa }}</td>
                   <td class="text-center">{{ colaborador.area }}</td>
                   <td class="text-center">{{ colaborador.cargo }}</td>
-                  <td class="text-center">{{ colaborador.licencia }}</td>
                   <td [routerLink]="['/vermas', colaborador.id]" class="text-center">Ver Más</td>
                 </tr>
               </tbody>

@@ -59,7 +59,6 @@
                       <td>{{ colaborador.empresa }}</td>
                       <td>{{ colaborador.area }}</td>
                       <td>{{ colaborador.cargo }}</td>
-                      <td>{{ colaborador.licencia }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -144,4 +143,58 @@
                 </table>
               </div>
             </div>
+
+            <div class="card mb-4 m-4">
+              <div class="card-header text-white">
+                Información del Mantenimiento
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center">EQUIPO</th>
+                      <th class="text-center">FECHA</th>
+                      <th class="text-center">TIPO</th>
+                      <th class="text-center">DESCRIPCION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-center">{{ mantenimiento.equipo}}</td>
+                      <td class="text-center">{{ mantenimiento.fecha }}</td>
+                      <td class="text-center">{{ mantenimiento.tipo}}</td>
+                      <td class="text-center">{{ mantenimiento.descripcion}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card mb-4 m-4">
+              <div class="card-header text-white">
+                Información del Periferico
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>NOMBRE</th>
+                      <th>MODELO</th>
+                      <th>NUMERO SERIE</th>
+                      <th>FECHA ADQUISICION</th>
+                      <th>RESPONSABLE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ periferico.id }}</td>
+                        <td>{{ periferico.nombre }}</td>
+                        <td>{{ periferico.modelo }}</td>
+                        <td>{{ periferico.numero_serie }}</td>
+                        <td>{{ periferico.fecha_adquisicion }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div> 
           </div>

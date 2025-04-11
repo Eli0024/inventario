@@ -6,6 +6,7 @@ import { Colaborador } from '../models/users';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UsersService {
 
   private apiUrl = 'http://127.0.0.1:8000/colaborador/';

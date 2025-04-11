@@ -1,31 +1,35 @@
 import { Component, Input } from '@angular/core';
-import { Impresora } from '../models/imprer';
-import { ImprerService } from '../services/imprer.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
+import { Mantenimpre } from '../models/mantenim';
+import { MantenimpreService } from '../services/mantenimpre.service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-formimpre',
+  selector: 'app-mantenimprer',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './formimpre.component.html',
-  styleUrl: './formimpre.component.css'
+  imports: [RouterLink, CommonModule, FormsModule],
+  templateUrl: './mantenimprer.component.html',
+  styleUrl: './mantenimprer.component.css'
 })
-export class FormimpreComponent {
+export class MantenimprerComponent {
 
-  impresora : Impresora = {
-    id: 0,
-    nombre: '',
-    direccion_ip: '',
-    };
+  mantenimpre : Mantenimpre = {
   
-  @Input() impresoraSeleccionado: any;
+     impresora: { nombre: '' },
+     id: 0,
+     fecha: '',
+     descripcion: '',
+     realizado_por: '',
+   };
+ 
+  
+  @Input() mantenimpreSeleccionado: any;
  
 
-  constructor(private imprerService: ImprerService, private router: Router, private activatedRoute:ActivatedRoute) { }
+  constructor(private mantenimpreService: MantenimpreService, private router: Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargar();
@@ -37,8 +41,8 @@ export class FormimpreComponent {
       e=>{
         let id=e['id'];
         if(id){
-          this.imprerService.get(id).subscribe(
-            impresora => this.impresora = impresora
+          this.mantenimpreService.get(id).subscribe(
+            mantenimpre => this.mantenimpre = mantenimpre
           );
         }
       }
@@ -46,7 +50,7 @@ export class FormimpreComponent {
   }
 
   create(): void {
-    this.imprerService.create(this.impresora).subscribe(
+    this.mantenimpreService.create(this.mantenimpre).subscribe(
       () => {
         Swal.fire({
           title: "Registro Exitoso",
@@ -78,7 +82,7 @@ export class FormimpreComponent {
   }
   
   update(): void {
-    this.imprerService.update(this.impresora).subscribe(
+    this.mantenimpreService.update(this.mantenimpre).subscribe(
       () => {
         Swal.fire({
           position: "top-end",

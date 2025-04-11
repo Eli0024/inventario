@@ -5,5 +5,4 @@ export interface Colaborador {
     empresa: null;
     area: null;
     cargo: string;
-    licencia: any;
 }

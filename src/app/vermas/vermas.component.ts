@@ -9,6 +9,10 @@ import { Colaborador } from '../models/users';
 import { Equipo } from '../models/computer';
 import { Licence } from '../models/licence';
 import { ContentComponent } from '../content/content.component';
+import { Mantenimiento } from '../models/manten';
+import { Periferico } from '../models/perife';
+import { MantenService } from '../services/manten.service';
+import { PerifeService } from '../services/perife.service';
 
 @Component({
   selector: 'app-vermas',
@@ -26,7 +30,6 @@ export class VermasComponent implements OnInit {
     empresa: null,
     area: null,
     cargo: '',
-    licencia: null,
   };
 
   equipo: Equipo ={
@@ -55,11 +58,37 @@ export class VermasComponent implements OnInit {
     serial_office: '',
   };
 
+  mantenimiento : Mantenimiento = {
+    responsable: { // Objeto Responsable por defecto
+      nombre: '',
+      apellido: ''
+    },
+    id: 0,
+    equipo: '',
+    fecha: '',
+    tipo: '',
+    descripcion: '',
+  }
+
+  periferico : Periferico = {
+    responsable: { // Objeto Responsable por defecto
+      nombre: '',
+      apellido: ''
+    },
+    id: 0,
+    nombre: '',
+    modelo: '',
+    numero_serie: '',
+    fecha_adquisicion: '',
+  }
+
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
     private computersService: ComputersService,
-    private licenceService: LicenceService
+    private licenceService: LicenceService,
+    private mantenService: MantenService,
+    private perifeService: PerifeService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +97,8 @@ export class VermasComponent implements OnInit {
       this.cargarDatosColaborador(id);
       this.cargarDatosEquipoPorColaborador(id); // Usar el mismo ID para cargar el equipo
       this.cargarDatosLicencia(id);
+      this.cargarDatosMantenimiento(id);
+      this.CargarDatosPeriferico(id);
     }
   }
 
@@ -124,6 +155,18 @@ export class VermasComponent implements OnInit {
   cargarDatosLicencia(id: string) {
     this.licenceService.getLicenciaById(id).subscribe((data) => {
       this.licence = data;
+    });
+  }
+
+  cargarDatosMantenimiento(id: string) {
+    this.mantenService.getMantenimientoById(id).subscribe((data) => {
+      this.mantenimiento = data;
+    });
+  }
+
+  CargarDatosPeriferico(id: string) {
+    this.perifeService.getPerifericoById(id).subscribe((data) => {
+      this.periferico = data;
     });
   }
 }

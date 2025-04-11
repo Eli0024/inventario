@@ -25,42 +25,10 @@
             <button
               type="button"
               class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+              (click)="openModalAndEdit({id: 0, correo: '', contrasena: '', serial_office: ''})"
             >
               Registrar Licencia
             </button>
-
-            <!-- Modal para registrar licencia -->
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1
-                      class="modal-title fs-5 text-2xl font-bold text-gray-900"
-                      id="exampleModalLabel"
-                    >
-                      Registrar Licencia
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <app-formoff></app-formoff>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <button
               class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
@@ -135,103 +103,68 @@
     </div>
   </div>
 
-  <!-- Modal para editar licencia (fuera de la tabla) -->
-  <div *ngIf="modalAbierto" class="modal fade show" style="display: block" tabindex="-1">
-    <div class="modal-dialog">
+  <!-- Modal para editar/crear licencia -->
+  <div *ngIf="modalAbierto" class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1050;">
+    <div class="modal-dialog modal-dialog-centered" style="margin-top: 10%;">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-gray-900">Editar Licencia</h5>
+          <h5 class="modal-title text-gray-900">
+            {{ licenceSeleccionado.id ? 'Editar' : 'Crear' }} Licencia
+          </h5>
           <button type="button" class="close" (click)="closeModal()">&times;</button>
         </div>
         <div class="modal-body">
-          <div class="container">
-            <form id="registro-parametros-form">
-              <!-- Campos del formulario -->
-              <div class="input-container">
-                <div class="icon-container bg-cyan-500 text-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="30"
-                    fill="currentColor"
-                    class="bi bi-motherboard"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M11.5 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-10 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zM5 3a1 1 0 0 0-1 1h-.5a.5.5 0 0 0 0 1H4v1h-.5a.5.5 0 0 0 0 1H4a1 1 0 0 0 1 1v.5a.5.5 0 0 0 1 0V8h1v.5a.5.5 0 0 0 1 0V8a1 1 0 0 0 1-1h.5a.5.5 0 0 0 0-1H9V5h.5a.5.5 0 0 0 0-1H9a1 1 0 0 0-1-1v-.5a.5.5 0 0 0-1 0V3H6v-.5a.5.5 0 0 0-1 0zm0 1h3v3H5zm6.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
-                    />
-                    <path
-                      d="M1 2a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-2H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 9H1V8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6H1V5H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 2zm1 11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  id="correo"
-                  name="correo"
-                  placeholder="Correo"
-                  [(ngModel)]="licenceSeleccionado.correo"
-                  required
-                />
+          <form>
+            <div class="input-container mb-3">
+              <div class="icon-container bg-cyan-500 text-white">
+                <i class="fas fa-envelope"></i>
               </div>
-              <div class="input-container">
-                <div class="icon-container bg-cyan-500 text-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="30"
-                    fill="currentColor"
-                    class="bi bi-memory"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M12 1.5H4a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5zm-1 1v10H5V2h6z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  id="contrasena"
-                  name="contrasena"
-                  placeholder="Contraseña"
-                  [(ngModel)]="licenceSeleccionado.contrasena"
-                  required
-                />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Correo"
+                [(ngModel)]="licenceSeleccionado.correo"
+                name="correo"
+                required
+              />
+            </div>
+            
+            <div class="input-container mb-3">
+              <div class="icon-container bg-cyan-500 text-white">
+                <i class="fas fa-lock"></i>
               </div>
-              <div class="input-container">
-                <div class="icon-container bg-cyan-500 text-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="30"
-                    fill="currentColor"
-                    class="bi bi-file-earmark-code"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M4.5 0A.5.5 0 0 0 4 0.5v15a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5H8.707L5.354 5.354A.5.5 0 0 0 5 5.707V1H4.5zM9 3.5v7h4V3.5h-4z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  id="serial_office"
-                  name="serial_office"
-                  placeholder="Serial Office"
-                  [(ngModel)]="licenceSeleccionado.serial_office"
-                  required
-                />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Contraseña"
+                [(ngModel)]="licenceSeleccionado.contrasena"
+                name="contrasena"
+                required
+              />
+            </div>
+            
+            <div class="input-container mb-3">
+              <div class="icon-container bg-cyan-500 text-white">
+                <i class="fas fa-key"></i>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closeModal()">
-                  Cerrar
-                </button>
-                <button type="button" class="btn btn-primary" (click)="update()">
-                  Actualizar
-                </button>
-              </div>
-            </form>
-          </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Serial Office"
+                [(ngModel)]="licenceSeleccionado.serial_office"
+                name="serial_office"
+                required
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            Cerrar
+          </button>
+          <button type="button" class="btn btn-primary" (click)="update()">
+            {{ licenceSeleccionado.id ? 'Actualizar' : 'Guardar' }}
+          </button>
         </div>
       </div>
     </div>

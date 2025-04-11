@@ -28,7 +28,6 @@ export class UsuariosComponent implements OnInit {
     empresa: null,
     area: null,
     cargo: '',
-    licencia: null,
   };
 
   colaboradorSeleccionado: Colaborador = {
@@ -38,7 +37,6 @@ export class UsuariosComponent implements OnInit {
     empresa: null,
     area: null,
     cargo: '',
-    licencia: null,
    };
    
   constructor(private usersService: UsersService, private cdr: ChangeDetectorRef) {  }

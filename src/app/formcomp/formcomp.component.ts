@@ -47,7 +47,6 @@ export class FormcompComponent {
       empresa: null,
       area: null,
       cargo: '',
-      licencia: null,
     };
     
 

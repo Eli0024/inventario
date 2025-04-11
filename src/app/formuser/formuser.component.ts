@@ -25,7 +25,6 @@ export class FormuserComponent {
     empresa: null,
     area: null,
     cargo: '',
-    licencia: null,
   };
   
   @Input() colaboradorSeleccionado: any;

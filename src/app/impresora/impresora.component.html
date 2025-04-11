@@ -17,44 +17,27 @@
             </div>
           </div>
           <!-- Button trigger modal -->
-          <div class="flex justify-center items-center mt-16">
-            <div class="flex flex-wrap space-x-4">
+          <div class="flex flex-col items-center mt-8 space-y-4">
+            <!-- Botones centrados -->
+            <div class="flex space-x-4">
               <button
                 type="button"
                 class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                data-bs-target="#impresoraModal"
               >
                 Registrar Impresora
               </button>
-              <!-- Modal -->
-              <div
-                class="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
+              
+              <button
+                type="button"
+                class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
+                data-bs-toggle="modal"
+                data-bs-target="#mantenimientoModal"
               >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1
-                        class="modal-title fs-5 text-2xl font-bold text-gray-900"
-                        id="exampleModalLabel"
-                      >
-                        Registrar Impresora
-                      </h1>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body"><app-formimpre></app-formimpre></div>
-                  </div>
-                </div>
-              </div>
+                Registrar Mantenimiento
+              </button>
+              
               <button
                 class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
                 type="button"
@@ -62,14 +45,75 @@
               >
                 Volver
               </button>
-              <div class="col">
-                <input
-                  class="rounded-full text-black border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
-                  type="search"
-                  placeholder="Search"
-                  [(ngModel)]="filter.searchTerm"
-                  name="searchTerm"
-                />
+            </div>
+            <br>
+            
+            <!-- Filtro centrado abajo -->
+            <div class="w-64">
+              <input
+                class="rounded-full text-black border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
+                type="search"
+                placeholder="Search"
+                [(ngModel)]="filter.searchTerm"
+                name="searchTerm"
+              />
+            </div>
+          </div>
+          
+          <!-- Modal Impresora -->
+          <div
+            class="modal fade"
+            id="impresoraModal"
+            tabindex="-1"
+            aria-labelledby="impresoraModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1
+                    class="modal-title fs-5 text-2xl font-bold text-gray-900"
+                    id="impresoraModalLabel"
+                  >
+                    Registrar Impresora
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body"><app-formimpre></app-formimpre></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Modal Mantenimiento -->
+          <div
+            class="modal fade"
+            id="mantenimientoModal"
+            tabindex="-1"
+            aria-labelledby="mantenimientoModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1
+                    class="modal-title fs-5 text-2xl font-bold text-gray-900"
+                    id="mantenimientoModalLabel"
+                  >
+                    Registrar Mantenimiento
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body"><app-mantenimprer></app-mantenimprer></div>
               </div>
             </div>
           </div>
@@ -84,15 +128,17 @@
                     <thead class="">
                       <th class="text-center">ID</th>
                       <th class="text-center">NOMBRE</th>
-                      <th class="text-center">IP</th>
+                      <th class="text-center">DIRECCION IP</th>
+                      <th class="text-center">Mantenimientos</th>
                       <th class="text-center">Editar</th>
                       <th class="text-center">Eliminar</th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let impresora of filterImpresoras()">
-                        <td class="text-center">{{ impresora.id}}</td>
+                        <td class="text-center">{{ impresora.id }}</td>
                         <td class="text-center">{{ impresora.nombre }}</td>
-                        <td class="text-center">{{ impresora.ip }}</td>
+                        <td class="text-center">{{ impresora.direccion_ip }}</td>
+                        <td [routerLink]="['/details', impresora.id]" class="text-center">Ver Más</td>
                         <td class="py-2 px-3 text-center">
                           <button
                             type="button"
@@ -160,7 +206,7 @@
                                             name="ip"
                                             placeholder="IP"
                                             [(ngModel)]="
-                                            impresoraSeleccionado.ip
+                                            impresoraSeleccionado.direccion_ip
                                             "
                                             required
                                           />

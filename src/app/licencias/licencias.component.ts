@@ -21,121 +21,73 @@ import { Licence } from '../models/licence';
 })
 export class LicenciasComponent implements OnInit {
 
-    licences: Licence[] = []; // inicializa con un array vacío
-    filter: any = { searchTerm: '' };
-    licence : Licence = {
-      id: 0,
-      correo: '',
-      contrasena: '',
-      serial_office: '',
-    };
-  
-    licenceSeleccionado: Licence = {
-      id: 0,
-      correo: '',
-      contrasena: '',
-      serial_office: '',
-     };
-     
-    constructor(private licenceService: LicenceService, private cdr: ChangeDetectorRef) {  }
-  
-    ngOnInit(): void {
-      this.loadLicenses();
-      }
-      
-      editarLicence(licence: any) {
-        this.licenceSeleccionado = { ...licence };
-        this.licence = { ...licence };
-        this.cdr.detectChanges();
-      }
-      
-      openModalAndEdit(licence: any) {
-        this.licenceSeleccionado = { ...licence }; // Copia los valores de la licencia seleccionada
-        this.modalAbierto = true;
-      }
-     
-      modalAbierto: boolean = false; 
-  
-    loadLicenses(): void {
-      this.licenceService.getAll().subscribe(
-        (response: Licence[]) => {
-          this.licences = response;
-        },
-        (error: any) => {
-          console.error('Error al obtener los usuarios', error);
-        }
-      );
-    }
-  
-    // Abre el modal
-    openModal(): void {
-      this.modalAbierto = true;
-    }
-  
-    // Cierra el modal
-    closeModal(): void {
-      this.modalAbierto = false;
-    }
-    
-    update(): void {
-      if (this.licenceSeleccionado && this.licenceSeleccionado.id) {  // Asegúrate de que el id esté presente
-        this.licenceService.update(this.licenceSeleccionado).subscribe(
-          (response: Licence) => {
-            console.log('Licencia actualizada', response);
-            this.loadLicenses();  // Recargar las licencias
-            this.closeModal();  // Cerrar el modal
-          },
-          (error: any) => {
-            console.error('Error al actualizar la licencia', error);
-          }
-        );
-      } else {
-        console.error('El id de la licencia es necesario para actualizar.');
-      }
-    }
-    
-       
-    
-     delete(id: number) {
-        console.log(id);
-        
-        Swal.fire({
-          title: "¿Desea eliminar este registro?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Sí, ¡elimínalo!"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.licenceService.delete(id).subscribe({
-              next: () => {
-                Swal.fire({
-                  title: "¡Eliminado!",
-                  text: "El registro ha sido eliminado.",
-                  icon: "success"
-                });
-                this.ngOnInit(); // Actualiza la vista
-              },
-              error: (err) => {
-                console.error('Error:', err);
-                Swal.fire({
-                  title: "Error",
-                  text: "Hubo un problema al eliminar el registro.",
-                  icon: "error"
-                });
-              }
-            });
-          }
-        });
-      }
+  licencias: Licence[] = [];
+  licenceSeleccionado: Licence = {
+    id: 0,
+    correo: '',
+    contrasena: '',
+    serial_office: ''
+  };
+  modalAbierto = false;
+  filter = {
+    searchTerm: ''
+  };
 
-      filterLicences(): Licence[] {
-        if (this.licences && this.licences.length) {
-          return this.licences.filter( Licence =>
-            Licence.correo.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) 
-          );
-        }
-        return [];
-      }
+  constructor(private licenceService: LicenceService) {}
+
+  ngOnInit(): void {
+    this.cargarLicencias();
   }
+
+  cargarLicencias(): void {
+    this.licenceService.getAll().subscribe({
+      next: (data) => this.licencias = data,
+      error: (err) => console.error('Error al cargar licencias:', err)
+    });
+  }
+
+  filterLicences(): Licence[] {
+    if (!this.filter.searchTerm) return this.licencias;
+    
+    return this.licencias.filter(licence => 
+      licence.correo.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+      licence.contrasena.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+      licence.serial_office.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
+    );
+  }
+
+  openModalAndEdit(licence: Licence): void {
+    this.licenceSeleccionado = {...licence};
+    this.modalAbierto = true;
+  }
+
+  closeModal(): void {
+    this.modalAbierto = false;
+    this.licenceSeleccionado = {
+      id: 0,
+      correo: '',
+      contrasena: '',
+      serial_office: ''
+    };
+  }
+
+  update(): void {
+    this.licenceService.update(this.licenceSeleccionado)
+      .subscribe({
+        next: () => {
+          this.closeModal();
+          this.cargarLicencias(); // Actualiza la tabla
+        },
+        error: (err) => console.error('Error al actualizar:', err)
+      });
+  }
+
+  delete(id: number): void {
+    if (confirm('¿Estás seguro de eliminar esta licencia?')) {
+      this.licenceService.delete(id).subscribe({
+        next: () => this.cargarLicencias(), // Actualiza la tabla
+        error: (err) => console.error('Error al eliminar:', err)
+      });
+    }
+  }
+}

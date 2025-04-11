@@ -88,7 +88,7 @@ export class ContentComponent implements OnInit{
     empresa: null,
     area: null,
     cargo: '',
-    licencia: null,
+    
   };
 
   descargarReporte() {

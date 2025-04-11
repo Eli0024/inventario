@@ -16,6 +16,10 @@ export class MantenService {
     return this.http.get<Mantenimiento[]>(this.apiUrl);
   }
 
+  getMantenimientoById(id: string): Observable<Mantenimiento> {
+        return this.http.get<Mantenimiento>(`${this.apiUrl}${id}/`);
+      }
+
   getTotalMantenimientos(): Observable<number> {
     return this.http.get<number>('http://127.0.0.1:8000/mantenimiento/total');
   }

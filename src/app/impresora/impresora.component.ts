@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Impresora } from '../models/imprer';
 import { ImprerService } from '../services/imprer.service';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
@@ -8,11 +7,13 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormimpreComponent } from '../formimpre/formimpre.component';
 import { RouterLink } from '@angular/router';
+import { MantenimprerComponent } from '../mantenimprer/mantenimprer.component';
+import { Impresora } from '../models/imprer';
 
 @Component({
   selector: 'app-impresora',
   standalone: true,
-  imports: [FormsModule, CommonModule, NavbarComponent, SidebarComponent, FormimpreComponent, RouterLink],
+  imports: [FormsModule, CommonModule, NavbarComponent, SidebarComponent, FormimpreComponent, RouterLink, MantenimprerComponent,],
   templateUrl: './impresora.component.html',
   styleUrl: './impresora.component.css'
 })
@@ -23,13 +24,13 @@ export class ImpresoraComponent implements OnInit {
   impresora : Impresora = {
     id: 0,
     nombre: '',
-    ip: '',
+    direccion_ip: '',
   };
 
   impresoraSeleccionado: Impresora = {
     id: 0,
     nombre: '',
-    ip: '',
+    direccion_ip: '',
    };
    
   constructor(private imprerService: ImprerService, private cdr: ChangeDetectorRef) {  }
@@ -84,7 +85,6 @@ export class ImpresoraComponent implements OnInit {
     }
   }
   
-     
   
    delete(id: number) {
       console.log(id);
