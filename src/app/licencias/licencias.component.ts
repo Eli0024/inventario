@@ -23,6 +23,7 @@ export class LicenciasComponent implements OnInit {
 
   licencias: Licence[] = [];
   licenceSeleccionado: Licence = {
+    responsable: { nombre: '', apellido: '' },
     id: 0,
     correo: '',
     contrasena: '',
@@ -64,6 +65,7 @@ export class LicenciasComponent implements OnInit {
   closeModal(): void {
     this.modalAbierto = false;
     this.licenceSeleccionado = {
+      responsable: { nombre: '', apellido: '' },
       id: 0,
       correo: '',
       contrasena: '',

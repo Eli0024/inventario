@@ -23,7 +23,7 @@ export class FormcompComponent {
 
  
   equipo: Equipo = {
-    responsable: { nombre: '', apellido: '' },
+    responsable: {id:0, nombre: '', apellido: '' },
     id: 0,
     marca: '',
     modelo: '',
@@ -31,7 +31,6 @@ export class FormcompComponent {
     procesador: '',
     office: '',
     serial: '',
-    windows: '',
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
@@ -95,6 +94,11 @@ export class FormcompComponent {
     });
   }
 
+  getNombreResponsable(id: number): string {
+    const colab = this.colaboradores.find(c => c.id === id);
+    return colab ? `${colab.nombre} ${colab.apellido}` : 'No encontrado';
+  }
+
   // Método para manejar el evento "equipoCreado"
   onEquipoCreado(equipo: Equipo): void {
     this.equipos.push(equipo);  // Agregar el nuevo equipo a la lista
@@ -124,47 +128,49 @@ export class FormcompComponent {
 
 
   create(): void {
-    console.log('Equipo a crear:', this.equipo);
-
-    this.computersService.create(this.equipo).subscribe(
-      (nuevoEquipo) => {
-        console.log('Equipo creado:', nuevoEquipo);
-        Swal.fire('¡Creado!', 'El equipo ha sido creado correctamente.', 'success');
-
-        // Crear un nuevo arreglo para que Angular detecte el cambio
-        this.equipos = [...this.equipos, nuevoEquipo];
-        console.log('Lista de equipos actualizada:', this.equipos);
-
-        // Marcar el componente para verificación de cambios
-        this.cdr.markForCheck();
-
-        // Reiniciar el formulario
-        this.equipo = {
-          responsable: { nombre: '', apellido: '' },
-          id: 0,
-          marca: '',
-          modelo: '',
-          memoria: '',
-          procesador: '',
-          office: '',
-          serial: '',
-          windows: '',
-          sistema_operativo: '',
-          fecha_adquisicion: '',
-          estado: '',
-          archivo: null
-        };
-
-        // Cerrar el modal
-        this.closeModal1();
+    // Verificación mejorada del responsable
+    if (!this.equipo.responsable?.id) {
+      Swal.fire('Error', 'Debes seleccionar un responsable de la lista', 'error');
+      return;
+    }
+  
+    console.log('Datos a enviar:', {
+      ...this.equipo,
+      responsable_id: this.equipo.responsable.id // Campo que espera el backend
+    });
+  
+    this.computersService.create({
+      ...this.equipo,
+      responsable_id: this.equipo.responsable.id
+    }).subscribe({
+      next: (response) => {
+        Swal.fire('¡Éxito!', 'Equipo registrado correctamente', 'success');
+        this.resetForm();
+        this.cargar(); // Recarga la lista de equipos
       },
-      (error) => {
-        console.error('Error al crear el equipo:', error);
-        Swal.fire('Error', 'Ocurrió un error al crear el equipo.', 'error');
+      error: (err) => {
+        console.error('Error completo:', err);
+        Swal.fire('Error', err.error?.message || 'Error al registrar equipo', 'error');
       }
-    );
+    });
   }
-
+  
+  // Método reset mejorado
+  resetForm(): void {
+    this.equipo = {
+      responsable: { id: 0, nombre: '', apellido: '' },
+      marca: '',
+      modelo: '',
+      memoria: '',
+      procesador: '',
+      office: '',
+      serial: '',
+      sistema_operativo: '',
+      fecha_adquisicion: '',
+      estado: '',
+      archivo: null
+    };
+  }
 
   guardarEquipo() {
     // Aquí puedes implementar la lógica para guardar los cambios.

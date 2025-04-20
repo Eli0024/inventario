@@ -1,5 +1,6 @@
 // models.ts
 export interface Responsable {
+  id: number; 
   nombre: string;
   apellido: string;
 }
@@ -16,7 +17,6 @@ export interface Equipo {
   procesador: string;
   office: string;
   serial: string;
-  windows: string;
   sistema_operativo: string;
   fecha_adquisicion: string;
   estado: string;

@@ -101,27 +101,20 @@
                         <td class="text-center">{{ mantenimiento?.fecha }}</td>
                         <td class="text-center">{{ mantenimiento?.tipo}}</td>
                         <td class="text-center">{{ mantenimiento?.descripcion}}</td>
-                        <td class="text-center">{{ mantenimiento?.responsable}}</td>
+                        <td class="text-center">
+                          {{ mantenimiento?.responsable?.nombre || 'No asignado' }} {{ mantenimiento?.responsable?.apellido || '' }}
+                        </td>
                         <td class="py-2 px-3 text-center">
                           <button
                             type="button"
                             class="text-xl py-2 px-4 text-center"
-                            data-bs-toggle="modal"
-                            data-bs-target="#myModal"
                             (click)="editarMantenimiento(mantenimiento)"
-                            (click)="openModal()"
                           >
-                            <i
-                              class="fa fa-edit text-blue-500 text-center text-2xl"
-                            ></i>
+                            <i class="fa fa-edit text-blue-500 text-center text-2xl"></i>
                           </button>
-                          <!-- Modal -->
-                          <div
-                            *ngIf="modalAbierto"
-                            class="modal fade show"
-                            style="display: block"
-                            tabindex="-1"
-                          >
+                          
+                          <!-- Modal - Usa solo *ngIf -->
+                          <div *ngIf="modalAbierto" class="modal fade show" style="display: block">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">

@@ -20,6 +20,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 export class FormoffComponent {
 
   licence: Licence = {
+    responsable: { nombre: '', apellido: '' },
     id: 0,
     correo: '',
     contrasena: '',

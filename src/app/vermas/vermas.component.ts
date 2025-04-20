@@ -40,11 +40,11 @@ export class VermasComponent implements OnInit {
     procesador: '',
     office: '',
     serial: '',
-    windows: '',
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
     responsable: { // Objeto Responsable por defecto
+      id: 0,
       nombre: '',
       apellido: ''
     },
@@ -52,6 +52,10 @@ export class VermasComponent implements OnInit {
   };
   
   licence : Licence = {
+    responsable: { // Objeto Responsable por defecto
+      nombre: '',
+      apellido: ''
+    },
     id: 0,
     correo: '',
     contrasena: '',
@@ -60,6 +64,7 @@ export class VermasComponent implements OnInit {
 
   mantenimiento : Mantenimiento = {
     responsable: { // Objeto Responsable por defecto
+      id: 0,
       nombre: '',
       apellido: ''
     },
@@ -129,11 +134,11 @@ export class VermasComponent implements OnInit {
             procesador: '',
             office: '',
             serial: '',
-            windows: '',
             sistema_operativo: '',
             fecha_adquisicion: '',
             estado: '',
             responsable: {
+              id: 0,
               nombre: '',
               apellido: ''
             },

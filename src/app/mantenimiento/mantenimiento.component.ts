@@ -22,7 +22,7 @@ export class MantenimientoComponent implements OnInit {
   mantenimientos: Mantenimiento[] = []; // inicializa con un array vacío
   filter: any = { searchTerm: '' };
   mantenimiento: Mantenimiento = {
-    responsable: { nombre: '', apellido: '' },
+    responsable: { id:0 , nombre: '', apellido: '' },
     id: 0,
     equipo: '',
     fecha: '',
@@ -31,7 +31,7 @@ export class MantenimientoComponent implements OnInit {
   };
 
   mantenimientoSeleccionado: Mantenimiento = {
-    responsable: { nombre: '', apellido: '' },
+    responsable: { id:0, nombre: '', apellido: '' },
     id: 0,
     equipo: '',
     fecha: '',
@@ -74,19 +74,45 @@ export class MantenimientoComponent implements OnInit {
   }
 
   // Actualizar el usuario
-  update(): void {
-    if (this.mantenimientoSeleccionado) {
-      this.mantenService.update(this.mantenimientoSeleccionado).subscribe(
-        (response: Mantenimiento) => {
-          console.log('Usuario actualizado', response);
-          this.loadMantenimientos(); // Recargar los equipos
-          this.closeModal(); // Cerrar el modal
-        },
-        (error: any) => {
-          console.error('Error al actualizar usuario', error);
+  getEquipo(id: number): void {
+    this.mantenService.get(id).subscribe({
+      next: (mantenimiento) => {
+        this.mantenimientoSeleccionado = mantenimiento;
+        
+        // Asegura que el responsable tenga estructura válida
+        if (!this.mantenimientoSeleccionado.responsable) {
+          this.mantenimientoSeleccionado.responsable = {
+            id: 0,
+            nombre: 'No asignado',
+            apellido: ''
+          };
         }
-      );
+        console.log('Datos cargados:', this.mantenimientoSeleccionado);
+      },
+      error: (err) => console.error('Error al cargar equipo:', err)
+    });
+  }
+  
+  // Al actualizar
+  update(): void {
+    if (!this.mantenimientoSeleccionado.responsable?.id) {
+      alert('Debe seleccionar un responsable válido');
+      return;
     }
+  
+    this.mantenService.update(this.mantenimientoSeleccionado).subscribe({
+      next: (response) => {
+        console.log('Actualización exitosa:', response);
+        this.loadMantenimientos(); // Recargar los equipos
+        this.closeModal(); // Cerrar el modal
+      },
+      error: (err) => {
+        console.error('Error completo:', err);
+        if (err.error) {
+          alert(JSON.stringify(err.error));
+        }
+      }
+    });
   }
      
   

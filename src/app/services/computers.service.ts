@@ -4,15 +4,16 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { Authservice } from '../auth.service';
 import { Equipo } from '../models/computer';
+import Swal from 'sweetalert2';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComputersService {
+  
 
   private apiUrl = 'http://127.0.0.1:8000/registrarequipo/';
-  
   
 
   constructor(private http: HttpClient, private authservice : Authservice) { }
@@ -69,89 +70,77 @@ getTotalEquipos(): Observable<number> {
 }
 
 
-create(equipo: Equipo): Observable<Equipo> {
+create(equipo: any): Observable<any> {
   const formData = new FormData();
 
-  // Agregar campos principales
-  formData.append('id_equipo', equipo.id?.toString() || '');
-  formData.append('marca', equipo.marca);
-  formData.append('modelo', equipo.modelo);
-  formData.append('memoria', equipo.memoria);
-  formData.append('procesador', equipo.procesador);
-  formData.append('office', equipo.office);
-  formData.append('serial', equipo.serial);
-  formData.append('windows', equipo.windows);
-  formData.append('sistema_operativo', equipo.sistema_operativo);
-  formData.append('fecha_adquisicion', equipo.fecha_adquisicion);
-  formData.append('estado', equipo.estado);
+  // Campos normales
+  const camposEquipo = [
+    'marca', 'modelo', 'memoria', 'procesador', 
+    'office', 'serial', 'sistema_operativo',
+    'fecha_adquisicion', 'estado'
+  ];
 
-  // Agregar campos del responsable
-  formData.append('responsable.nombre', equipo.responsable?.nombre || '');
-  formData.append('responsable.apellido', equipo.responsable?.apellido || '');
+  camposEquipo.forEach(campo => {
+    if (equipo[campo] !== undefined && equipo[campo] !== null) {
+      formData.append(campo, equipo[campo]);
+    }
+  });
 
-  // Agregar el archivo (si existe)
-  if (equipo.archivo) {
+  // Responsable (solo ID)
+  if (equipo.responsable_id) {
+    formData.append('responsable_id', equipo.responsable_id.toString());
+  } else {
+    return throwError(() => new Error('ID de responsable no proporcionado'));
+  }
+
+  // Archivo
+  if (equipo.archivo instanceof File) {
     formData.append('archivo', equipo.archivo);
   }
 
-  return this.http.post<Equipo>(`${this.apiUrl}`, formData).pipe(
-    catchError(error => {
-      console.error('Error en la solicitud:', error);
-      alert('Ocurrió un error al crear el equipo. Revisa los campos.');
-      return throwError(() => new Error(error));
-    })
-  );
+  return this.http.post(this.apiUrl, formData, {
+    headers: this.getHeaders()
+  });
 }
-
 
   get(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}${id}/`);
   }
 
-  update(equipo: Equipo): Observable<Equipo> {
+  
+  update(equipo: any): Observable<any> {
     const formData = new FormData();
   
-    // Verificar datos del responsable
-    if (!equipo.responsable || !equipo.responsable.nombre || !equipo.responsable.apellido) {
-      console.error('El campo "responsable" es obligatorio y debe incluir "nombre" y "apellido".');
-      alert('Por favor, completa los datos del responsable antes de enviar el formulario.');
-      return throwError(() => new Error('El campo "responsable" debe incluir "nombre" y "apellido".'));
-    }
+    // 1. Campos normales del equipo
+    const camposEquipo = [
+      'id', 'marca', 'modelo', 'memoria', 'procesador',
+      'office', 'serial', 'sistema_operativo',
+      'fecha_adquisicion', 'estado'
+    ];
   
-    // Archivo opcional
-    if (equipo.archivo instanceof File) {
-      let archivo = equipo.archivo;
-      if (archivo.name.length > 100) {
-        archivo = new File([archivo], archivo.name.substring(0, 100), { type: archivo.type });
+    camposEquipo.forEach(campo => {
+      if (equipo[campo] !== undefined && equipo[campo] !== null) {
+        formData.append(campo, String(equipo[campo]));
       }
-      formData.append('archivo', archivo);
+    });
+  
+    // 2. Envía SOLO el ID del responsable (requerido)
+    if (equipo.responsable?.id) {
+      formData.append('responsable_id', String(equipo.responsable.id));
+    } else {
+      throw new Error('El ID del responsable es requerido');
     }
   
-    // Agregar datos del responsable
-    formData.append('responsable[nombre]', equipo.responsable.nombre);
-    formData.append('responsable[apellido]', equipo.responsable.apellido);
+    // 3. Archivo si existe
+    if (equipo.archivo instanceof File) {
+      formData.append('archivo', equipo.archivo);
+    }
   
-    // Agregar otros campos
-    formData.append('marca', equipo.marca);
-    formData.append('memoria', equipo.memoria);
-    formData.append('procesador', equipo.procesador);
-    formData.append('office', equipo.office);
-    formData.append('serial', equipo.serial);
-    formData.append('windows', equipo.windows);
-    formData.append('sistema_operativo', equipo.sistema_operativo);
-    formData.append('fecha_adquisicion', equipo.fecha_adquisicion);
-    formData.append('estado', equipo.estado);
-  
-    return this.http.put<Equipo>(`${this.apiUrl}${equipo.id}/`, formData).pipe(
-      catchError(error => {
-        console.error('Error de solicitud:', error);
-        alert('Ocurrió un error al enviar los datos. Revisa los campos e intenta de nuevo.');
-        return throwError(() => new Error(error));
-      })
-    );
+    return this.http.put(`${this.apiUrl}${equipo.id}/`, formData, {
+      headers: this.getHeaders()
+    });
   }
   
-
   delete(id: number) {
     const token = localStorage.getItem('token');  // Obtén el token del almacenamiento local
     const headers = new HttpHeaders({

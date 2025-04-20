@@ -25,10 +25,40 @@
             <button
               type="button"
               class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-              (click)="openModalAndEdit({id: 0, correo: '', contrasena: '', serial_office: ''})"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
             >
               Registrar Licencia
             </button>
+            <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1
+                    class="modal-title fs-5 text-2xl font-bold text-gray-900"
+                    id="exampleModalLabel"
+                  >
+                    Registrar Licencia
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <app-formoff></app-formoff>
+                </div>
+              </div>
+            </div>
+          </div>
 
             <button
               class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"

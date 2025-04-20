@@ -39,11 +39,11 @@ export class InfoComponent implements OnInit {
     procesador: '',
     office: '',
     serial: '',
-    windows: '',
     sistema_operativo: '',
     fecha_adquisicion: '',
     estado: '',
     responsable: { // Objeto Responsable por defecto
+      id: 0,
       nombre: '',
       apellido: ''
     },
@@ -51,24 +51,22 @@ export class InfoComponent implements OnInit {
   };
   // Ejemplo en el componente
 
-   equipoSeleccionado: Equipo = {
-    id: 0,  // Type assertion (unsafe, but works)
-     marca: '',
-     modelo: '',
-     memoria: '',
-     procesador: '',
-     office: '',
-     serial: '',
-     windows: '',
-     sistema_operativo: '',
-     fecha_adquisicion: '',
-     estado: '',
-     responsable: { // Objeto Responsable por defecto
+  equipoSeleccionado: any = {
+    marca: '',
+    modelo: '',
+    memoria: '',
+    procesador: '',
+    office: '',
+    serial: '',
+    sistema_operativo: '',
+    fecha_adquisicion: '',
+    estado: '',
+    archivo: null,
+    responsable: {
       nombre: '',
       apellido: ''
-    },
-     archivo: null,
-   };
+    }
+  };
 
 
   constructor(
@@ -80,7 +78,7 @@ export class InfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargar();
-    this.getEquipos();
+    // this.getEquipos();
     this.loadEquipos();
   }
 
@@ -95,11 +93,35 @@ export class InfoComponent implements OnInit {
     );
   }
 
-  getEquipos(): void {
-    this.computersService.getEquipos().subscribe((data: any) => {
-      this.equipos = data;
-    });
+  getArchivoUrl(): string {
+    return this.equipoSeleccionado.archivo;
   }
+
+  getNombreArchivo(): string {
+    if (this.equipoSeleccionado.archivo) {
+      return this.equipoSeleccionado.archivo.split('/').pop() || 'documento';
+    }
+    return '';
+  }
+
+  // Al obtener los datos
+getEquipos(id: number): void {
+  this.computersService.getEquipo(id).subscribe({
+    next: (equipo) => {
+      this.equipoSeleccionado = equipo;
+      // Asegura que el responsable tenga estructura válida
+      if (!this.equipoSeleccionado.responsable) {
+        this.equipoSeleccionado.responsable = {
+          id: null,
+          nombre: '',
+          apellido: ''
+        };
+      }
+      console.log('Datos recibidos:', this.equipoSeleccionado);
+    },
+    error: (err) => console.error('Error al obtener equipo:', err)
+  });
+}
 
   editarEquipo(equipo: any) {
     this.equipoSeleccionado = { ...equipo };
@@ -135,29 +157,54 @@ export class InfoComponent implements OnInit {
     this.modalAbierto = true;
   }
 
+// Al obtener los datos
+getEquipo(id: number): void {
+  this.computersService.getEquipo(id).subscribe({
+    next: (equipo) => {
+      this.equipoSeleccionado = equipo;
+      
+      // Asegura que el responsable tenga estructura válida
+      if (!this.equipoSeleccionado.responsable) {
+        this.equipoSeleccionado.responsable = {
+          id: null,
+          nombre: 'No asignado',
+          apellido: ''
+        };
+      }
+      console.log('Datos cargados:', this.equipoSeleccionado);
+    },
+    error: (err) => console.error('Error al cargar equipo:', err)
+  });
+}
 
-
-  // Actualizar el equipo
-  update(): void {
-    if (this.equipoSeleccionado) {
-      this.computersService.update(this.equipoSeleccionado).subscribe(
-        (response: Equipo) => {
-          console.log('Equipo actualizado', response);
-          this.loadEquipos(); // Recargar los equipos
-          this.closeModal(); // Cerrar el modal
-        },
-        (error: any) => {
-          console.error('Error al actualizar equipo', error);
-        }
-      );
-    }
+// Al actualizar
+update(): void {
+  if (!this.equipoSeleccionado.responsable?.id) {
+    alert('Debe seleccionar un responsable válido');
+    return;
   }
+
+  this.computersService.update(this.equipoSeleccionado).subscribe({
+    next: (response) => {
+      console.log('Actualización exitosa:', response);
+      this.loadEquipos(); // Recargar los equipos
+      this.closeModal(); // Cerrar el modal
+    },
+    error: (err) => {
+      console.error('Error completo:', err);
+      if (err.error) {
+        alert(JSON.stringify(err.error));
+      }
+    }
+  });
+}
               
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0]; // Obtener el archivo seleccionado
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
     if (file) {
-      this.equipo.archivo = file;
+      this.equipoSeleccionado.archivo = file;
+      this.equipoSeleccionado.archivoNombre = file.name;
     }
   }
 

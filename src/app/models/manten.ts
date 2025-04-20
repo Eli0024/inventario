@@ -1,4 +1,5 @@
 export interface Responsable {
+  id: number;
   nombre: string;
   apellido: string;
 }
