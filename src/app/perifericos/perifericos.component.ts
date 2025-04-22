@@ -29,7 +29,8 @@ export class PerifericosComponent implements OnInit {
        numero_serie: '',
        fecha_adquisicion: '',
        responsable: { // Objeto Responsable por defecto
-         nombre: '',
+        id:0,
+        nombre: '',
          apellido: ''
        },
      };
@@ -42,6 +43,7 @@ export class PerifericosComponent implements OnInit {
         numero_serie: '',
         fecha_adquisicion: '',
         responsable: { // Objeto Responsable por defecto
+          id:0,
           nombre: '',
           apellido: ''
         },

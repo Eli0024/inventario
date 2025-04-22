@@ -109,7 +109,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let equipo of filterEquipos()">
-                      <td class="text-center">{{ equipo?.id}}</td>
+                      <td class="text-center">{{ equipo?.id }}</td>
                       <td class="text-center">{{ equipo?.marca }}</td>
                       <td class="text-center">{{ equipo?.modelo }}</td>
                       <td class="text-center">{{ equipo?.memoria }}</td>
@@ -124,7 +124,8 @@
                       </td>
                       <td class="text-center">{{ equipo?.estado }}</td>
                       <td class="text-center">
-                        {{ equipo?.responsable?.nombre || 'No asignado' }} {{ equipo?.responsable?.apellido || '' }}
+                        {{ equipo?.responsable?.nombre || "No asignado" }}
+                        {{ equipo?.responsable?.apellido || "" }}
                       </td>
                       <td class="text-primary text-center">
                         <a
@@ -141,12 +142,19 @@
                           class="text-xl py-2 px-4 text-center"
                           (click)="openModalAndEdit(equipo)"
                         >
-                          <i class="fa fa-edit text-blue-500 text-center text-2xl"></i>
+                          <i
+                            class="fa fa-edit text-blue-500 text-center text-2xl"
+                          ></i>
                         </button>
                       </td>
                       <td class="py-2 px-3 text-center">
-                        <button *ngIf="equipo.id !== undefined" (click)="delete(equipo.id!)">
-                          <i class="fa fa-trash text-red-500 text-center text-2xl"></i>
+                        <button
+                          *ngIf="equipo.id !== undefined"
+                          (click)="delete(equipo.id!)"
+                        >
+                          <i
+                            class="fa fa-trash text-red-500 text-center text-2xl"
+                          ></i>
                         </button>
                       </td>
                     </tr>
@@ -161,297 +169,326 @@
   </div>
 
   <!-- Modal para editar equipo (fuera de la tabla) -->
-  <div *ngIf="modalAbierto" class="modal fade show" style="display: block" tabindex="-1">
+  <div
+    *ngIf="modalAbierto"
+    class="modal fade show"
+    style="display: block"
+    tabindex="-1"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-gray-900">Editar Equipo</h5>
-          <button type="button" class="close" (click)="closeModal()">&times;</button>
+          <button type="button" class="close" (click)="closeModal()">
+            &times;
+          </button>
         </div>
         <div class="modal-body">
           <div class="container">
             <form id="registro-parametros-form">
               <!-- Campos del formulario -->
-               <div class="input-container">
-                                        <div
-                                          class="icon-container bg-cyan-500 text-white"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="currentColor"
-                                            class="bi bi-motherboard"
-                                            viewBox="0 0 16 16"
-                                          >
-                                            <path
-                                              d="M11.5 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-10 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zM5 3a1 1 0 0 0-1 1h-.5a.5.5 0 0 0 0 1H4v1h-.5a.5.5 0 0 0 0 1H4a1 1 0 0 0 1 1v.5a.5.5 0 0 0 1 0V8h1v.5a.5.5 0 0 0 1 0V8a1 1 0 0 0 1-1h.5a.5.5 0 0 0 0-1H9V5h.5a.5.5 0 0 0 0-1H9a1 1 0 0 0-1-1v-.5a.5.5 0 0 0-1 0V3H6v-.5a.5.5 0 0 0-1 0zm0 1h3v3H5zm6.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
-                                            />
-                                            <path
-                                              d="M1 2a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-2H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 9H1V8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6H1V5H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 2zm1 11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="marca"
-                                          name="marca"
-                                          placeholder="Marca"
-                                          [(ngModel)]="equipoSeleccionado.marca"
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div
-                                          class="icon-container bg-cyan-500 text-white"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="currentColor"
-                                            class="bi bi-memory"
-                                            viewBox="0 0 16 16"
-                                          >
-                                            <path
-                                              d="M12 1.5H4a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5zm-1 1v10H5V2h6z"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="memoria"
-                                          name="memoria"
-                                          placeholder="Memoria"
-                                          [(ngModel)]="
-                                            equipoSeleccionado.memoria
-                                          "
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div
-                                          class="icon-container bg-cyan-500 text-white"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="currentColor"
-                                            class="bi bi-cpu"
-                                            viewBox="0 0 16 16"
-                                          >
-                                            <path
-                                              d="M5.5 0a.5.5 0 0 1 .5.5v1h4V.5a.5.5 0 0 1 1 0v1h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1v4h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1v1a.5.5 0 0 1-1 0v-1H6v1a.5.5 0 0 1-1 0v-1H4a.5.5 0 0 1-.5-.5v-1h1V9H4a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 5.5 0zM6 5V4h4v1H6z"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="procesador"
-                                          name="procesador"
-                                          placeholder="Procesador"
-                                          [(ngModel)]="
-                                            equipoSeleccionado.procesador
-                                          "
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div class="icon-container bg-cyan-500 text-white">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="currentColor"
-                                            class="bi bi-laptop"
-                                            viewBox="0 0 16 16"
-                                          >
-                                            <path
-                                              d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="office"
-                                          name="office"
-                                          placeholder="Office"
-                                          [(ngModel)]="
-                                            equipoSeleccionado.office
-                                          "
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div
-                                          class="icon-container bg-cyan-500 text-white"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="currentColor"
-                                            class="bi bi-file-earmark-code"
-                                            viewBox="0 0 16 16"
-                                          >
-                                            <path
-                                              d="M4.5 0A.5.5 0 0 0 4 0.5v15a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5H8.707L5.354 5.354A.5.5 0 0 0 5 5.707V1H4.5zM9 3.5v7h4V3.5h-4z"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="serial"
-                                          name="serial"
-                                          placeholder="Serial"
-                                          [(ngModel)]="
-                                            equipoSeleccionado.serial
-                                          "
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div
-                                          class="icon-container bg-cyan-500 text-white"
-                                        >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-windows" viewBox="0 0 16 16">
-                                          <path d="M6.555 1.375 0 2.237v5.45h6.555zM0 13.795l6.555.933V8.313H0zm7.278-5.4.026 6.378L16 16V8.395zM16 0 7.33 1.244v6.414H16z"/>
-                                        </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="sistema_operativo"
-                                          name="sistema_operativo"
-                                          placeholder="Sistema Operativo"
-                                          [(ngModel)]="
-                                            equipoSeleccionado.sistema_operativo
-                                          "
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div
-                                          class="icon-container bg-cyan-500 text-white"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="currentColor"
-                                            class="bi bi-calendar2-week-fill"
-                                            viewBox="0 0 16 16"
-                                          >
-                                            <path
-                                              d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5M8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="fecha_adquisicion"
-                                          name="fecha_adquisicion"
-                                          placeholder="Fecha de Adquisicion"
-                                          [(ngModel)]="
-                                            equipoSeleccionado.fecha_adquisicion
-                                          "
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div
-                                          class="icon-container bg-cyan-500 text-white"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="currentColor"
-                                            class="bi bi-card-checklist"
-                                            viewBox="0 0 16 16"
-                                          >
-                                            <path
-                                              d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
-                                            />
-                                            <path
-                                              d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="estado"
-                                          name="estado"
-                                          placeholder="Estado"
-                                          [(ngModel)]="
-                                            equipoSeleccionado.estado
-                                          "
-                                          required
-                                        />
-                                      </div>
-                                      <div class="input-container">
-                                        <div class="icon-container bg-cyan-500 text-white">
-                                          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                                            <path d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"/>
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="responsable-nombre"
-                                          name="responsable-nombre"
-                                          placeholder="Nombre del Responsable"
-                                          [(ngModel)]="equipoSeleccionado.responsable.nombre"
-                                          required
-                                        />
-                                      </div>
-                                      
-                                      <div class="input-container">
-                                        <div class="icon-container bg-cyan-500 text-white">
-                                          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                                            <path d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"/>
-                                          </svg>
-                                        </div>
-                                        <input
-                                          type="text"
-                                          id="responsable-apellido"
-                                          name="responsable-apellido"
-                                          placeholder="Apellido del Responsable"
-                                          [(ngModel)]="equipoSeleccionado.responsable.apellido"
-                                          required
-                                        />
-                                      </div>
-                                      
-                                      <!-- Campo oculto para el ID del responsable -->
-                                      <input type="hidden" [(ngModel)]="equipoSeleccionado.responsable.id" name="responsable-id">
-                                      <div class="input-container">
-                                        <div class="icon-container bg-cyan-500 text-white">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-arrow-up-fill" viewBox="0 0 16 16">
-                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707z"/>
-                                          </svg>
-                                        </div>
-                                        
-                                        <!-- Mostrar archivo actual si existe -->
-                                        <div *ngIf="equipoSeleccionado.archivo" class="mb-2">
-                                          <a [href]="getArchivoUrl()" target="_blank" class="text-blue-600 hover:underline">
-                                            {{ getNombreArchivo() }}
-                                          </a>
-                                        </div>
-                                        
-                                        <!-- Input para nuevo archivo -->
-                                        <!-- <input
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-motherboard"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M11.5 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-10 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zM5 3a1 1 0 0 0-1 1h-.5a.5.5 0 0 0 0 1H4v1h-.5a.5.5 0 0 0 0 1H4a1 1 0 0 0 1 1v.5a.5.5 0 0 0 1 0V8h1v.5a.5.5 0 0 0 1 0V8a1 1 0 0 0 1-1h.5a.5.5 0 0 0 0-1H9V5h.5a.5.5 0 0 0 0-1H9a1 1 0 0 0-1-1v-.5a.5.5 0 0 0-1 0V3H6v-.5a.5.5 0 0 0-1 0zm0 1h3v3H5zm6.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
+                    />
+                    <path
+                      d="M1 2a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-2H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 9H1V8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6H1V5H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 2zm1 11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="marca"
+                  name="marca"
+                  placeholder="Marca"
+                  [(ngModel)]="equipoSeleccionado.marca"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-memory"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M12 1.5H4a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5zm-1 1v10H5V2h6z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="memoria"
+                  name="memoria"
+                  placeholder="Memoria"
+                  [(ngModel)]="equipoSeleccionado.memoria"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-cpu"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M5.5 0a.5.5 0 0 1 .5.5v1h4V.5a.5.5 0 0 1 1 0v1h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1v4h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1v1a.5.5 0 0 1-1 0v-1H6v1a.5.5 0 0 1-1 0v-1H4a.5.5 0 0 1-.5-.5v-1h1V9H4a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 5.5 0zM6 5V4h4v1H6z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="procesador"
+                  name="procesador"
+                  placeholder="Procesador"
+                  [(ngModel)]="equipoSeleccionado.procesador"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-laptop"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="office"
+                  name="office"
+                  placeholder="Office"
+                  [(ngModel)]="equipoSeleccionado.office"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-file-earmark-code"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M4.5 0A.5.5 0 0 0 4 0.5v15a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5H8.707L5.354 5.354A.5.5 0 0 0 5 5.707V1H4.5zM9 3.5v7h4V3.5h-4z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="serial"
+                  name="serial"
+                  placeholder="Serial"
+                  [(ngModel)]="equipoSeleccionado.serial"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-windows"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M6.555 1.375 0 2.237v5.45h6.555zM0 13.795l6.555.933V8.313H0zm7.278-5.4.026 6.378L16 16V8.395zM16 0 7.33 1.244v6.414H16z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="sistema_operativo"
+                  name="sistema_operativo"
+                  placeholder="Sistema Operativo"
+                  [(ngModel)]="equipoSeleccionado.sistema_operativo"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-calendar2-week-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5M8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="fecha_adquisicion"
+                  name="fecha_adquisicion"
+                  placeholder="Fecha de Adquisicion"
+                  [(ngModel)]="equipoSeleccionado.fecha_adquisicion"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-card-checklist"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
+                    />
+                    <path
+                      d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="estado"
+                  name="estado"
+                  placeholder="Estado"
+                  [(ngModel)]="equipoSeleccionado.estado"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    class="icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="responsable-nombre"
+                  name="responsable-nombre"
+                  placeholder="Nombre del Responsable"
+                  [(ngModel)]="equipoSeleccionado.responsable.nombre"
+                  required
+                />
+              </div>
+
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    class="icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="responsable-apellido"
+                  name="responsable-apellido"
+                  placeholder="Apellido del Responsable"
+                  [(ngModel)]="equipoSeleccionado.responsable.apellido"
+                  required
+                />
+              </div>
+
+              <!-- Campo oculto para el ID del responsable -->
+              <input
+                type="hidden"
+                [(ngModel)]="equipoSeleccionado.responsable.id"
+                name="responsable-id"
+              />
+              <div class="input-container">
+                <div class="icon-container bg-cyan-500 text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-file-earmark-arrow-up-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707z"
+                    />
+                  </svg>
+                </div>
+
+                <!-- Mostrar archivo actual si existe -->
+                <div *ngIf="equipoSeleccionado.archivo" class="mb-2">
+                  <a
+                    [href]="getArchivoUrl()"
+                    target="_blank"
+                    class="text-blue-600 hover:underline"
+                  >
+                    {{ getNombreArchivo() }}
+                  </a>
+                </div>
+
+                <!-- Input para nuevo archivo -->
+                <!-- <input
                                           class="text-gray-900"
                                           type="file"
                                           id="archivo"
                                           name="archivo"
                                           (change)="onFileSelected($event)"
                                         /> -->
-                                      </div>
+              </div>
               <!-- Más campos del formulario -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closeModal()">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="closeModal()"
+                >
                   Cerrar
                 </button>
-                <button type="button" class="btn btn-primary" (click)="update()">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="update()"
+                >
                   Actualizar
                 </button>
               </div>

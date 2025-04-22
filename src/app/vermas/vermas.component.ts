@@ -53,6 +53,7 @@ export class VermasComponent implements OnInit {
   
   licence : Licence = {
     responsable: { // Objeto Responsable por defecto
+      id: 0,
       nombre: '',
       apellido: ''
     },
@@ -77,6 +78,7 @@ export class VermasComponent implements OnInit {
 
   periferico : Periferico = {
     responsable: { // Objeto Responsable por defecto
+      id: 0,
       nombre: '',
       apellido: ''
     },

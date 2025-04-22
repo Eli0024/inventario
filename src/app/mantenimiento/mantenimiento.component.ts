@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormmanteComponent } from '../formmante/formmante.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class MantenimientoComponent implements OnInit {
     descripcion: '',
    };
    
-  constructor(private mantenService: MantenService, private cdr: ChangeDetectorRef) {  }
+  constructor(private mantenService: MantenService, private cdr: ChangeDetectorRef, private router: Router) {  }
 
   ngOnInit(): void {
     this.loadMantenimientos();
@@ -47,8 +47,18 @@ export class MantenimientoComponent implements OnInit {
 
 
     editarMantenimiento(mantenimiento: Mantenimiento): void {
-      this.mantenimientoSeleccionado = { ...mantenimiento };  // Crea una copia del usuario a editar
-      this.openModal();  // Abre el modal
+      this.mantenimientoSeleccionado = { ...mantenimiento };
+      
+      // Asegurar estructura del responsable
+      if (!this.mantenimientoSeleccionado.responsable) {
+        this.mantenimientoSeleccionado.responsable = {
+          id: 0,
+          nombre: '',
+          apellido: ''
+        };
+      }
+      
+      this.openModal();
     }
     
     openModal(): void {
@@ -73,23 +83,33 @@ export class MantenimientoComponent implements OnInit {
     );
   }
 
+  openModalAndEdit(equipo: any) {
+    this.mantenimientoSeleccionado = { ...equipo }; // Copia los valores del equipo seleccionado
+    this.modalAbierto = true;
+  }
+
   // Actualizar el usuario
   getEquipo(id: number): void {
     this.mantenService.get(id).subscribe({
       next: (mantenimiento) => {
-        this.mantenimientoSeleccionado = mantenimiento;
+        this.mantenimientoSeleccionado = { ...mantenimiento };
         
-        // Asegura que el responsable tenga estructura válida
-        if (!this.mantenimientoSeleccionado.responsable) {
+        // Asegurar estructura del responsable
+        if (!this.mantenimientoSeleccionado.responsable || typeof this.mantenimientoSeleccionado.responsable === 'number') {
           this.mantenimientoSeleccionado.responsable = {
-            id: 0,
-            nombre: 'No asignado',
+            id: typeof this.mantenimientoSeleccionado.responsable === 'number' 
+                 ? this.mantenimientoSeleccionado.responsable 
+                 : 0,
+            nombre: '',
             apellido: ''
           };
         }
-        console.log('Datos cargados:', this.mantenimientoSeleccionado);
+        this.openModal(); // Abrir modal después de cargar
       },
-      error: (err) => console.error('Error al cargar equipo:', err)
+      error: (err) => {
+        console.error('Error al cargar equipo:', err);
+        Swal.fire('Error', 'No se pudo cargar el mantenimiento', 'error');
+      }
     });
   }
   
@@ -114,8 +134,7 @@ export class MantenimientoComponent implements OnInit {
       }
     });
   }
-     
-  
+        
    delete(id: number) {
       console.log(id);
       

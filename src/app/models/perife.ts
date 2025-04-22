@@ -10,6 +10,7 @@ export interface Periferico {
   }
   
   export interface Responsable {
+    id: number;
     nombre: string;
     apellido: string;
   }

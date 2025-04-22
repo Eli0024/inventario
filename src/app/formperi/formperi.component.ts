@@ -6,6 +6,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Colaborador } from '../models/users';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-formperi',
@@ -23,18 +25,30 @@ export class FormperiComponent {
         numero_serie: '',
         fecha_adquisicion: '',
         responsable: { // Objeto Responsable por defecto
+          id:0,
           nombre: '',
           apellido: ''
         },
       };
+
+ colaborador: Colaborador = {
+             id: 0,
+             nombre: '',
+             apellido: '',
+             empresa: null,
+             area: null,
+             cargo: '',
+           };     
     
     @Input() perifericoSeleccionado: any;
-   
+    responsables: any[] = [];
+    colaboradores: Colaborador[] = [];
   
-    constructor(private perifeService: PerifeService, private router: Router, private activatedRoute:ActivatedRoute) { }
+    constructor(private perifeService: PerifeService, private router: Router, private activatedRoute:ActivatedRoute, private usersService: UsersService) { }
   
     ngOnInit(): void {
       this.cargar();
+      this.loadUsuarios();
      }
   
     cargar():void{
@@ -51,58 +65,53 @@ export class FormperiComponent {
       );
     }
   
-    create(): void {
-      this.perifeService.create(this.periferico).subscribe(
-        () => {
-          Swal.fire({
-            title: "Registro Exitoso",
-            showClass: {
-              popup: `
-                animate__animated
-                animate__fadeInUp
-                animate__faster
-              `
+    loadUsuarios(): void {
+        this.usersService.getAll().subscribe(
+          (response: Colaborador[]) => {
+            this.colaboradores = response;
+          },
+          (error: any) => {
+            console.error('Error al obtener los usuarios', error);
+          }
+        );
+      }
+    
+       create(): void {
+          // Validación del responsable
+          if (!this.periferico.responsable?.id) {
+            Swal.fire('Error', 'Debes seleccionar un responsable', 'error');
+            return;
+          }
+      
+          // Llamada al servicio
+          this.perifeService.create(this.periferico).subscribe({
+            next: (response) => {
+              Swal.fire('Éxito', 'Periferico creado correctamente', 'success');
+              this.resetForm();
             },
-            hideClass: {
-              popup: `
-                animate__animated
-                animate__fadeOutDown
-                animate__faster
-              `
+            error: (err) => {
+              console.error('Error:', err);
+              const errorMsg = err.message || 'Error al crear el mantenimiento';
+              Swal.fire('Error', errorMsg, 'error');
             }
           });
-          this.router.navigate(['/perifericos']);
-        },
-        error => {
-          Swal.fire({
-            title: "Error al registrar",
-            text: error.message,
-            icon: "error"
-          });
         }
-      );
-    }
-    
-    update(): void {
-      this.perifeService.update(this.periferico).subscribe(
-        () => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Registro Actualizado",
-            showConfirmButton: false,
-            timer: 1500
-          });
-          this.router.navigate(['/perifericos']);
-        },
-        error => {
-          Swal.fire({
-            title: "Error al actualizar",
-            text: error.message,
-            icon: "error"
-          });
+      
+        resetForm(): void {
+          this.periferico = {
+            responsable: { id: 0, nombre: '', apellido: '' },
+            id: 0,
+            nombre: '',
+            modelo: '',
+            numero_serie: '',
+            fecha_adquisicion: '',
+          };
         }
-      );
-    }
-  }
-  
+        
+        // Método reset (correcto)
+        getNombreResponsable(id: number): string {
+          const colab = this.colaboradores.find(c => c.id === id);
+          return colab ? `${colab.nombre} ${colab.apellido}` : 'No encontrado';
+        }
+      }
+      

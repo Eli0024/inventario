@@ -6,6 +6,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Colaborador } from '../models/users';
+import { UsersService } from '../services/users.service';
 
 
 @Component({
@@ -27,13 +29,25 @@ export class FormmanteComponent {
     descripcion: '',
     };
   
+    colaborador: Colaborador = {
+          id: 0,
+          nombre: '',
+          apellido: '',
+          empresa: null,
+          area: null,
+          cargo: '',
+        };
+        
   @Input() mantenimientoSeleccionado: any;
- 
+  responsables: any[] = [];
+  colaboradores: Colaborador[] = [];
+  mantenimientos: Mantenimiento[] = [];
 
-  constructor(private mantenService: MantenService, private router: Router, private activatedRoute:ActivatedRoute) { }
+  constructor(private mantenService: MantenService, private router: Router, private activatedRoute:ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.cargar();
+    this.loadUsuarios();
    }
 
   cargar():void{
@@ -50,58 +64,53 @@ export class FormmanteComponent {
     );
   }
 
-  create(): void {
-    this.mantenService.create(this.mantenimiento).subscribe(
-      () => {
-        Swal.fire({
-          title: "Registro Exitoso",
-          showClass: {
-            popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `
-          },
-          hideClass: {
-            popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `
-          }
-        });
-        this.router.navigate(['/manten']);
+  loadUsuarios(): void {
+    this.usersService.getAll().subscribe(
+      (response: Colaborador[]) => {
+        this.colaboradores = response;
       },
-      error => {
-        Swal.fire({
-          title: "Error al registrar",
-          text: error.message,
-          icon: "error"
-        });
+      (error: any) => {
+        console.error('Error al obtener los usuarios', error);
       }
     );
   }
-  
-  update(): void {
-    this.mantenService.update(this.mantenimiento).subscribe(
-      () => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Registro Actualizado",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.router.navigate(['/manten']);
+
+  create(): void {
+    // Validación del responsable
+    if (!this.mantenimiento.responsable?.id) {
+      Swal.fire('Error', 'Debes seleccionar un responsable', 'error');
+      return;
+    }
+
+    // Llamada al servicio
+    this.mantenService.create(this.mantenimiento).subscribe({
+      next: (response) => {
+        Swal.fire('Éxito', 'Mantenimiento creado correctamente', 'success');
+        this.resetForm();
       },
-      error => {
-        Swal.fire({
-          title: "Error al actualizar",
-          text: error.message,
-          icon: "error"
-        });
+      error: (err) => {
+        console.error('Error:', err);
+        const errorMsg = err.message || 'Error al crear el mantenimiento';
+        Swal.fire('Error', errorMsg, 'error');
       }
-    );
+    });
+  }
+
+  resetForm(): void {
+    this.mantenimiento = {
+      responsable: { id: 0, nombre: '', apellido: '' },
+      id: 0,
+      equipo: '',
+      fecha: '',
+      tipo: '',
+      descripcion: '',
+    };
+  }
+  
+  // Método reset (correcto)
+  getNombreResponsable(id: number): string {
+    const colab = this.colaboradores.find(c => c.id === id);
+    return colab ? `${colab.nombre} ${colab.apellido}` : 'No encontrado';
   }
 }
 

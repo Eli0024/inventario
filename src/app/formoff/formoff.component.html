@@ -49,41 +49,17 @@
         required
       />
     </div>
-    <div class="input-container">
-      <div
-        class="icon-container bg-cyan-500 text-white "
-      >
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
-          />
-        </svg>
-      </div>
-        <input type="text" id="nombre"  placeholder="Nombre Responsable" [(ngModel)]="licence.responsable.nombre" name="nombre" required>
-    </div>
-    <div class="input-container">
-      <div
-        class="icon-container bg-cyan-500 text-white "
-      >
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
-          />
-        </svg>
-      </div>
-      <input type="text" id="apellido" placeholder="Apellido Responsable"   [(ngModel)]="licence.responsable.apellido" name="apellido" required>
+    <select class="bg-gray-500" [(ngModel)]="licence.responsable.id" name="responsable" required>
+      <option [ngValue]="null">Seleccione un responsable</option>
+      <option *ngFor="let colab of colaboradores" [ngValue]="colab.id">
+        {{ colab.nombre }} {{ colab.apellido }}
+      </option>
+    </select>
+    
+    <div *ngIf="licence.responsable.id && colaboradores.length">
+      <small>Responsable seleccionado: 
+        {{ getNombreResponsable(licence.responsable.id) }}
+      </small>
     </div>
     
     <button class="btn btn-primary" type="button" (click)="create()">Registrar</button>

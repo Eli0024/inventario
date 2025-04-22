@@ -255,26 +255,72 @@
                   <div class="input-container">
                     <div class="icon-container bg-cyan-500 text-white">
                       <svg
+                        class="icon"
                         xmlns="http://www.w3.org/2000/svg"
                         width="30"
                         height="30"
-                        fill="currentColor"
-                        class="bi bi-file-earmark-code"
-                        viewBox="0 0 16 16"
+                        viewBox="0 0 24 24"
                       >
                         <path
-                          d="M4.5 0A.5.5 0 0 0 4 0.5v15a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5H8.707L5.354 5.354A.5.5 0 0 0 5 5.707V1H4.5zM9 3.5v7h4V3.5h-4z"
+                          d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
                         />
                       </svg>
                     </div>
                     <input
                       type="text"
-                      id="responsable"
-                      name="responsable"
-                      placeholder="Responsable"
-                      [(ngModel)]="perifericoSeleccionado.responsable"
+                      id="responsable-nombre"
+                      name="responsable-nombre"
+                      placeholder="Nombre del Responsable"
+                      [(ngModel)]="perifericoSeleccionado.responsable.nombre"
                       required
                     />
+                  </div>
+    
+                  <div class="input-container">
+                    <div class="icon-container bg-cyan-500 text-white">
+                      <svg
+                        class="icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="30"
+                        height="30"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      id="responsable-apellido"
+                      name="responsable-apellido"
+                      placeholder="Apellido del Responsable"
+                      [(ngModel)]="perifericoSeleccionado.responsable.apellido"
+                      required
+                    />
+                  </div>
+    
+                  <!-- Campo oculto para el ID del responsable -->
+                  <input
+                    type="hidden"
+                    [(ngModel)]="perifericoSeleccionado.responsable.id"
+                    name="responsable-id"
+                  />
+                  <div class="input-container">
+                    <div class="icon-container bg-cyan-500 text-white">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="30"
+                        height="30"
+                        fill="currentColor"
+                        class="bi bi-file-earmark-arrow-up-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707z"
+                        />
+                      </svg>
+                    </div>    
                   </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" (click)="closeModal()">
