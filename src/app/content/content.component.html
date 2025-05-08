@@ -2,23 +2,24 @@
   <app-navbar class="fixed top-0 w-full h-16 z-50"></app-navbar>
 
   <div class="flex flex-1 pt-16">
-    <div class="w-64  fixed h-screen  bg-gray-800 text-white z-40 overflow-y-auto">
+    <div class="w-64 fixed h-screen bg-gray-800 text-white z-40 overflow-y-auto">
       <app-sidebar></app-sidebar>
     </div>
 
-    <div class="flex-1  ml-64 bg-gray-100 text-gray-900 overflow-y-auto">
-      <div id="main" class="main-content flex-1 ">
-        <div class="bg-white shadow-md fixed z-30 w-100 h-20 top-16">
-          <div class="p-3 text-xl md:text-2xl font-semibold">
-            <i class="fa fa-tachometer-alt mr-2"></i>
-            <span>Panel de Administración</span>
-          </div>
+    <div class="flex-1 ml-64 bg-gray-100 text-gray-900 overflow-y-auto">
+      <!-- Panel de Administración Fijo -->
+      <div class="bg-white shadow-md fixed z-30 w-[calc(100%-16rem)] h-20 top-16">
+        <div class="p-3 text-xl md:text-2xl font-semibold">
+          <i class="fa fa-tachometer-alt mr-2"></i>
+          <span>Panel de Administración</span>
         </div>
+      </div>
 
-
-     
+      <!-- Contenido principal con margen superior -->
+      <div class="pt-20">
+        <!-- Primer grupo de cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-          <div class="card h-60 shadow   rounded-lg bg-white">
+          <div class="card h-60 shadow rounded-lg bg-white">
             <a routerLink="/info" class="text-center block p-4">
               <i class="fa fa-laptop text-blue-500 text-4xl mb-2"></i>
             </a>
@@ -27,7 +28,7 @@
               <p class="text-center text-2xl text-gray-700">{{ totalEquipos }}</p>
             </div>
             <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
-              <small class="text-body-secondary"></small>
+              <small class="text-body-secondary">Total de equipos registrados</small>
             </div>
           </div>
           <div class="card h-60 shadow rounded-lg bg-white">
@@ -39,7 +40,7 @@
               <p class="text-center text-2xl text-gray-700">{{ totalColaboradores }}</p>
             </div>
             <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
-              <small class="text-body-secondary"></small>
+              <small class="text-body-secondary">Usuarios activos</small>
             </div>
           </div>
           <div class="card h-60 shadow rounded-lg bg-white">
@@ -51,11 +52,12 @@
               <p class="text-center text-2xl text-gray-700">{{ totalLicencias }}</p>
             </div>
             <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
-              <small class="text-body-secondary"></small>
+              <small class="text-body-secondary">Licencias registradas</small>
             </div>
           </div>
-        
+        </div>
 
+        <!-- Segundo grupo de cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
           <div class="card h-60 shadow rounded-lg bg-white">
             <a routerLink="/manten" class="text-center block p-4 text-indigo-500 hover:text-indigo-700">
@@ -67,7 +69,7 @@
               <p class="card-text"></p>
             </div>
             <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
-              <small class="text-body-secondary"></small>
+              <small class="text-body-secondary">Regirto de mantenimiento</small>
             </div>
           </div>
           <div class="card h-60 shadow rounded-lg bg-white">
@@ -79,23 +81,24 @@
               <p class="text-center text-2xl text-gray-700">{{ totalImpresoras }}</p>
             </div>
             <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
-              <small class="text-body-secondary"></small>
+              <small class="text-body-secondary">Impresoras registradas</small>
             </div>
           </div>
           <div class="card h-60 shadow rounded-lg bg-white">
             <a routerLink="/perifericos" class="text-center block p-4 text-red-500 hover:text-red-700">
-              <i class="fa fa-mouse text-4xl mb-2"></i> </a>
+              <i class="fa fa-mouse text-4xl mb-2"></i>
+            </a>
             <div class="card-body p-4">
               <h5 class="card-title text-center text-lg font-semibold text-gray-800">Periféricos</h5>
               <p class="text-center text-2xl text-gray-700">{{ totalPerifericos }}</p>
             </div>
             <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
-              <small class="text-body-secondary"></small>
+              <small class="text-body-secondary">Perisfericos registrados</small>
             </div>
           </div>
         </div>
-      </div>
 
+        <!-- Formulario de reporte -->
         <div class="p-4 flex justify-center">
           <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 bg-white p-4 rounded-lg shadow">
             <label for="area" class="text-gray-700">Selecciona un área:</label>
@@ -114,13 +117,14 @@
               <option value="QCS">QCS</option>
               <option value="Surfactantes">Surfactantes</option>
               <option value="TIC">TIC</option>
-              </select>
+            </select>
             <button (click)="descargarReporte()" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
               <i class="fa fa-download mr-2"></i> Generar Reporte
             </button>
           </div>
         </div>
 
+        <!-- Tabla de usuarios -->
         <div class="p-4">
           <div class="bg-white rounded-lg shadow overflow-x-auto">
             <table class="min-w-full table-hover">
@@ -129,8 +133,10 @@
                   <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">ID</th>
                   <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">NOMBRE</th>
                   <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">APELLIDO</th>
-                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider hidden sm:table-cell">EMPRESA</th> <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">AREA</th>
-                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider hidden md:table-cell">CARGO</th> <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">DETALLE</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider hidden sm:table-cell">EMPRESA</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">AREA</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider hidden md:table-cell">CARGO</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">DETALLE</th>
                 </tr>
               </thead>
               <tbody class="bg-white text-gray-700">
