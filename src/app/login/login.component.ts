@@ -18,6 +18,7 @@ export class LoginComponent  {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
+   isPasswordVisible=false;
 
 
    constructor(private authService: Authservice, private router: Router) {}
@@ -41,4 +42,11 @@ export class LoginComponent  {
    onSubmit() {
      this.login();
    }
+   togglePasswordVisibility() { 
+    this.isPasswordVisible = !this.isPasswordVisible;
+    const passwordInput = document.querySelector('input[name="password"]') as HTMLInputElement;
+    if (passwordInput) {
+      passwordInput.type = this.isPasswordVisible ? 'text' : 'password';
+    }
+  }
  }

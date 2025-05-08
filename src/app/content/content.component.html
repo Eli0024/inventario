@@ -1,168 +1,147 @@
-<div class="min-h-screen flex flex-col bg-white text-white">
-  <!-- Navbar -->
-  <app-navbar></app-navbar>
+<div class="min-h-screen flex flex-col bg-gray-900 text-white">
+  <app-navbar class="fixed top-0 w-full h-16 z-50"></app-navbar>
 
-  <div class="flex flex-1">
-    <!-- Sidebar -->
-    <div class="w-full md:w-64 text-white">
+  <div class="flex flex-1 pt-16">
+    <div class="w-64  fixed h-screen  bg-gray-800 text-white z-40 overflow-y-auto">
       <app-sidebar></app-sidebar>
     </div>
 
-    <!-- Main content area -->
-    <div class="flex flex-col w-full">
-      <!-- Main content header -->
-      <div id="main" class="main-content flex-1 bg-gray-200">
-        <div class="bg-gray-800">
-          <div class="bg-white p-3 shadow text-2xl text-gray-600">
-            <i class="fa fa-tachometer-alt fa-x"></i>
-            <span> Panel de Administración</span>
+    <div class="flex-1  ml-64 bg-gray-100 text-gray-900 overflow-y-auto">
+      <div id="main" class="main-content flex-1 ">
+        <div class="bg-white shadow-md fixed z-30 w-100 h-20 top-16">
+          <div class="p-3 text-xl md:text-2xl font-semibold">
+            <i class="fa fa-tachometer-alt mr-2"></i>
+            <span>Panel de Administración</span>
           </div>
         </div>
 
-        <!-- Cards de resumen -->
-        <div class="row row-cols-1 row-cols-md-3 p-4 g-4">
-          <div class="col">
-            <div class="card h-60">
-              <a routerLink="/info" class="text-center">
-                <i class="fa fa-laptop text-center m-2 fa-2x"></i>
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-center">Equipos</h5>
-                <p class="text-center text-xl">{{ totalEquipos }}</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary"></small>
-              </div>
+
+     
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+          <div class="card h-60 shadow   rounded-lg bg-white">
+            <a routerLink="/info" class="text-center block p-4">
+              <i class="fa fa-laptop text-blue-500 text-4xl mb-2"></i>
+            </a>
+            <div class="card-body p-4">
+              <h5 class="card-title text-center text-lg font-semibold text-gray-800">Equipos</h5>
+              <p class="text-center text-2xl text-gray-700">{{ totalEquipos }}</p>
+            </div>
+            <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
+              <small class="text-body-secondary"></small>
             </div>
           </div>
-          <div class="col">
-            <div class="card h-60">
-              <a routerLink="/usuarios" class="text-center">
-                <i class="fas fa-users fa-2x m-2 text-center"></i>
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-center">Usuarios</h5>
-                <p class="text-center text-xl">{{ totalColaboradores }}</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary"></small>
-              </div>
+          <div class="card h-60 shadow rounded-lg bg-white">
+            <a routerLink="/usuarios" class="text-center block p-4 text-green-500 hover:text-green-700">
+              <i class="fas fa-users text-4xl mb-2"></i>
+            </a>
+            <div class="card-body p-4">
+              <h5 class="card-title text-center text-lg font-semibold text-gray-800">Usuarios</h5>
+              <p class="text-center text-2xl text-gray-700">{{ totalColaboradores }}</p>
+            </div>
+            <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
+              <small class="text-body-secondary"></small>
             </div>
           </div>
-          <div class="col">
-            <div class="card h-60">
-              <a routerLink="/licencias" class="text-center">
-                <i class="fa fa-file-alt fa-2x m-2 text-center"></i>
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-center">Licencias</h5>
-                <p class="text-center text-xl">{{ totalLicencias }}</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary"></small>
-              </div>
+          <div class="card h-60 shadow rounded-lg bg-white">
+            <a routerLink="/licencias" class="text-center block p-4 text-yellow-500 hover:text-yellow-700">
+              <i class="fa fa-file-alt text-4xl mb-2"></i>
+            </a>
+            <div class="card-body p-4">
+              <h5 class="card-title text-center text-lg font-semibold text-gray-800">Licencias</h5>
+              <p class="text-center text-2xl text-gray-700">{{ totalLicencias }}</p>
+            </div>
+            <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
+              <small class="text-body-secondary"></small>
+            </div>
+          </div>
+        
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+          <div class="card h-60 shadow rounded-lg bg-white">
+            <a routerLink="/manten" class="text-center block p-4 text-indigo-500 hover:text-indigo-700">
+              <i class="fa fa-tools text-4xl mb-2"></i>
+            </a>
+            <div class="card-body p-4">
+              <h5 class="card-title text-center text-lg font-semibold text-gray-800">Mantenimiento</h5>
+              <p class="text-center text-2xl text-gray-700">{{ totalMantenimientos }}</p>
+              <p class="card-text"></p>
+            </div>
+            <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
+              <small class="text-body-secondary"></small>
+            </div>
+          </div>
+          <div class="card h-60 shadow rounded-lg bg-white">
+            <a routerLink="/impresoras" class="text-center block p-4 text-teal-500 hover:text-teal-700">
+              <i class="fa fa-print text-4xl mb-2"></i>
+            </a>
+            <div class="card-body p-4">
+              <h5 class="card-title text-center text-lg font-semibold text-gray-800">Impresoras</h5>
+              <p class="text-center text-2xl text-gray-700">{{ totalImpresoras }}</p>
+            </div>
+            <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
+              <small class="text-body-secondary"></small>
+            </div>
+          </div>
+          <div class="card h-60 shadow rounded-lg bg-white">
+            <a routerLink="/perifericos" class="text-center block p-4 text-red-500 hover:text-red-700">
+              <i class="fa fa-mouse text-4xl mb-2"></i> </a>
+            <div class="card-body p-4">
+              <h5 class="card-title text-center text-lg font-semibold text-gray-800">Periféricos</h5>
+              <p class="text-center text-2xl text-gray-700">{{ totalPerifericos }}</p>
+            </div>
+            <div class="card-footer bg-gray-100 p-2 text-center text-sm text-gray-500 rounded-b-lg">
+              <small class="text-body-secondary"></small>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Otras 3 cards -->
-        <div class="row row-cols-1 row-cols-md-3 p-4 g-4">
-          <div class="col">
-            <div class="card h-60">
-              <a routerLink="/manten" class="text-center">
-                <i class="fa fa-tools fa-2x m-2 text-center"></i>
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-center">Mantenimiento</h5>
-                <p class="text-center text-xl">{{ totalMantenimientos }}</p>
-                <p class="card-text"></p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary"></small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <a routerLink="/impresoras" class="text-center">
-                <i class="fa fa-print fa-2x m-2 text-center"></i>
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-center">Impresoras</h5>
-                <p class="text-center text-xl">{{ totalImpresoras }}</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary"></small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <a routerLink="/perifericos" class="text-center">
-                <i class="fa fa-print fa-2x m-2 text-center"></i>
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-center">Periféricos</h5>
-                <p class="text-center text-xl">{{ totalPerifericos }}</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary"></small>
-              </div> 
-            </div>
-          </div>
-        </div>
-
-        <!-- Botón para generar reporte -->
         <div class="p-4 flex justify-center">
-          <div class="flex items-center space-x-4 bg-white p-4 rounded-lg shadow">
+          <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 bg-white p-4 rounded-lg shadow">
             <label for="area" class="text-gray-700">Selecciona un área:</label>
-            <select id="area" [(ngModel)]="area" class="p-2 border rounded bg-gray-600">
+            <select id="area" [(ngModel)]="area" class="p-2 border rounded bg-gray-100 text-gray-700">
               <option value="Abastecimiento">Abastecimiento</option>
-          <option value="Almacen">Almacen</option>
-          <option value="Calidad">Calidad</option>
-          <option value="Compras">Compras</option>
-          <option value="Contabilidad">Contabilidad</option>
-          <option value="Despachos">Despachos</option>
-          <option value="Gestion Humana">Gestion Humana</option>
-          <option value="Investigacion y Desarrollo">
-            Investigacion y Desarrollo
-          </option>
-          <option value="Logistica">Logistica</option>
-          <option value="Mantenimiento">Mantenimiento</option>
-          <option value="QBC">QBC</option>
-          <option value="QCS">QCS</option>
-          <option value="Surfactantes">Surfactantes</option>
-          <option value="TIC">TIC</option>
-              <!-- Agrega más opciones según tus áreas -->
-            </select>
+              <option value="Almacen">Almacen</option>
+              <option value="Calidad">Calidad</option>
+              <option value="Compras">Compras</option>
+              <option value="Contabilidad">Contabilidad</option>
+              <option value="Despachos">Despachos</option>
+              <option value="Gestion Humana">Gestion Humana</option>
+              <option value="Investigacion y Desarrollo">Investigacion y Desarrollo</option>
+              <option value="Logistica">Logistica</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="QBC">QBC</option>
+              <option value="QCS">QCS</option>
+              <option value="Surfactantes">Surfactantes</option>
+              <option value="TIC">TIC</option>
+              </select>
             <button (click)="descargarReporte()" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-              <i class="fa fa-download"></i> Generar Reporte
+              <i class="fa fa-download mr-2"></i> Generar Reporte
             </button>
           </div>
         </div>
 
-        <!-- Tabla de usuarios -->
-        <div class="card-body ml-4 mr-4 mt-4">
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <thead class="bg-custom-blue">
-                <th class="text-center">ID</th>
-                <th class="text-center">NOMBRE</th>
-                <th class="text-center">APELLIDO</th>
-                <th class="text-center">EMPRESA</th>
-                <th class="text-center">AREA</th>
-                <th class="text-center">CARGO</th>
-                <th class="text-center">DETALLE</th>
+        <div class="p-4">
+          <div class="bg-white rounded-lg shadow overflow-x-auto">
+            <table class="min-w-full table-hover">
+              <thead class="bg-gray-200 text-gray-700">
+                <tr>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">ID</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">NOMBRE</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">APELLIDO</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider hidden sm:table-cell">EMPRESA</th> <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">AREA</th>
+                  <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider hidden md:table-cell">CARGO</th> <th class="px-4 py-2 text-center text-sm font-semibold tracking-wider">DETALLE</th>
+                </tr>
               </thead>
-              <tbody>
+              <tbody class="bg-white text-gray-700">
                 <tr *ngFor="let colaborador of filterColaboradores()">
-                  <td class="text-center">{{ colaborador.id }}</td>
-                  <td class="text-center">{{ colaborador.nombre }}</td>
-                  <td class="text-center">{{ colaborador.apellido }}</td>
-                  <td class="text-center">{{ colaborador.empresa }}</td>
-                  <td class="text-center">{{ colaborador.area }}</td>
-                  <td class="text-center">{{ colaborador.cargo }}</td>
-                  <td [routerLink]="['/vermas', colaborador.id]" class="text-center">Ver Más</td>
+                  <td class="px-4 py-3 text-center text-sm">{{ colaborador.id }}</td>
+                  <td class="px-4 py-3 text-center text-sm">{{ colaborador.nombre }}</td>
+                  <td class="px-4 py-3 text-center text-sm">{{ colaborador.apellido }}</td>
+                  <td class="px-4 py-3 text-center text-sm hidden sm:table-cell">{{ colaborador.empresa }}</td>
+                  <td class="px-4 py-3 text-center text-sm">{{ colaborador.area }}</td>
+                  <td class="px-4 py-3 text-center text-sm hidden md:table-cell">{{ colaborador.cargo }}</td>
+                  <td [routerLink]="['/vermas', colaborador.id]" class="px-4 py-3 text-center text-sm text-blue-500 hover:underline cursor-pointer">Ver Más</td>
                 </tr>
               </tbody>
             </table>
