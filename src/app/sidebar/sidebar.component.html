@@ -1,33 +1,29 @@
-<!-- sidebar.component.html -->
-<div class="sidebar">
-  <a class="active text-center font-manrope text-lg" routerLink="/info"
-    >Equipos <i class="fa fa-laptop fa-x"></i
-  ></a>
-  <a class="text-center font-manrope text-lg" routerLink="/usuarios"
-    >Usuarios <i class="fa fa-address-book fa-x"></i
-  ></a>
-  <a class="text-center font-manrope text-lg" routerLink="/licencias"
-    >Licencias <i class="fa fa-file-alt fa-x"></i
-  ></a>
-  <a class="text-center font-manrope text-lg" routerLink="/impresoras"
-    >Impresoras <i class="fa fa-print fa-x"></i
-  ></a>
-  <a class="text-center font-manrope text-lg" routerLink="/manten"
-    >Mantenimiento <i class="fa fa-tools fa-x"></i
-  ></a>
-  <a class="text-center font-manrope text-lg" routerLink="/perifericos"
-    >Perifericos <i class="fa fa-tools fa-x"></i
-  ></a>
-  <br>
-  <div class="flex justify-center">
-    <button class="text-lg text-gray-800" (click)="logout()">Cerrar sesión</button>
+<div class="sidebar flex flex-col bg-gray-100 text-white p-4" style="max-height: 110vh;">
+  <div class="mb-8">
+    <nav class="flex flex-col space-y-2">
+      <a class="active flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/info">
+        <i class="fa fa-laptop fa-lg mr-2"></i> Equipos
+      </a>
+      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/usuarios">
+        <i class="fa fa-address-book fa-lg mr-2"></i> Usuarios
+      </a>
+      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/licencias">
+        <i class="fa fa-file-alt fa-lg mr-2"></i> Licencias
+      </a>
+      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/impresoras">
+        <i class="fa fa-print fa-lg mr-2"></i> Impresoras
+      </a>
+      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/manten">
+        <i class="fa fa-tools fa-lg mr-2"></i> Mantenimiento
+      </a>
+      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/perifericos">
+        <i class="fa fa-mouse fa-lg mr-2"></i> Periféricos
+      </a>
+    </nav>
+  </div>
+  <div class="flex justify-center mt-8">
+    <button class="flex items-center text-lg text-gray-600 hover:text-red-500 focus:outline-none" (click)="logout()">
+      <i class="fas fa-sign-out-alt fa-lg mr-2"></i> Cerrar sesión
+    </button>
   </div>
 </div>
-<!-- <form method="POST" action="">
-  <a role="menuitem" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50 cursor-pointer dark:hover:bg-gray-700"
-     onclick="event.preventDefault(); this.closest('form').submit();">
-    Log Out
-  </a>
-</form> -->
-<!-- Page content -->
-<div class="content">..</div>

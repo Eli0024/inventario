@@ -1,7 +1,7 @@
 .header {
     height: 70px;
     padding: 20px 50px;
-    background-color: rgb(42, 124, 190);
+    background-color: rgb(25, 135, 225);
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -19,7 +19,7 @@
         height: 50px;
         border-radius: 50%;
         border: 2px solid #fff;
-        background-color: rgb(11, 107, 185);
+        background-color: rgb(25, 135, 225);
         margin-left: 20px;
         display: flex;
         align-items: center;

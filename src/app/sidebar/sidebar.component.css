@@ -19,6 +19,7 @@
 /* Active/current link */
 .sidebar a.active {
   background-color: #10a36d;
+  background-color: #6febbd;
   color: white;
 }
 
