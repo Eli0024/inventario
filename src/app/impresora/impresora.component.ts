@@ -6,22 +6,29 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormimpreComponent } from '../formimpre/formimpre.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MantenimprerComponent } from '../mantenimprer/mantenimprer.component';
 import { Impresora } from '../models/imprer';
 
 @Component({
   selector: 'app-impresora',
   standalone: true,
-  imports: [FormsModule, CommonModule, NavbarComponent, SidebarComponent, FormimpreComponent, RouterLink, MantenimprerComponent,],
+  imports: [
+    FormsModule, 
+    CommonModule, 
+    NavbarComponent, 
+    SidebarComponent, 
+    FormimpreComponent, 
+    RouterLink, 
+    MantenimprerComponent
+  ],
   templateUrl: './impresora.component.html',
   styleUrl: './impresora.component.css'
 })
 export class ImpresoraComponent implements OnInit {
-
-  impresoras : Impresora[] = []; // inicializa con un array vacío
+  impresoras: Impresora[] = [];
   filter: any = { searchTerm: '' };
-  impresora : Impresora = {
+  impresora: Impresora = {
     id: 0,
     nombre: '',
     direccion_ip: '',
@@ -31,21 +38,22 @@ export class ImpresoraComponent implements OnInit {
     id: 0,
     nombre: '',
     direccion_ip: '',
-   };
+  };
+  
+  modalImpresoraAbierto: boolean = false;
+  modalMantenimientoAbierto: boolean = false;
+
+  modalEdicionAbierto: boolean = false;
    
-  constructor(private imprerService: ImprerService, private cdr: ChangeDetectorRef) {  }
+  constructor(
+    private imprerService: ImprerService, 
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadImpresoras();
-    }
-    
-    editarImpresora(impresora: Impresora): void {
-         this.impresoraSeleccionado = { ...impresora };  // Crea una copia del usuario a editar
-         this.openModal();  // Abre el modal
-       }
-  
-
-    modalAbierto: boolean = false; 
+  }
 
   loadImpresoras(): void {
     this.imprerService.getAll().subscribe(
@@ -53,79 +61,119 @@ export class ImpresoraComponent implements OnInit {
         this.impresoras = response;
       },
       (error: any) => {
-        console.error('Error al obtener los usuarios', error);
+        console.error('Error al obtener las impresoras', error);
       }
     );
   }
 
-  // Abre el modal
-  openModal(): void {
-    this.modalAbierto = true;
+  //MODAL DE REGISTRO IMPRESORA
+  openImpresoraModal(): void {
+    this.modalImpresoraAbierto = true;
   }
 
-  // Cierra el modal
+  closeImpresoraModal(): void {
+    this.modalImpresoraAbierto = false;
+  }
+
+  onImpresoraCreada(impresora: any): void {
+  this.modalImpresoraAbierto = false;
+  this.loadImpresoras(); 
+}
+
+  //MODAL DE REGISTRO MANTENIMIENTO IMPRESORA
+
+  openMantenimientoModal(): void {
+    this.modalMantenimientoAbierto = true;
+  }
+
+  closeMantenimientoModal(): void {
+    this.modalMantenimientoAbierto = false;
+  }
+
+  onMantenimientoCreado(mantenimiento: any): void {
+  this.modalMantenimientoAbierto = false; 
+}
+
+  //MODAL DE EDICION
+  editarImpresora(impresora: Impresora): void {
+    this.impresoraSeleccionado = { ...impresora };
+    this.openModal();
+  }
+
+  openModal(): void {
+    this.modalEdicionAbierto = true;
+  }
+
   closeModal(): void {
-    this.modalAbierto = false;
+    this.modalEdicionAbierto = false;
   }
   
   update(): void {
-    if (this.impresoraSeleccionado && this.impresoraSeleccionado.id) {  // Asegúrate de que el id esté presente
+    if (this.impresoraSeleccionado && this.impresoraSeleccionado.id) {
       this.imprerService.update(this.impresoraSeleccionado).subscribe(
         (response: Impresora) => {
-          console.log('Licencia actualizada', response);
-          this.loadImpresoras();  // Recargar las licencias
-          this.closeModal();  // Cerrar el modal
+          console.log('Impresora actualizada', response);
+          this.loadImpresoras();
+          this.closeModal();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Impresora actualizada",
+            showConfirmButton: false,
+            timer: 1500
+          });
         },
         (error: any) => {
-          console.error('Error al actualizar la licencia', error);
+          console.error('Error al actualizar la impresora', error);
+          Swal.fire({
+            title: "Error",
+            text: "Hubo un problema al actualizar la impresora",
+            icon: "error"
+          });
         }
       );
-    } else {
-      console.error('El id de la licencia es necesario para actualizar.');
     }
   }
   
-  
-   delete(id: number) {
-      console.log(id);
-      
-      Swal.fire({
-        title: "¿Desea eliminar este registro?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sí, ¡elimínalo!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.imprerService.delete(id).subscribe({
-            next: () => {
-              Swal.fire({
-                title: "¡Eliminado!",
-                text: "El registro ha sido eliminado.",
-                icon: "success"
-              });
-              this.ngOnInit(); // Actualiza la vista
-            },
-            error: (err) => {
-              console.error('Error:', err);
-              Swal.fire({
-                title: "Error",
-                text: "Hubo un problema al eliminar el registro.",
-                icon: "error"
-              });
-            }
-          });
-        }
-      });
-    }
-
-    filterImpresoras(): Impresora[] {
-      if (this.impresoras && this.impresoras.length) {
-        return this.impresoras.filter( Impresora =>
-          Impresora.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) 
-        );
+  delete(id: number) {
+    Swal.fire({
+      title: "¿Desea eliminar este registro?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, ¡elimínalo!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.imprerService.delete(id).subscribe({
+          next: () => {
+            Swal.fire({
+              title: "¡Eliminado!",
+              text: "El registro ha sido eliminado.",
+              icon: "success"
+            });
+            this.loadImpresoras();
+          },
+          error: (err) => {
+            console.error('Error:', err);
+            Swal.fire({
+              title: "Error",
+              text: "Hubo un problema al eliminar el registro.",
+              icon: "error"
+            });
+          }
+        });
       }
-      return [];
+    });
+  }
+
+  filterImpresoras(): Impresora[] {
+    if (this.impresoras && this.impresoras.length) {
+      return this.impresoras.filter(impresora =>
+        impresora.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+        impresora.direccion_ip.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
+      );
     }
+    return [];
+  }
 }

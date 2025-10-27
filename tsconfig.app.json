@@ -5,15 +5,16 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": [
-      "node"
+      "jasmine"
     ]
   },
   "files": [
     "src/main.ts",
     "src/main.server.ts",
-    "server.ts"
+    "src/custom-typings.d.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.ts"
   ]
 }

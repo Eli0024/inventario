@@ -1,19 +1,32 @@
-import { inject, Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
 import { Authservice } from './auth.service';
 
-
-
 export const AuthInterceptor: HttpInterceptorFn =(req, next)=>{
-  const token = inject(Authservice).getToken();
-  if(token){
-  const authReq = req.clone({
-    setHeaders: {
-      Authorization: `Token ${token}`
-    }
-  });
-  return next(authReq);
-}
+  const authservice = inject(Authservice);
+  const token = authservice.getToken();
+  const empresaId = authservice.getEmpresaId();
 
-return next(req);
-};
+  const isPublicRoute=
+  req.url.includes('/login') || req.url.includes('/register')
+
+  if(isPublicRoute){
+    return next(req);
+  }
+
+  let headers:{[name: string]: string} = {};
+
+  if(token){
+    headers['Authorization'] = `Token ${token}`;
+  }
+
+  if(empresaId){
+    headers['X-Empresa-ID'] = empresaId.toString();
+  }
+
+  const authReq = req.clone({
+    setHeaders: headers
+  });
+  
+  return next(authReq);
+};  

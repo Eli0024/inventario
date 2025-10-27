@@ -1,69 +1,203 @@
-<div class="container">
-  <form id="registro-parametros-form">
-    <div class="input-container">
-      <div
-        class="icon-container bg-cyan-500 text-white"
-      >
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
-        <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
-        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
-      </svg>
+<div class="modal-container bg-white p-6 rounded-2xl shadow-xl max-w-5xl mx-auto border border-gray-100">
+  <form id="registro-licencias-form" class="space-y-6" #licenciaForm="ngForm">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Tipo de licencia -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-list text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <select
+            [(ngModel)]="licence.tipo_licencia"
+            name="tipo_licencia"
+            required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+          >
+            <option value="office">Office</option>
+            <option value="project_2013">Project 2013</option>
+            <option value="project_2019">Project 2019</option>
+            <option value="visio">Visio</option>
+            <option value="antivirus">Antivirus</option>
+            <option value="windows">Windows</option>
+            <option value="adobe">Adobe</option>
+            <option value="autocad_2019">AutoCad 2019</option>
+            <option value="autocad_2024">AutoCad 2024</option>
+            <option value="otro">Otro</option>
+          </select>
+          <label
+            for="tipo_licencia"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+        peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+        peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3
+        peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1"
+          >Tipo de Licencia</label>
+        </div>
       </div>
-      <input type="text" id="correo" name="correo" placeholder="Correo"  [(ngModel)]="licence.correo" required />
-    </div>
-    <div class="input-container">
-      <div
-        class="icon-container bg-cyan-500 text-white "
-      >
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-qr-code" viewBox="0 0 16 16">
-        <path d="M2 2h2v2H2z"/>
-        <path d="M6 0v6H0V0zM5 1H1v4h4zM4 12H2v2h2z"/>
-        <path d="M6 10v6H0v-6zm-5 1v4h4v-4zm11-9h2v2h-2z"/>
-        <path d="M10 0v6h6V0zm5 1v4h-4V1zM8 1V0h1v2H8v2H7V1zm0 5V4h1v2zM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8zm0 0v1H2V8H1v1H0V7h3v1zm10 1h-1V7h1zm-1 0h-1v2h2v-1h-1zm-4 0h2v1h-1v1h-1zm2 3v-1h-1v1h-1v1H9v1h3v-2zm0 0h3v1h-2v1h-1zm-4-1v1h1v-2H7v1z"/>
-        <path d="M7 12h1v3h4v1H7zm9 2v2h-3v-1h2v-1z"/>
-      </svg>
+
+      <!-- Correo -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-envelope text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            placeholder=" "
+            [(ngModel)]="licence.correo"
+            required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500
+              focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-transparent"
+          />
+          <label
+            for="correo"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3
+              left-3 z-10 origin-[0] peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+              peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 peer-focus:scale-75
+              peer-focus:-translate-y-6 bg-white px-1"
+          >Correo</label>
+        </div>
       </div>
-      <input
-        type="text"
-        id="contraseña"
-        name="contraseña"
-        placeholder="Contraseña"
-        [(ngModel)]="licence.contrasena"
-        required
-      />
     </div>
-    <div class="input-container">
-      <div
-        class="icon-container bg-cyan-500 text-white"
-      >
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-code" viewBox="0 0 16 16">
-        <path d="M4.5 0A.5.5 0 0 0 4 0.5v15a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V2a.5.5 0 0 0-.5-.5H8.707L5.354 5.354A.5.5 0 0 0 5 5.707V1H4.5zM9 3.5v7h4V3.5h-4z"/>
-      </svg>      
+
+    <!-- SEGUNDA FILA -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Contraseña -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-lock text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="text"
+            id="contrasena"
+            name="contrasena"
+            placeholder=" "
+            [(ngModel)]="licence.contrasena"
+            required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500
+              focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-transparent"
+           
+          />
+          <label
+            for="contrasena"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3
+              left-3 z-10 origin-[0] peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+              peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 peer-focus:scale-75
+              peer-focus:-translate-y-6 bg-white px-1"
+          >Contraseña</label>
+        </div>
       </div>
-      <input
-        type="text"
-        id="serial_office"
-        name="serial_office"
-        placeholder="Serial_Office"
-        [(ngModel)]="licence.serial_office"
-        required
-      />
+
+      <!-- Clave de producto -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-key text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="text"
+            id="clave_producto"
+            name="clave_producto"
+            placeholder=" "
+            [(ngModel)]="licence.clave_producto"
+            required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500
+              focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-transparent"
+          />
+          <label
+            for="clave_producto"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3
+              left-3 z-10 origin-[0] peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+              peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 peer-focus:scale-75
+              peer-focus:-translate-y-6 bg-white px-1"
+          >Clave de Producto</label>
+        </div>
+      </div>
     </div>
-    <select class="bg-gray-500" [(ngModel)]="licence.responsable.id" name="responsable" required>
-      <option [ngValue]="null">Seleccione un responsable</option>
-      <option *ngFor="let colab of colaboradores" [ngValue]="colab.id">
-        {{ colab.nombre }} {{ colab.apellido }}
-      </option>
-    </select>
-    
-    <div *ngIf="licence.responsable.id && colaboradores.length">
-      <small>Responsable seleccionado: 
-        {{ getNombreResponsable(licence.responsable.id) }}
-      </small>
+
+    <!-- TERCERA FILA -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Fecha compra -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-calendar text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="date"
+            id="fecha_compra"
+            name="fecha_compra"
+            [(ngModel)]="licence.fecha_compra"
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500
+              focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+          />
+          <label
+            for="fecha_compra"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3
+              left-3 z-10 origin-[0] peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+              peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 peer-focus:scale-75
+              peer-focus:-translate-y-6 bg-white px-1"
+          >Fecha de Compra</label>
+        </div>
+      </div>
     </div>
-    
-    <button class="btn btn-primary" type="button" (click)="create()">Registrar</button>
+
+    <!-- EQUIPO -->
+    <div class="flex items-center space-x-2 transition-all">
+      <div
+        class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+        <i class="fas fa-desktop text-lg"></i>
+      </div>
+      <div class="relative z-0 w-full group">
+        <select
+          [(ngModel)]="licence.equipo_id"
+          class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500
+            focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+          name="equipo_id"
+          required
+        >
+          <option [ngValue]="null">Seleccione un equipo</option>
+          <option *ngFor="let eq of equipos" [ngValue]="eq.id">
+            {{ eq.marca }} - {{ eq.serial }} ({{ eq.responsable.nombre }} {{ eq.responsable.apellido }})
+          </option>
+        </select>
+        <label
+          for="equipo"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3
+            left-3 z-10 origin-[0] peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+            peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 peer-focus:scale-75
+            peer-focus:-translate-y-6 bg-white px-1"
+        >Equipo</label>
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 mt-4">
+      <button
+        type="button"
+        class="px-6 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm transition-all"
+        (click)="cancelar()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium
+          shadow-md hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50
+          disabled:cursor-not-allowed"
+        (click)="create()"
+      >
+        Registrar
+      </button>
+    </div>
 
   </form>
 </div>
-

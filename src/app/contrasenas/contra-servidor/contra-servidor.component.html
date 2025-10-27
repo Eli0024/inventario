@@ -1,0 +1,444 @@
+<div class="min-h-screen flex flex-col bg-white text-white">
+  <app-navbar class="fixed top-0 w-full z-50"></app-navbar>
+
+  <div class="flex flex-1 pt-16">
+    <div class="w-64 fixed h-screen bg-gray-800 text-white z-40 overflow-y-auto">
+      <app-sidebar></app-sidebar>
+    </div>
+
+
+    <div class="flex-1 ml-64 bg-gray-100 text-gray-900   overflow-y-auto">
+      <div class="bg-gray-800 shadow-md fixed z-30 w-[calc(100%-16rem)] h-18 top-16">
+        <div class="bg-white p-3 shadow text-2xl text-gray-600 sticky-top">
+            <i class="fa fa-list"></i>
+          <span>Lista de Contraseñas Servidores</span>
+        </div>
+      </div>
+      
+      <div class="flex flex-col md:flex-row justify-between md:items-center items-stretch gap-3 p-4 sm:p-5 bg-white shadow-sm rounded-lg mx-2 sm:mx-4 mt-20 mb-6 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] overflow-hidden">
+  <div class="flex flex-wrap justify-center md:justify-start gap-3 w-full md:w-auto">
+    <button
+      type="button"
+      class="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+      (click)="abrirModalRegistro()"
+    >
+      <i class="fas fa-plus"></i>
+      Registrar Contraseña
+    </button>
+
+    <!-- MODAL TAILWIND -->
+    <div *ngIf="modalRegistroAbierto" class="fixed inset-0 flex items-center justify-center z-50">
+      <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" (click)="cerrarModalRegistro()"></div>
+      <div class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-fadeIn z-50">
+        <!-- Header -->
+        <div class="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4">
+          <h5 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fas fa-plus"></i> Registrar Contraseña
+          </h5>
+          <button type="button" class="text-white hover:text-gray-200 transition" (click)="cerrarModalRegistro()">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="p-6 bg-gray-50 overflow-y-auto max-h-[80vh]">
+          <app-formservidor
+            (contrasenaCreada)="handleRegistroExitoso($event)"
+            (cancelarRegistro)="cerrarModalRegistro()"
+          ></app-formservidor>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="flex items-center justify-center gap-2 bg-gradient-to-r from-gray-600 to-gray-500 hover:from-gray-700 hover:to-gray-600 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+      type="button"
+      routerLink="/content"
+    >
+      <i class="fas fa-arrow-left"></i>
+      Volver
+    </button>
+  </div>
+
+  <div class="relative w-full md:w-auto">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <i class="fas fa-search text-gray-400"></i>
+    </div>
+    <input
+      class="block w-full md:w-64 lg:w-80 pl-10 pr-4 py-2.5 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition duration-150 bg-gray-50"
+      type="search"
+      placeholder="Buscar..."
+      [(ngModel)]="filter.searchTerm"
+    />
+  </div>
+</div>
+
+      
+      <!-- Sección de tablas -->
+      <div class="space-y-10">
+       <div class="w-full p-3">
+        <div class="mb-2 ">
+          <h3 class="text-2xl font-bold text-white bg-gray-400 rounded-t-lg py-2 shadow-sm text-center"><b> Servidor de Datos</b></h3>
+        </div>
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden ">
+            <div class="overflow-auto max-h-[calc(100vh-220px)]">
+             <table class="min-w-[1200px] w-full text-sm text-gray-700">
+                <thead class="sticky top-0 bg-gray-100 border-b border-gray-400 uppercase text-gray-800 text-xs z-10">
+                  <tr>
+                    <th class="p-3 text-center">ID</th>
+                    <th class="p-3 text-center">Tipo</th>
+                    <th class="p-3 text-center">Direccion Ip</th>
+                    <th class="p-3 text-center">Contraseña</th>
+                    <th class="p3 text-center">Archivo</th>
+                    <th class="p-3 text-center">Editar</th>
+                    <th class="p-3 text-center">Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let servidor of filterPorTipo('datos'); let i = index" class="hover:bg-gray-50 border-b border-gray-100 transition">
+                    <td class="p-3 text-center">{{ i + 1 }}</td>
+                    <td class="p-3 text-center">{{ servidor.tipo }}</td>
+                    <td class="p-3 text-center">{{ servidor.direccion_ip }}</td>
+                    <td class="p-3 text-center">{{ servidor.contrasena }}</td>
+                    <!--archivo-->
+                    <td class="p-3 text-center">
+                      <a
+                        href="{{servidor.archivo}}"
+                        class="text-blue-600 hover:underline"
+                        target="_blank"
+                      >
+                        <i class="fas fa-file text-lg"></i>
+                      </a>
+                    </td>
+          
+                    <td class="p-3 text-center space-x-2">
+                      <button 
+                        type="button"
+                        class="text-blue-500 hover:text-blue-700 transition"
+                        (click)="abrirModalEdicion(servidor)"
+                      >
+                        <i class="fa fa-edit text-xl"></i>
+                      </button>
+                    </td>  
+                    <td class="p-3 text-center space-x-2">
+                      <button 
+                      *ngIf="servidor.id !== undefined" 
+                      (click)="delete(servidor.id)" class="text-red-500 hover:text-red-700 transition"
+                      >
+                        <i class="fa fa-trash text-xl"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla: Servidor Sólido Fequiva -->
+        <div class="w-full p-3">
+          <div class="mb-2">
+            <h3 class="text-2xl font-bold text-white bg-gray-400 rounded-t-lg py-2 shadow-sm text-center"> <b>Servidor Solido Fequiva</b></h3>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="overflow-auto max-h-[calc(100vh-220px)]">
+              
+             <table class="min-w-[1200px] w-full text-sm text-gray-700">
+                <thead class="sticky top-0 bg-gray-100 border-b border-gray-400 uppercase text-gray-800 text-xs z-10">
+                  <tr>
+                    <th class="p-3 text-center">ID</th>
+                    <th class="p-3 text-center">Tipo</th>
+                    <th class="p-3 text-center">Direccion Ip</th>
+                    <th class="p-3 text-center">Contraseña</th>
+                    <th class="p3 text-center">Archivo</th>
+                    <th class="p-3 text-center">Editar</th>
+                    <th class="p-3 text-center">Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let servidor of filterPorTipo('solido'); let i = index" class="hover:bg-gray-50 border-b border-gray-100 transition">
+                    <td class="p-3 text-center">{{ i + 1 }}</td>
+                    <td class="p-3 text-center">{{ servidor.tipo }}</td>
+                    <td class="p-3 text-center">{{ servidor.direccion_ip }}</td>
+                    <td class="p-3 text-center">{{ servidor.contrasena }}</td>
+                    <!--archivo-->
+                    <td class="p-3 text-center">
+                      <a
+                        href="{{servidor.archivo}}"
+                        class="text-blue-600 hover:underline"
+                        target="_blank"
+                      >
+                        <i class="fas fa-file text-lg"></i>
+                      </a>
+                    </td>
+          
+                    <td class="p-3 text-center space-x-2">
+                      <button 
+                        type="button"
+                        class="text-blue-500 hover:text-blue-700 transition"
+                        (click)="abrirModalEdicion(servidor)"
+                      >
+                        <i class="fa fa-edit text-xl"></i>
+                      </button>
+                    </td>  
+                    <td class="p-3 text-center space-x-2">
+                      <button 
+                      *ngIf="servidor.id !== undefined" 
+                      (click)="delete(servidor.id)" class="text-red-500 hover:text-red-700 transition"
+                      >
+                        <i class="fa fa-trash text-xl"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla: Servidor de Líneas -->
+        <div class="w-full p-3">
+          <div class="mb-2">
+            <h3 class="text-2xl font-bold text-white bg-gray-400 rounded-t-lg py-2 shadow-sm text-center "> <b>Servidor Lineas Telefonicas</b></h3>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="overflow-auto max-h-[calc(100vh-220px)]">
+             <table class="min-w-[1200px] w-full text-sm text-gray-700">
+                <thead class="sticky top-0 bg-gray-100 border-b border-gray-400 uppercase text-gray-800 text-xs z-10">
+                  <tr>
+                    <th class="p-3 text-center">ID</th>
+                    <th class="p-3 text-center">Tipo</th>
+                    <th class="p-3 text-center">Direccion Ip</th>
+                    <th class="p-3 text-center">Contraseña</th>
+                    <th class="p-3 text-center">Archivo</th>
+                    <th class="p-3 text-center">Editar</th>
+                    <th class="p-3 text-center">Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let servidor of filterPorTipo('lineas'); let i = index" class="hover:bg-gray-50 border-b border-gray-100 transition">
+                    <td class="p-3 text-center">{{ i + 1 }}</td>
+                    <td class="p-3 text-center">{{ servidor.tipo }}</td>
+                    <td class="p-3 text-center">{{ servidor.direccion_ip }}</td>
+                    <td class="p-3 text-center">{{ servidor.contrasena }}</td>
+                    <!--archivo-->
+                    <td class="p-3 text-center">
+                      <a
+                        href="{{servidor.archivo}}"
+                        class="text-blue-600 hover:underline"
+                        target="_blank"
+                      >
+                        <i class="fas fa-file text-lg"></i>
+                      </a>
+                    </td>
+          
+                    <td class="p-3 text-center ">
+                      <button 
+                        type="button"
+                        class="text-blue-500 hover:text-blue-700 transition"
+                        (click)="abrirModalEdicion(servidor)"
+                      >
+                        <i class="fa fa-edit text-xl"></i>
+                      </button>
+                    </td>  
+                    <td class="p-3 text-center ">
+                      <button 
+                      *ngIf="servidor.id !== undefined" 
+                      (click)="delete(servidor.id)" class="text-red-500 hover:text-red-700 transition"
+                      >
+                        <i class="fa fa-trash text-xl"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal de Edición Servidor -->
+<div *ngIf="modalEdicionAbierto" class="fixed inset-0 flex items-center justify-center z-50">
+  <!-- Fondo oscuro -->
+  <div
+    class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+    (click)="cerrarModalEdicion()"
+  ></div>
+
+  <!-- Contenedor del modal -->
+  <div
+    class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-fadeIn z-50"
+  >
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4">
+      <h5 class="text-xl font-bold text-white flex items-center gap-2" id="servidorEditarModalLabel">
+        <i class="fas fa-server"></i> Editar Contraseña de Servidor
+      </h5>
+      <button
+        type="button"
+        (click)="cerrarModalEdicion()"
+        class="text-white hover:text-gray-200 transition"
+        aria-label="Close"
+      >
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="p-6 bg-gray-50 overflow-y-auto max-h-[80vh]">
+      <form class="space-y-6 slim-form">
+        <!-- GRID 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Tipo -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-server text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <select
+                id="tipo-editar"
+                name="tipo-editar"
+                [(ngModel)]="servidorSeleccionado.tipo"
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-black"
+              >
+                <option value="" disabled>Seleccione un tipo</option>
+                <option value="datos">Servidor de Datos</option>
+                <option value="solido">Servidor Sólido Fequiva</option>
+                <option value="lineas">Servidor de Líneas Telefónicas</option>
+              </select>
+              <label
+                for="tipo-editar"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Tipo de servidor
+              </label>
+            </div>
+          </div>
+
+          <!-- Dirección IP -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-network-wired text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <input
+                type="text"
+                id="direccion_ip-editar"
+                name="direccion_ip-editar"
+                [(ngModel)]="servidorSeleccionado.direccion_ip"
+                placeholder=" "
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none 
+                       transition-all placeholder-transparent text-black"
+              />
+              <label
+                for="direccion_ip-editar"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600 
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Dirección IP
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRID 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Contraseña -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-key text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <input
+                id="contrasena-editar"
+                name="contrasena-editar"
+                [(ngModel)]="servidorSeleccionado.contrasena"
+                placeholder=" "
+                autocomplete="off"
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none 
+                       transition-all placeholder-transparent text-black"
+              />
+              <label
+                for="contrasena-editar"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600 
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Contraseña
+              </label>
+            </div>
+          </div>
+
+          <!-- Archivo -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+             <i class="fas fa-paperclip text-lg"></i>
+          </div>
+            <div class="relative z-0 w-full group">
+              <input
+                type="file"
+                id="archivo-editar"
+                name="archivo-editar"
+                (change)="onFileSelectedEditar($event)"
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+              />
+              <label
+                for="archivo-editar"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white px-1
+              peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3"
+              >
+                Archivo Adjunto
+              </label>
+              <span *ngIf="servidorSeleccionado.archivo" class="text-xs text-gray-700 mt-2 block">
+                Archivo actual:
+                <a [href]="getNombreArchivoEditar()" target="_blank" class="text-blue-600 hover:underline">
+                  {{ getNombreArchivoEditar() }}
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-300 mt-4">
+          <button
+            type="button"
+            (click)="cerrarModalEdicion()"
+            class="px-5 py-2.5 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium transition"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            (click)="update()"
+            [disabled]="isSubmittingEditar"
+            class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span *ngIf="!isSubmittingEditar">Actualizar</span>
+            <span *ngIf="isSubmittingEditar" class="loading-spinner border-t-transparent border-2 border-white w-5 h-5 rounded-full animate-spin"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</div>
+

@@ -1,0 +1,181 @@
+/* Estilos personalizados para el calendario */
+
+
+
+:host {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .fc {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Encabezados de días personalizados */
+:host ::ng-deep .fc-col-header-cell {
+  background-color: #f8fafc;
+  padding: 12px 0;
+  font-weight: 600;
+  border: none;
+}
+
+:host ::ng-deep .fc-col-header-cell-cushion {
+  color: #35527a;
+  text-decoration: none;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  padding: 8px 4px;
+}
+
+/* Días de la semana */
+:host ::ng-deep .fc-day-sun .fc-col-header-cell-cushion,
+:host ::ng-deep .fc-day-sun .fc-daygrid-day-number {
+  color: #ef4444;
+}
+
+:host ::ng-deep .fc-day-sat .fc-col-header-cell-cushion,
+:host ::ng-deep .fc-day-sat .fc-daygrid-day-number {
+  color: #4669a1;
+}
+
+/* Botones de navegación */
+:host ::ng-deep .fc-button {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  text-transform: capitalize;
+}
+
+:host ::ng-deep .fc-button:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+  transform: translateY(-1px);
+}
+
+:host ::ng-deep .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: #3730a3;
+  border-color: #3730a3;
+}
+
+/* Título del calendario */
+:host ::ng-deep .fc-toolbar-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: capitalize;
+  font-family:Arial, Helvetica, sans-serif
+}
+
+/* Celdas del calendario */
+:host ::ng-deep .fc-daygrid-day {
+  border: 1px solid #e2e8f0;
+  transition: background-color 0.2s;
+}
+
+:host ::ng-deep .fc-daygrid-day:hover {
+  background-color: #f8fafc;
+}
+
+:host ::ng-deep .fc-daygrid-day-number {
+  color: #64748b;
+  font-weight: 500;
+  padding: 8px;
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .fc-day-today {
+  background-color: #f0f9ff !important;
+}
+
+:host ::ng-deep .fc-day-today .fc-daygrid-day-number {
+  color: #0369a1;
+  font-weight: 700;
+}
+
+/* Eventos */
+:host ::ng-deep .fc-event {
+  border-radius: 0.375rem;
+  border: none;
+  padding: 4px 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+:host ::ng-deep .fc-event:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.fc-event-time {
+  text-transform: uppercase; /* AM/PM en mayúsculas */
+}
+:host ::ng-deep .fc-event-title {
+  font-weight: 500;
+}
+
+/* Time grid (vista semanal/diaria) */
+:host ::ng-deep .fc-timegrid-slot {
+  height: 2.5rem !important;
+}
+
+:host ::ng-deep .fc-timegrid-axis-cushion {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+:host ::ng-deep .fc-timegrid-slot-label-cushion {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.fc-event-time {
+  text-transform: uppercase; /* AM/PM en mayúsculas */
+}
+ 
+
+/* Responsive */
+@media (max-width: 1024px) {
+  :host {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    width: 95%;
+  }
+  
+  :host ::ng-deep .fc-toolbar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  :host ::ng-deep .fc-toolbar-chunk {
+    margin-bottom: 0.5rem;
+  }
+  
+  :host ::ng-deep .fc-header-toolbar .fc-toolbar-chunk:last-child {
+    margin-bottom: 0;
+  }
+  
+  :host ::ng-deep .fc-toolbar-title {
+    font-size: 1.25rem;
+  }
+  
+  :host ::ng-deep .fc-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+

@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError,catchError } from 'rxjs';
 import { Mantenimiento } from '../models/manten';
 import { Authservice } from '../auth.service';
+import {map} from 'rxjs/operators'
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,84 +13,89 @@ export class MantenService {
 
   private apiUrl = 'http://127.0.0.1:8000/mantenimiento/';
 
-  constructor(private http: HttpClient, private authservice: Authservice) { }
+  constructor(private http: HttpClient) { }
 
-  private getHeaders(): HttpHeaders {
-      const token = this.authservice.getToken();  // Obtén el token de autenticación
-      return new HttpHeaders({
-        'Authorization': `Token ${token}`,  // Envía el token en el encabezado
-      });
+  private handleError(error: any) {
+    if (error.status===401) {
+      return throwError(() => new Error('No autorizado. Por favor, inicie sesión.'));
     }
+    else if (error.status===404) {
+      return throwError(() => new Error('Recurso no encontrado.'));
+    }
+    else {
+      return throwError(() => new Error('Ocurrió un error inesperado.'));
+    }
+  }
     
   getAll(): Observable<Mantenimiento[]> {
-    return this.http.get<Mantenimiento[]>(this.apiUrl);
+    return this.http.get<Mantenimiento[]>(this.apiUrl)
+      .pipe(catchError(this.handleError));
   }
 
+  // Obtener mantenimiento por ID
   getMantenimientoById(id: string): Observable<Mantenimiento> {
-        return this.http.get<Mantenimiento>(`${this.apiUrl}${id}/`);
-      }
+    return this.http.get<Mantenimiento>(`${this.apiUrl}${id}/`)
+      .pipe(catchError(this.handleError));
+  }
 
+  getMantenimientoPorEquipo(equipoId: number): Observable<Mantenimiento[]> {
+    return this.http.get<Mantenimiento[]>(`${this.apiUrl}/equipo${equipoId}/`)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Obtener total de mantenimientos (para la card del dashboard)
   getTotalMantenimientos(): Observable<number> {
-    return this.http.get<number>('http://127.0.0.1:8000/mantenimiento/total');
-  }
-
-  create(mantenimiento: Mantenimiento): Observable<any> {
-    // Validar que exista el responsable
-    if (!mantenimiento.responsable?.id) {
-      return throwError(() => new Error('ID de responsable no proporcionado'));
-    }
-  
-    // Preparar el objeto a enviar
-    const datosEnvio = {
-      equipo: mantenimiento.equipo,
-      fecha: mantenimiento.fecha,
-      tipo: mantenimiento.tipo,
-      descripcion: mantenimiento.descripcion,
-      responsable_id: mantenimiento.responsable.id  // Solo enviamos el ID
-    };
-  
-    return this.http.post(this.apiUrl, datosEnvio, {
-      headers: this.getHeaders()
-    });
-  }
-  
-  get(id:number): Observable<any> {
-    return this.http.get(`${this.apiUrl}${id}/`);
-  }
-
-  update(mantenimiento: any): Observable<any> {
-    // 1. Crear objeto para los datos en lugar de FormData
-    const datosActualizacion: any = {};
-  
-    // Campos normales del equipo
-    const camposEquipo = ['id', 'equipo', 'fecha', 'tipo', 'descripcion'];
-  
-    camposEquipo.forEach(campo => {
-      if (mantenimiento[campo] !== undefined && mantenimiento[campo] !== null) {
-        datosActualizacion[campo] = String(mantenimiento[campo]);
-      }
-    });
-  
-    // 2. Envía SOLO el ID del responsable (requerido)
-    if (mantenimiento.responsable?.id) {
-      datosActualizacion.responsable_id = String(mantenimiento.responsable.id);
-    } else {
-      return throwError(() => new Error('El ID del responsable es requerido'));
-    }
-  
-    // 3. Archivo si existe (OJO: sin FormData necesitarías otro enfoque para archivos)
-    if (mantenimiento.archivo instanceof File) {
-      console.warn('Advertencia: Los archivos no se pueden enviar sin FormData');
-      // Considera manejar los archivos en un método separado
-    }
-  
-    return this.http.put(`${this.apiUrl}${mantenimiento.id}/`, datosActualizacion, {
-      headers: this.getHeaders()
-    });
+  return this.http.get<{ total: number }>('http://127.0.0.1:8000/mantenimiento/total/').pipe(
+    map(res => res.total)
+  );
 }
 
-  delete(id:number): Observable<Mantenimiento> {
-    return this.http.delete<Mantenimiento>(`${this.apiUrl}${id}/`);
+  // Crear un nuevo mantenimiento
+  create(mantenimiento: Mantenimiento): Observable<any> {
+
+    const datosEnvio = {
+      equipo_id:mantenimiento.equipo_id,
+      fecha_mantenimiento: mantenimiento.fecha_mantenimiento,
+      tipo_mantenimiento: mantenimiento.tipo_mantenimiento,
+      tipo_servicio: mantenimiento.tipo_servicio,
+      descripcion: mantenimiento.descripcion,
+      realizado_por: mantenimiento.realizado_por
+    };
+
+    return this.http.post(this.apiUrl, datosEnvio)
+      .pipe(catchError(this.handleError));
   }
 
+  // Actualizar mantenimiento
+  update(mantenimiento: any): Observable<any> {
+    const datosActualizacion: any = {};
+
+    const campos = [
+      'id', 'equipo_id', 'fecha_mantenimiento',
+      'tipo_mantenimiento', 'tipo_servicio',
+      'descripcion', 'realizado_por'
+    ];
+
+    campos.forEach(campo => {
+      if (mantenimiento[campo] !== undefined && mantenimiento[campo] !== null) {
+        datosActualizacion[campo] = mantenimiento[campo];
+      }
+    });
+
+     if (datosActualizacion.tipo_mantenimiento) {
+    datosActualizacion.tipo_mantenimiento = datosActualizacion.tipo_mantenimiento.toLowerCase();
+  }
+  if (datosActualizacion.tipo_servicio) {
+    datosActualizacion.tipo_servicio = datosActualizacion.tipo_servicio.toLowerCase();
+  }
+
+    return this.http.patch(`${this.apiUrl}${mantenimiento.id}/`, datosActualizacion)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Eliminar mantenimiento
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}${id}/`)
+      .pipe(catchError(this.handleError));
+  }
 }

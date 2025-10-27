@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Licence } from '../models/licence';
 import { Authservice } from '../auth.service';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import {map,catchError} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class LicenceService {
 
   private apiUrl = 'http://127.0.0.1:8000/licencias/';
 
-  constructor(private http: HttpClient, private authservice: Authservice) { }
+  constructor(private http: HttpClient) { }
 
   getLicence(id: number): Observable<Licence> {
       return this.http.get<Licence>(`${this.apiUrl}${id}/`);
@@ -26,68 +27,69 @@ export class LicenceService {
     return this.http.get<Licence[]>(this.apiUrl);
   }
 
+
   getTotalLicencias(): Observable<number> {
-    return this.http.get<number>('http://127.0.0.1:8000/registrarlicencia/total');
+  return this.http.get<{ total: number }>('http://127.0.0.1:8000/registrarlicencia/total/').pipe(
+    map(res => res.total)
+  );
   }
 
-  private getHeaders(): HttpHeaders {
-        const token = this.authservice.getToken();  // Obtén el token de autenticación
-        return new HttpHeaders({
-          'Authorization': `Token ${token}`,  // Envía el token en el encabezado
-        });
-      }
+  getByEquipo(equipoId: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}equipo/${equipoId}/`);
+ }
+
 
   create(licence: Licence): Observable<any> {
-      // Validar que exista el responsable
-      if (!licence.responsable?.id) {
-        return throwError(() => new Error('ID de responsable no proporcionado'));
+      
+      const datosEnvio:any= {
+        tipo_licencia: licence.tipo_licencia,
+        correo: licence.correo && licence.correo.trim() !== '' ? licence.correo : null,
+        contrasena: licence.contrasena && licence.contrasena.trim() !== '' ? licence.contrasena : null,
+        clave_producto: licence.clave_producto,
+        fecha_compra: licence.fecha_compra||null,
+      };
+
+    if ( licence.equipo_id) {
+        datosEnvio.equipo_id = licence.equipo_id;
       }
     
-      // Preparar el objeto a enviar
-      const datosEnvio = {
-        correo: licence.correo,
-        contrasena: licence.contrasena,
-        serial_office: licence.serial_office,
-        responsable_id: licence.responsable.id  // Solo enviamos el ID
-      };
-    
-      return this.http.post(this.apiUrl, datosEnvio, {
-        headers: this.getHeaders()
-      });
-    }
+      return this.http.post(this.apiUrl, datosEnvio);
+  }
+  
     
 
   get(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}${id}/`);  // Aquí se debe pasar un id válido
+    return this.http.get(`${this.apiUrl}${id}/`);
   }
-  
+
   update(licence: any): Observable<any> {
-    // 1. Crear objeto para los datos en lugar de FormData
     const datosActualizacion: any = {};
-  
-    // Campos normales del equipo
-    const camposEquipo = ['id', 'correo', 'contrasena', 'serial_office'];
-  
-    camposEquipo.forEach(campo => {
-      if (licence[campo] !== undefined && licence[campo] !== null) {
-        datosActualizacion[campo] = String(licence[campo]);
+
+    const camposLicencia = [
+      'id',
+      'tipo_licencia',
+      'correo',
+      'contrasena',
+      'clave_producto',
+      'fecha_compra',
+      'fecha_expiracion',
+      
+    ];
+
+    camposLicencia.forEach(campo => {
+      if (licence[campo] !== undefined) {
+        datosActualizacion[campo] = licence[campo] === '' ? null : licence[campo];
       }
     });
-  
-    // 2. Envía SOLO el ID del responsable (requerido)
-    if (licence.responsable?.id) {
-      datosActualizacion.responsable_id = String(licence.responsable.id);
-    } else {
-      return throwError(() => new Error('El ID del responsable es requerido'));
+    if (licence.equipo_id) {
+      datosActualizacion.equipo_id = licence.equipo_id;
     }
-    
-    return this.http.put(`${this.apiUrl}${licence.id}/`, datosActualizacion, {
-      headers: this.getHeaders()
-    });
-}
+
+    return this.http.put(`${this.apiUrl}${licence.id}/`, datosActualizacion);
+  }
 
   delete(id: number): Observable<Licence> {
     return this.http.delete<Licence>(`${this.apiUrl}${id}/`);
   }
-
 }
+

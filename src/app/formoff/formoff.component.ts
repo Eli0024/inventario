@@ -1,4 +1,4 @@
-import { Component, Input, NgModule } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Licence } from '../models/licence';
 import { LicenceService } from '../services/licence.service';
@@ -8,107 +8,96 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { Colaborador } from '../models/users';
-import { UsersService } from '../services/users.service';
+import { Equipo } from '../models/computer';
+import { ComputersService } from '../services/computers.service';
 
 @Component({
   selector: 'app-formoff',
   standalone: true,
-  imports: [NavbarComponent,  CommonModule, FormsModule, SidebarComponent],
+  imports: [NavbarComponent, CommonModule, FormsModule, SidebarComponent],
   templateUrl: './formoff.component.html',
   styleUrl: './formoff.component.css'
 })
-
 export class FormoffComponent {
-
+  @Output() licenceCreada = new EventEmitter<Licence>();
+  @Output() formularioCancelado = new EventEmitter<void>();
+  
   licence: Licence = {
-    responsable: { id:0,nombre: '', apellido: '' },
-    id: 0,
+    tipo_licencia:'',
     correo: '',
     contrasena: '',
-    serial_office: '',
+    clave_producto: '',
+    fecha_compra: '',
+    equipo: null,
+    equipo_id: null,
   };
-  
-   colaborador: Colaborador = {
-            id: 0,
-            nombre: '',
-            apellido: '',
-            empresa: null,
-            area: null,
-            cargo: '',
-          };
-          
-  @Input() licenceSeleccionado: any;
-  responsables: any[] = [];
-  colaboradores: Colaborador[] = [];
 
-  constructor(private licenceService: LicenceService, private router: Router, private activatedRoute:ActivatedRoute, private usersService: UsersService) { }
+  equipos: Equipo []= [];
+  isSubmitting = false;
+
+  constructor(
+    private licenceService: LicenceService,
+    private computersService: ComputersService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
-    this.cargar();
-    this.loadUsuarios();
-   }
-
-  cargar():void{
-
-    this.activatedRoute.params.subscribe(
-      e=>{
-        let id=e['id'];
-        if(id){
-          this.licenceService.get(id).subscribe(
-            licence => this.licence = licence
-          );
-        }
-      }
-    );
+    this.cargarEquipos();
   }
 
-  loadUsuarios(): void {
-    this.usersService.getAll().subscribe(
-      (response: Colaborador[]) => {
-        this.colaboradores = response;
+
+  cargarEquipos(): void {
+    this.computersService.getEquipos().subscribe({
+      next: (data:Equipo[]) => {
+        this.equipos = data;
       },
-      (error: any) => {
-        console.error('Error al obtener los usuarios', error);
+      error: (err:unknown) => {
+        console.error('Error al cargar equipos:', err);
+        Swal.fire('Error', 'No se pudieron cargar los equipos', 'error');
       }
-    );
+    });
   }
 
-   create(): void {
-      // Validación del responsable
-      if (!this.licence.responsable?.id) {
-        Swal.fire('Error', 'Debes seleccionar un responsable', 'error');
-        return;
+
+  create(): void {
+    if (!this.licence.equipo_id) {
+      Swal.fire('Error', 'Debe seleccionar un equipo', 'error');
+      return;
+    }
+
+    this.isSubmitting = true;
+
+    this.licenceService.create(this.licence).subscribe({
+      next: (createdLicence) => {
+        Swal.fire('Éxito', 'Licencia registrada correctamente', 'success');
+        this.licenceCreada.emit(createdLicence);
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error(err);
+        Swal.fire('Error', 'No se pudo registrar la licencia', 'error');
+      },
+      complete: () => {
+        this.isSubmitting = false;
       }
-  
-      // Llamada al servicio
-      this.licenceService.create(this.licence).subscribe({
-        next: (response) => {
-          Swal.fire('Éxito', 'Licencia creada correctamente', 'success');
-          this.resetForm();
-        },
-        error: (err) => {
-          console.error('Error:', err);
-          const errorMsg = err.message || 'Error al crear el mantenimiento';
-          Swal.fire('Error', errorMsg, 'error');
-        }
-      });
-    }
-  
-    resetForm(): void {
-      this.licence = {
-        responsable: { id: 0, nombre: '', apellido: '' },
-        id: 0,
-        correo: '',
-        contrasena: '',
-        serial_office: '',
-      };
-    }
-    
-    // Método reset (correcto)
-    getNombreResponsable(id: number): string {
-      const colab = this.colaboradores.find(c => c.id === id);
-      return colab ? `${colab.nombre} ${colab.apellido}` : 'No encontrado';
-    }
+    });
   }
-  
+
+  cancelar(): void {
+  this.resetForm();
+  this.formularioCancelado.emit();
+}
+  resetForm(): void {
+    this.licence = {
+      tipo_licencia:'',
+      correo: '',
+      contrasena: '',
+      clave_producto: '',
+      fecha_compra: '',
+      equipo: null,
+       equipo_id: null
+    };
+  }
+
+}

@@ -17,7 +17,7 @@
           <div class="bg-gray-800">
             <div class="bg-white p-3 shadow text-2xl text-gray-600">
               <i class="fa fa-tachometer-alt fa-x"></i>
-              <span> Panel de Administracion</span>
+              <span> Detalles</span>
             </div>
           </div>
           
@@ -55,7 +55,7 @@
                       <td>{{ colaborador.id }}</td>
                       <td>{{ colaborador.nombre }}</td>
                       <td>{{ colaborador.apellido }}</td>
-                      <td>{{ colaborador.empresa }}</td>
+                      <td>{{ colaborador.empresa.nombre }}</td>
                       <td>{{ colaborador.area }}</td>
                       <td>{{ colaborador.cargo }}</td>
                     </tr>
@@ -83,6 +83,7 @@
                       <th>Sistema Operativo</th>
                       <th>Fecha Adquisicion</th>
                       <th>Estado</th>
+                      <th>Responsable</th>
                       <th>Archivo</th>
                     </tr>
                   </thead>
@@ -102,6 +103,7 @@
                         {{ equipo.fecha_adquisicion }}
                       </td>
                       <td class="text-center">{{ equipo.estado }}</td>
+                      <td class="text-center">{{equipo.responsable.nombre}} {{equipo.responsable.apellido}}</td>
                       <td class="text-primary text-center">
                         <a href ="{{ equipo.archivo}}"
                           target="_blank"
@@ -126,17 +128,28 @@
                   <thead>
                     <tr>
                       <th>ID</th>
+                      <th>Tipo Licencia</th>
                       <th>Correo</th>
                       <th>Contraseña</th>
-                      <th>Serial Office</th>
+                      <th>Clave del Producto</th>
+                      <th>Fecha de Compra</th>
+                      <th>Fecha de Expiracion</th>
+                      <th>Marca del Equipo</th>
+                      <th>Serial del Equipo</th>
+                      <th>Responsable</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>{{ licence.id }}</td>
+                      <td>{{ licence.tipo_licencia }}</td>
                       <td>{{ licence.correo }}</td>
                       <td>{{ licence.contrasena }}</td>
-                      <td>{{ licence.serial_office }}</td>
+                      <td>{{ licence.clave_producto }}</td>
+                      <td>{{ licence.fecha_compra }}</td>
+                      <td>{{ licence.equipo?.marca }}</td>
+                      <td>{{ licence.equipo?.serial}}</td>
+                      <td>{{ licence.equipo?.responsable?.nombre }} {{licence.equipo?.responsable?.apellido}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -151,18 +164,26 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th class="text-center">EQUIPO</th>
-                      <th class="text-center">FECHA</th>
-                      <th class="text-center">TIPO</th>
-                      <th class="text-center">DESCRIPCION</th>
+                      <th class="text-center">Marca del Equipo</th>
+                      <th class="text-center">Serial del Equipo</th>
+                      <th class="text-center">Responsable</th>
+                      <th class="text-center">Fecha de Mantenimiento</th>
+                      <th class="text-center">Tipo de Mantenimiento</th>
+                      <th class="text-center">Tipo de Servicio</th>
+                      <th class="text-center">Descripcion</th>
+                      <th class="text-center">Realizado por</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="text-center">{{ mantenimiento.equipo}}</td>
-                      <td class="text-center">{{ mantenimiento.fecha }}</td>
-                      <td class="text-center">{{ mantenimiento.tipo}}</td>
+                      <td class="text-center">{{ mantenimiento.equipo.marca}}</td>
+                      <td class="text-center">{{ mantenimiento.equipo.serial }}</td>
+                      <td class="text-center">{{ mantenimiento.equipo.responsable.nombre }}{{mantenimiento.equipo.responsable.apellido}}</td>
+                      <td class="text-center">{{ mantenimiento.fecha_mantenimiento }}</td>
+                      <td class="text-center">{{ mantenimiento.tipo_mantenimiento}}</td>
+                      <td class="text-center">{{ mantenimiento.tipo_servicio }}</td>
                       <td class="text-center">{{ mantenimiento.descripcion}}</td>
+                      <td class="text-center">{{ mantenimiento.realizado_por }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -177,11 +198,11 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>NOMBRE</th>
-                      <th>MODELO</th>
-                      <th>NUMERO SERIE</th>
-                      <th>FECHA ADQUISICION</th>
-                      <th>RESPONSABLE</th>
+                      <th>Nombre</th>
+                      <th>Modelo</th>
+                      <th>Numero Serie</th>
+                      <th>Fecha Adquisicion</th>
+                      <th>Responsable</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -191,6 +212,7 @@
                         <td>{{ periferico.modelo }}</td>
                         <td>{{ periferico.numero_serie }}</td>
                         <td>{{ periferico.fecha_adquisicion }}</td>
+                        <td>{{ periferico.responsable.nombre }}{{periferico.responsable.apellido}}</td>
                     </tr>
                   </tbody>
                 </table>

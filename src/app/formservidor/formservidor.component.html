@@ -1,0 +1,144 @@
+<div class="modal-container bg-white p-6 rounded-2xl shadow-xl max-w-5xl mx-auto border border-gray-100">
+  <form class="space-y-6 slim-form">
+
+    <!-- FILA 1 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Tipo -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-server text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <select
+            id="tipo"
+            name="tipo"
+            [(ngModel)]="servidor.tipo"
+            required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                   focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                   outline-none transition-all">
+            <option value="" disabled selected>Seleccione un tipo</option>
+            <option value="datos">Servidor de Datos</option>
+            <option value="solido">Servidor Sólido Fequiva</option>
+            <option value="lineas">Servidor de Líneas Telefónicas</option>
+          </select>
+          <label for="tipo"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                   peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 
+                   peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 
+                   peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Tipo de servidor
+          </label>
+        </div>
+      </div>
+
+      <!-- Dirección IP -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-network-wired text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="text"
+            id="direccion_ip"
+            name="direccion_ip"
+            [(ngModel)]="servidor.direccion_ip"
+            required
+            placeholder=" "
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                   focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                   outline-none transition-all placeholder-transparent"
+          />
+          <label for="direccion_ip"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                   peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 
+                   peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 
+                   peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Dirección IP
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILA 2 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Contraseña -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-key text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            id="contrasena"
+            name="contrasena"
+            [(ngModel)]="servidor.contrasena"
+            required
+            autocomplete="off"
+            placeholder=" "
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                   focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                   outline-none transition-all placeholder-transparent"
+          />
+          <label for="contrasena"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                   peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 
+                   peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 
+                   peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Contraseña
+          </label>
+        </div>
+      </div>
+
+      <!-- Archivo -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-file-upload text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="file"
+            id="archivo"
+            name="archivo"
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+            (change)="onFileSelected($event)"
+            accept="*"
+          />
+          <label for="archivo"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+      peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+      peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3
+      peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Archivo
+          </label>
+          <p class="mt-2 text-xs text-gray-500" *ngIf="servidor.archivo">
+            Archivo seleccionado: <span class="font-medium">{{ getNombreArchivo() }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 mt-4">
+      <button
+        type="button"
+        class="px-6 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm transition-all"
+        (click)="cancelar()">
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        class="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="create()"
+        [disabled]="isSubmitting">
+        <span *ngIf="!isSubmitting">Registrar</span>
+        <span *ngIf="isSubmitting" class="loading-spinner w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+      </button>
+    </div>
+
+  </form>
+</div>

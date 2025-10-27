@@ -1,260 +1,291 @@
 <div class="min-h-screen flex flex-col bg-white text-white">
-    <!-- Navbar -->
-    <app-navbar></app-navbar>
-    <div class="flex flex-1">
-      <!-- Sidebar -->
-      <div class="w-full md:w-64 bg-gray-800 text-white">
-        <app-sidebar></app-sidebar>
-      </div>
-      <!-- Main content area -->
-      <div class="flex flex-col w-full">
-        <!-- Main content header -->
-        <div id="main" class="main-content flex-1 bg-gray-200">
-          <div class="bg-gray-800">
-            <div class="bg-white p-3 shadow text-2xl text-gray-600">
-                <i class="fa fa-print fa-x"></i>
-              <span> Lista de Impresoras</span>
-            </div>
+  <!-- Navbar -->
+  <app-navbar class="fixed top-0 w-full z-50"></app-navbar>
+
+  <div class="flex flex-1 pt-16">
+    <!-- Sidebar -->
+    <div class="w-64 fixed h-screen bg-gray-800 text-white z-40 overflow-y-auto">
+      <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Main content area -->
+    <div class="flex-1  bg-gray-100 text-gray-900 overflow-y-auto">
+      <!-- Main content header -->
+      <div id="main" class="main-content flex-1 ml-64 bg-gray-100 ">
+        <!-- Título fijo -->
+        <div class="bg-gray-800 shadow-md fixed z-30 w-[calc(100%-16rem)] h-18 top-16">
+          <div class="bg-white p-3 shadow text-2xl text-gray-600 sticky-top">
+            <i class="fas fa-print"></i>
+            <span> Lista de Impresoras</span>
           </div>
-          <!-- Button trigger modal -->
-          <div class="flex flex-col items-center mt-8 space-y-4">
-            <!-- Botones centrados -->
-            <div class="flex space-x-4">
+        </div>
+
+        
+        <!-- Contenedor superior -->
+        <div
+         class="flex flex-col md:flex-row justify-between items-center gap-3 p-4 bg-white shadow-sm rounded-lg mx-4 mt-20 mb-6 h-15"
+        >
+       <!-- Botones -->
+      <div class="flex flex-wrap gap-3">
+      <button
+      type="button"
+      (click)="openImpresoraModal()"
+      class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+    >
+      <i class="fas fa-plus"></i>
+      Registrar Impresora
+    </button>
+
+    <button
+      type="button"
+      (click)="openMantenimientoModal()"
+      class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+    >
+      <i class="fas fa-tools"></i>
+      Registrar Mantenimiento
+    </button>
+
+    <button
+      class="flex items-center gap-2 bg-gradient-to-r from-gray-600 to-gray-500 hover:from-gray-700 hover:to-gray-600 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+      type="button"
+      routerLink="/content"
+    >
+      <i class="fas fa-arrow-left"></i>
+      Volver
+    </button>
+  </div>
+
+  <!-- Barra de búsqueda -->
+  <div class="relative w-full md:w-auto min-w-[250px]">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <i class="fas fa-search text-gray-400"></i>
+    </div>
+    <input
+      class="block w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition duration-150 bg-gray-50"
+      type="search"
+      placeholder="Buscar impresoras..."
+      name="searchTerm"
+      [(ngModel)]="filter.searchTerm"
+    />
+  </div>
+</div>
+
+<!-- MODAL REGISTRAR IMPRESORA -->
+<div *ngIf="modalImpresoraAbierto" class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" (click)="closeImpresoraModal()"></div>
+
+  <div
+    class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-fadeIn z-50"
+  >
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4">
+      <h2 class="text-xl font-bold text-white flex items-center gap-2">
+        <i class="fas fa-print text-white text-lg"></i>
+        Registrar Impresora
+      </h2>
+      <button type="button" (click)="closeImpresoraModal()" class="text-white hover:text-gray-200 transition">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="p-6 bg-gray-50 overflow-y-auto max-h-[80vh]">
+      <app-formimpre
+      *ngIf="modalImpresoraAbierto"
+      (formularioCancelado)="closeImpresoraModal()"
+      (impresoraCreada)="onImpresoraCreada($event)"
+      ></app-formimpre>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REGISTRAR MANTENIMIENTO -->
+<div *ngIf="modalMantenimientoAbierto" class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" (click)="closeMantenimientoModal()"></div>
+
+  <div
+    class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-fadeIn z-50"
+  >
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4">
+      <h2 class="text-xl font-bold text-white flex items-center gap-2">
+        <i class="fas fa-tools text-white text-lg"></i>
+        Registrar Mantenimiento
+      </h2>
+      <button type="button" (click)="closeMantenimientoModal()" class="text-white hover:text-gray-200 transition">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <div class="p-6 bg-gray-50 overflow-y-auto max-h-  [80vh">
+      <app-mantenimprer
+      (formularioCancelado)="closeMantenimientoModal()"
+      (onCreated)="onMantenimientoCreado($event)"
+      ></app-mantenimprer>
+    </div>
+     </div>
+   </div>
+
+
+        <!-- Tabla de impresoras mejorada -->
+        <div class="w-full p-3">
+  <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="overflow-auto max-h-[calc(100vh-220px)]">
+      <table class="min-w-[1000px] w-full text-sm text-gray-700">
+        <thead class="sticky top-0 bg-gray-100 border-b border-gray-400 uppercase text-gray-800 text-xs z-10">
+          <tr>
+            <th class="p-3 text-center">ID</th>
+            <th class="p-3 text-center">Nombre</th>
+            <th class="p-3 text-center">Dirección IP</th>
+            <th class="p-3 text-center">Mantenimientos</th>
+            <th class="p-3 text-center">Editar</th>
+            <th class="p-3 text-center">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let impresora of filterImpresoras()" class="hover:bg-gray-50 border-b border-gray-100 transition">
+            <td class="p-3 text-center bg-white">{{ impresora?.id }}</td>
+            <td class="p-3 text-center">{{ impresora?.nombre }}</td>
+            <td class="p-3 text-center">{{ impresora?.direccion_ip }}</td>
+            <td class="p-3 text-center">
               <button
                 type="button"
-                class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-                data-bs-toggle="modal"
-                data-bs-target="#impresoraModal"
+                class="text-purple-500 hover:text-purple-700 transition"
+                [routerLink]="['/details', impresora.id]"
               >
-                Registrar Impresora
+                <i class="fas fa-tools text-xl"></i>
               </button>
-              
+            </td>
+            <td class="p-3 text-center">
               <button
                 type="button"
-                class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-                data-bs-toggle="modal"
-                data-bs-target="#mantenimientoModal"
+                class="text-blue-500 hover:text-blue-700 transition"
+                (click)="editarImpresora(impresora)"
               >
-                Registrar Mantenimiento
+                <i class="fas fa-edit text-xl"></i>
               </button>
-              
+            </td>
+            <td class="p-3 text-center">
               <button
-                class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-                type="button"
-                routerLink="/content"
+                *ngIf="impresora.id !== undefined"
+                (click)="delete(impresora.id)"
+                class="text-red-500 hover:text-red-700 transition"
               >
-                Volver
+                <i class="fas fa-trash text-xl"></i>
               </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+ <!-- MODAL DE EDICIÓN IMPRESORA -->
+<div *ngIf="modalEdicionAbierto" class="fixed inset-0 flex items-center justify-center z-50">
+  <div
+    class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+    (click)="closeModal()">
+  </div>
+  <div
+    class="relative bg-white w-full max-w-3xl mx-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-fadeIn z-50">
+
+    <!-- ENCABEZADO -->
+    <div class="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4">
+      <h2 class="text-xl font-bold text-white flex items-center gap-2">
+        <i class="fas fa-edit text-white text-lg"></i>
+        Editar Impresora
+      </h2>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="text-white hover:text-gray-200 transition">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+
+    <!-- CUERPO -->
+    <div class="p-6 bg-gray-50 overflow-y-auto max-h-[80vh]">
+      <div class="modal-container bg-white p-6 rounded-2xl shadow-xl max-w-5xl mx-auto border border-gray-100">
+
+      <form id="editImpresoraForm" class="space-y-6" #editImpresoraForm="ngForm">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Nombre -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+              <i class="fas fa-print text-lg"></i>
             </div>
-            <br>
-            
-            <!-- Filtro centrado abajo -->
-            <div class="w-64">
+            <div class="relative z-0 w-full group">
               <input
-                class="rounded-full text-black border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
-                type="search"
-                placeholder="Search"
-                [(ngModel)]="filter.searchTerm"
-                name="searchTerm"
-              />
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder=" "
+                [(ngModel)]="impresoraSeleccionado.nombre"
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200
+                focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none
+                transition-all placeholder-transparent text-black" />
+              <label
+                for="nombre"
+                class="absolute text-sm text-gray-500 duration-300 transform
+                -translate-y-6 scale-75 top-3 left-3 bg-white px-1
+                peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+                peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3">
+                Nombre de la impresora
+              </label>
             </div>
           </div>
-          
-          <!-- Modal Impresora -->
-          <div
-            class="modal fade"
-            id="impresoraModal"
-            tabindex="-1"
-            aria-labelledby="impresoraModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1
-                    class="modal-title fs-5 text-2xl font-bold text-gray-900"
-                    id="impresoraModalLabel"
-                  >
-                    Registrar Impresora
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body"><app-formimpre></app-formimpre></div>
-              </div>
+
+          <!-- Dirección IP -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+              <i class="fas fa-network-wired text-lg"></i>
             </div>
-          </div>
-          
-          <!-- Modal Mantenimiento -->
-          <div
-            class="modal fade"
-            id="mantenimientoModal"
-            tabindex="-1"
-            aria-labelledby="mantenimientoModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1
-                    class="modal-title fs-5 text-2xl font-bold text-gray-900"
-                    id="mantenimientoModalLabel"
-                  >
-                    Registrar Mantenimiento
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body"><app-mantenimprer></app-mantenimprer></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="card card-plain m-20">
-              <div class="card-header card-header-danger">
-                <h4 class="card-title text-center mt-0"></h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead class="">
-                      <th class="text-center">ID</th>
-                      <th class="text-center">NOMBRE</th>
-                      <th class="text-center">DIRECCION IP</th>
-                      <th class="text-center">Mantenimientos</th>
-                      <th class="text-center">Editar</th>
-                      <th class="text-center">Eliminar</th>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let impresora of filterImpresoras()">
-                        <td class="text-center">{{ impresora.id }}</td>
-                        <td class="text-center">{{ impresora.nombre }}</td>
-                        <td class="text-center">{{ impresora.direccion_ip }}</td>
-                        <td [routerLink]="['/details', impresora.id]" class="text-center">Ver Más</td>
-                        <td class="py-2 px-3 text-center">
-                          <button
-                            type="button"
-                            class="text-xl py-2 px-4 text-center"
-                            data-bs-toggle="modal"
-                            data-bs-target="#myModal"
-                            (click)="editarImpresora(impresora)"
-                          >
-                            <i
-                              class="fa fa-edit text-blue-500 text-center text-2xl"
-                            ></i>
-                          </button>
-                          <!-- Modal -->
-                          <div
-                            *ngIf="modalAbierto"
-                            class="modal fade show"
-                            style="display: block"
-                            tabindex="-1"
-                          >
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title">Editar Usuario</h5>
-                                  <button
-                                    type="button"
-                                    class="close"
-                                    (click)="closeModal()"
-                                  >
-                                    &times;
-                                  </button>
-                                  <!-- Cerrar modal -->
-                                </div>
-                                <div class="modal-body">
-                                  <div class="modal-body">
-                                    <div class="container">
-                                      <form id="registro-parametros-form">
-                                        <div class="input-container">
-                                          <div
-                                            class="icon-container bg-cyan-500 text-white"
-                                          >
-                                          <i class="fa fa-print fa-2x m-2 text-center"></i>
-                                          </div>
-                                          <input
-                                            type="text"
-                                            id="nombre"
-                                            name="nombre"
-                                            placeholder="Nombre"
-                                            [(ngModel)]="
-                                              impresoraSeleccionado.nombre
-                                            "
-                                            required
-                                          />
-                                        </div>
-                                        <div class="input-container">
-                                          <div
-                                            class="icon-container bg-cyan-500 text-white"
-                                          >
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
-                                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5M9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8m1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5m-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96q.04-.245.04-.5M7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/>
-                                          </svg>
-                                          </div>
-                                          <input
-                                            type="text"
-                                            id="ip"
-                                            name="ip"
-                                            placeholder="IP"
-                                            [(ngModel)]="
-                                            impresoraSeleccionado.direccion_ip
-                                            "
-                                            required
-                                          />
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button
-                                            type="button"
-                                            class="btn btn-secondary"
-                                            (click)="closeModal()"
-                                          >
-                                            Cerrar
-                                          </button>
-                                          <!-- Cerrar modal manualmente -->
-                                          <button
-                                            type="button"
-                                            class="btn btn-primary"
-                                            (click)="update()"
-                                          > Actualizar </button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="py-2 px-3 text-center">
-                          <button
-                            type="button"
-                            name="button"
-                            class="text-center font-bold py-1 px-2"
-                            (click)="delete(impresora.id)"
-                          >
-                            <i
-                              class="fa fa-trash text-red-600 text-center text-2xl"
-                            ></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            <div class="relative z-0 w-full group">
+              <input
+                type="text"
+                id="direccion_ip"
+                name="direccion_ip"
+                placeholder=" "
+                [(ngModel)]="impresoraSeleccionado.direccion_ip"
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200
+                focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none
+                transition-all placeholder-transparent text-black" />
+              <label
+                for="direccion_ip"
+                class="absolute text-sm text-gray-500 duration-300 transform
+                -translate-y-6 scale-75 top-3 left-3 bg-white px-1
+                peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+                peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3">
+                Dirección IP
+              </label>
             </div>
           </div>
         </div>
-      </div>
+
+        <!-- BOTONES -->
+        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 mt-4">
+          <button
+            type="button"
+            (click)="closeModal()"
+            class="px-6 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-all shadow-sm">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            (click)="update()"
+            class="px-6 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold shadow-md hover:shadow-lg transition-all">
+            Actualizar
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-  
+</div>
+
+</div>

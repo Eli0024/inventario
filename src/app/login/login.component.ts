@@ -1,52 +1,94 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import Swal from 'sweetalert2';
+import { Component } from '@angular/core';
+import { Router ,RouterLink} from '@angular/router';
 import { Authservice } from '../auth.service';
-import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { EmpresaService } from '../services/empresa.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent  {
-
+export class LoginComponent {
   username: string = '';
   password: string = '';
+  empresaSeleccionada: number | null=null;
+  empresas: any[] = [];
   errorMessage: string = '';
-   isPasswordVisible=false;
+  isPasswordVisible: boolean = false;
+  isLoading: boolean = false;
+  pasoLogin:boolean=false;
+
+  constructor(
+    private authService: Authservice, 
+    private empresaService: EmpresaService,
+    private router: Router
+  ) {}
 
 
-   constructor(private authService: Authservice, private router: Router) {}
-
-   login() {
-     const user = { username: this.username, password: this.password};
-     this.authService.login(user).subscribe(data => {
-       this.authService.setToken(data.token)
-     
-       this.router.navigate(['/content']);
-     },
-     error => {
-       Swal.fire({
-         icon: "error",
-         title: "Oops...",
-         text: "Usuario o Contraseña Incorrecta!",
-       });
-     }
-   );
-   }
-   onSubmit() {
-     this.login();
-   }
-   togglePasswordVisibility() { 
-    this.isPasswordVisible = !this.isPasswordVisible;
-    const passwordInput = document.querySelector('input[name="password"]') as HTMLInputElement;
-    if (passwordInput) {
-      passwordInput.type = this.isPasswordVisible ? 'text' : 'password';
+  login(event: Event) {
+    event.preventDefault();
+    if (!this.username.trim() || !this.password.trim()) {
+      this.errorMessage = 'Usuario y contraseña son obligatorios';
+      return;
     }
+  
+    this.isLoading = true;  
+    
+    const data = {
+        username: this.username,
+        password: this.password,
+      };
+    
+     this.authService.login(data).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        this.pasoLogin=true;
+        this.cargarEmpresas();
+        this.isLoading=false;
+      },
+      error:()=>{
+        this.errorMessage='Usuario o contraseña son incorrectos';
+        this.isLoading=false;
+      }
+    });
   }
- }
+
+
+  cargarEmpresas(){
+    this.empresaService.getEmpresas().subscribe({
+      next:(res)=>{
+        this.empresas=res;
+      },
+      error:()=>{
+        this.errorMessage='No  se pudieron cargar las empresas'
+      }
+    });
+  }
+
+  seleccionarEmpresa() {
+  if (!this.empresaSeleccionada) {
+    this.errorMessage = 'Debes seleccionar una empresa';
+    return;
+  }
+
+  // Guardar empresa en el AuthService/localStorage
+  this.authService.setEmpresaId(this.empresaSeleccionada);
+
+  // Ya puedes navegar, no necesitas llamar al backend
+  this.router.navigate(['/content']);
+}
+
+  
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+ 
+  clearError() {
+    this.errorMessage = '';
+  }
+}

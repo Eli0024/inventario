@@ -1,4 +1,10 @@
 import { Routes } from '@angular/router';
+import { ContrasenasComponent } from './contrasenas/contrasenas.component';
+import { ContraSiesaComponent } from './contrasenas/contra-siesa/contra-siesa.component';
+import { ContraAntivirusComponent } from './contrasenas/contra-antivirus/contra-antivirus.component';
+import { ContraVpnComponent } from './contrasenas/contra-vpn/contra-vpn.component';
+import { ContraServidorComponent } from './contrasenas/contra-servidor/contra-servidor.component';
+import { ContraEquipoComponent } from './contrasenas/contra-equipo/contra-equipo.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LicenciasComponent } from './licencias/licencias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -16,6 +22,9 @@ import { VermasComponent } from './vermas/vermas.component';
 import { ReportescomponentComponent } from './reportescomponent/reportescomponent.component';
 import { PerifericosComponent } from './perifericos/perifericos.component';
 import { DetailsComponent } from './details/details.component';
+import { CalendarMantComponent } from './calendar-mant/calendar-mant.component';
+import { RegistroTareaComponent } from './registro-tarea/registro-tarea.component';
+import { RecuperarContraComponent } from './recuperar-contra/recuperar-contra.component';
 
 
 export const routes: Routes = [
@@ -38,11 +47,25 @@ export const routes: Routes = [
     { path: 'usuarios', component: UsuariosComponent },
     { path: 'impresoras', component: ImpresoraComponent },
     { path: 'perifericos', component: PerifericosComponent },
+    { path: 'contrasenas', component: ContrasenasComponent,
+        children: [
+            {path: 'siesa', component: ContraSiesaComponent},
+            {path: 'antivirus', component: ContraAntivirusComponent},
+            {path: 'vpn', component: ContraVpnComponent},
+            {path: 'servidor', component: ContraServidorComponent},
+            {path: 'equipo', component: ContraEquipoComponent},
+        ],
+    },
     { path: 'sidebar', component: SidebarComponent },
     { path: 'login', component: LoginComponent},
+    { path: 'recuperar-contra', component: RecuperarContraComponent },
     { path: 'register', component: RegisterComponent},
     { path: 'details/:id', component: DetailsComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path:'calendario',component:CalendarMantComponent},
+    { path: 'registro-tarea', component: RegistroTareaComponent },
+    
+
     
 ];
 

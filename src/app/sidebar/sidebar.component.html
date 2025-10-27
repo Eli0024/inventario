@@ -1,29 +1,142 @@
-<div class="sidebar flex flex-col bg-gray-100 text-white p-4" style="max-height: 110vh;">
-  <div class="mb-8">
-    <nav class="flex flex-col space-y-2">
-      <a class="active flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/info">
-        <i class="fa fa-laptop fa-lg mr-2"></i> Equipos
-      </a>
-      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/usuarios">
-        <i class="fa fa-address-book fa-lg mr-2"></i> Usuarios
-      </a>
-      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/licencias">
-        <i class="fa fa-file-alt fa-lg mr-2"></i> Licencias
-      </a>
-      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/impresoras">
-        <i class="fa fa-print fa-lg mr-2"></i> Impresoras
-      </a>
-      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/manten">
-        <i class="fa fa-tools fa-lg mr-2"></i> Mantenimiento
-      </a>
-      <a class="flex items-center p-2 rounded hover:bg-gray-700 font-manrope text-lg" routerLink="/perifericos">
-        <i class="fa fa-mouse fa-lg mr-2"></i> Periféricos
-      </a>
-    </nav>
+<div
+  class="flex flex-col w-64 bg-gradient-to-b from-white to-gray-50 h-[calc(100vh-4rem)] fixed md:relative md:h-auto md:min-h-screen shadow-lg px-4 py-5 transition-all duration-300 border-r border-gray-200"
+>
+  <!-- Encabezado -->
+  <div class="mb-6 border-b border-gray-200 pb-4 text-center md:text-left">
+    <h4 class="text-gray-800 text-[10px] font-semibold leading-snug tracking-wide">
+      <b>Gestión de Control Informático</b>
+    </h4>
   </div>
-  <div class="flex justify-center mt-8">
-    <button class="flex items-center text-lg text-gray-600 hover:text-red-500 focus:outline-none" (click)="logout()">
-      <i class="fas fa-sign-out-alt fa-lg mr-2"></i> Cerrar sesión
+
+  <!-- Navegación -->
+  <nav class="flex flex-col gap-2 flex-grow">
+    <a
+      routerLink="/content"
+      routerLinkActive="bg-blue-500 text-white shadow-md"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-home w-5 text-center"></i>
+      <span>Inicio</span>
+    </a>
+
+    <a
+      routerLink="/usuarios"
+      routerLinkActive="active"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-users"></i>
+      <span>Usuarios</span>
+    </a>
+
+    <a
+      routerLink="/info"
+      routerLinkActive="bg-blue-500 text-white shadow-md"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-laptop w-5 text-center"></i>
+      <span>Equipos</span>
+    </a>
+
+    <a
+      routerLink="/licencias"
+      routerLinkActive="bg-blue-500 text-white shadow-md"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-file-contract w-5 text-center"></i>
+      <span>Licencias</span>
+    </a>
+
+    <a
+      routerLink="/impresoras"
+      routerLinkActive="bg-blue-500 text-white shadow-md"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-print w-5 text-center"></i>
+      <span>Impresoras</span>
+    </a>
+
+    <a
+      routerLink="/manten"
+      routerLinkActive="bg-blue-500 text-white shadow-md"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-tools w-5 text-center"></i>
+      <span>Mantenimiento</span>
+    </a>
+
+    <a
+      routerLink="/perifericos"
+      routerLinkActive="bg-blue-500 text-white shadow-md"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-keyboard w-5 text-center"></i>
+      <span>Periféricos</span>
+    </a>
+
+    <!-- Dropdown Contraseñas -->
+    <div>
+      <button
+        (click)="togglePasswords()"
+        class="flex items-center justify-between w-full text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline "
+      >
+        <span class="flex items-center gap-3">
+          <i class="fa fa-lock w-5 text-center"></i> Contraseñas
+        </span>
+        <i class="fa" [ngClass]="showPasswords ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+      </button>
+
+      <div *ngIf="showPasswords" class="flex flex-col pl-8 mt-1 gap-1">
+        <a
+          routerLink="/contrasenas/siesa"
+          routerLinkActive="text-blue-600 font-semibold"
+          class="flex items-center justify-between w-full text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+          >Siesa</a
+        >
+        <a
+          routerLink="/contrasenas/antivirus"
+          routerLinkActive="text-blue-600 font-semibold"
+          class="flex items-center justify-between w-full text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline "
+          >Antivirus</a
+        >
+        <a
+          routerLink="/contrasenas/servidor"
+          routerLinkActive="text-blue-600 font-semibold"
+          class="flex items-center justify-between w-full text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+          >Servidor</a
+        >
+        <a
+          routerLink="/contrasenas/vpn"
+          routerLinkActive="text-blue-600 font-semibold"
+          class="flex items-center justify-between w-full text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+          >VPN</a
+        >
+        <a
+          routerLink="/contrasenas/equipo"
+          routerLinkActive="text-blue-600 font-semibold"
+          class="flex items-center justify-between w-full text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+          >Equipos</a
+        >
+      </div>
+    </div>
+
+    <a
+      routerLink="/registro-tarea"
+      routerLinkActive="bg-blue-500 text-white shadow-md"
+      class="flex items-center gap-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+    >
+      <i class="fa fa-book w-5 text-center"></i>
+      <span>Registro de Tareas</span>
+    </a>
+  </nav>
+
+  <!-- Pie -->
+  <div class="mt-auto pt-4 border-t border-gray-200">
+    <button
+      class="w-full flex items-center justify-center gap-3 text-gray-700 hover:text-red-500 hover:bg-red-100 py-2 rounded-lg transition-all duration-200"
+      (click)="logout()"
+    >
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Cerrar sesión</span>
     </button>
   </div>
 </div>

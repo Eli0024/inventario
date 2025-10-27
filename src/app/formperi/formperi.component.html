@@ -1,93 +1,164 @@
-<div class="container">
-    <form id="registro-parametros-form">
-      <div class="input-container">
-        <div
-          class="icon-container bg-cyan-500 text-white"
-        >
-        <i class="fa fa-print fa-2x m-2 text-center"></i>
-        </div>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre" [(ngModel)]="periferico.nombre" required />
-      </div>
-      <div class="input-container">
-        <div
-          class="icon-container bg-cyan-500 text-white"
-        >
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-aspect-ratio-fill" viewBox="0 0 16 16">
-            <path d="M0 12.5v-9A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5M2.5 4a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 1 0V5h2.5a.5.5 0 0 0 0-1zm11 8a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-1 0V11h-2.5a.5.5 0 0 0 0 1z"/>
-          </svg>
-        </div>
-        <input
-          type="text"
-          id="modelo"
-          name="modelo"
-          placeholder="Modelo"
-          [(ngModel)]="periferico.modelo"
-          required
-        />
-      </div>
-      <div class="input-container">
-        <div
-          class="icon-container bg-cyan-500 text-white"
-        >
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-body-text" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m9 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m5 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-12 2A.5.5 0 0 1 .5 6h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-8 2A.5.5 0 0 1 .5 8h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-7 2a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-          </svg>
-        </div>
-        <input
-          type="text"
-          id="numero_serie"
-          name="numero_serie"
-          placeholder="Numero de serie"
-          [(ngModel)]="periferico.numero_serie"
-          required
-        />
-      </div>
-      <div class="input-container">
-        <div
-          class="icon-container bg-cyan-500 text-white"
-        >
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16">
-            <path d="M6.445 11.688V6.354h-.633A13 13 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23"/>
-            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-          </svg>
-        </div>
-        <input
-          class="text-gray-600"
-          type="date"
-          id="fecha_adquisicion"
-          name="fecha_adquisicion"
-          placeholder="Fecha adquisicion"
-          [(ngModel)]="periferico.fecha_adquisicion"
-          required
-        />
-      </div>
-          <svg
-            class="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z"
-            />
-          </svg>
-          <select class="bg-gray-500" [(ngModel)]="periferico.responsable.id" name="responsable" required>
-            <option [ngValue]="null">Seleccione un responsable</option>
-            <option *ngFor="let colab of colaboradores" [ngValue]="colab.id">
-              {{ colab.nombre }} {{ colab.apellido }}
-            </option>
-          </select>
-          
-          <div *ngIf="periferico.responsable.id && colaboradores.length">
-            <small>Responsable seleccionado: 
-              {{ getNombreResponsable(periferico.responsable.id) }}
-            </small>
-          </div>
+<div class="modal-container bg-white p-6 rounded-2xl shadow-xl max-w-5xl mx-auto border border-gray-100">
+  <form id="registro-periferico-form" class="space-y-6" #perifericoForm="ngForm">
 
-      <button class="btn btn-primary" type="button" (click)="create()" >Registrar</button>
-  
-    </form>
-  </div>
-  
-  
+    <!-- PRIMERA FILA -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Nombre -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div class="p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-keyboard text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input 
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="periferico.nombre"
+            required
+            placeholder=" "
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                   focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                   outline-none transition-all placeholder-transparent"
+          />
+          <label for="nombre"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                   peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 
+                   peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 
+                   peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Nombre
+          </label>
+        </div>
+      </div>
+
+      <!-- Modelo -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div class="p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-tag text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input 
+            type="text"
+            id="modelo"
+            name="modelo"
+            [(ngModel)]="periferico.modelo"
+            required
+            placeholder=" "
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                   focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                   outline-none transition-all placeholder-transparent"
+          />
+          <label for="modelo"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                   peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 
+                   peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 
+                   peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Modelo
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEGUNDA FILA -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Número de serie -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div class="p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-barcode text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input 
+            type="text"
+            id="numero_serie"
+            name="numero_serie"
+            [(ngModel)]="periferico.numero_serie"
+            required
+            placeholder=" "
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                   focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                   outline-none transition-all placeholder-transparent"
+          />
+          <label for="numero_serie"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                   peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 
+                   peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 
+                   peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Número de serie
+          </label>
+        </div>
+      </div>
+
+      <!-- Fecha de adquisición -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div class="p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-calendar-alt text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input 
+            type="date"
+            id="fecha_adquisicion"
+            name="fecha_adquisicion"
+            [(ngModel)]="periferico.fecha_adquisicion"
+            required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                   focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                   outline-none transition-all"
+          />
+          <label for="fecha_adquisicion"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                   peer-focus:text-blue-600 bg-white px-1">
+            Fecha de adquisición
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESPONSABLE -->
+    <div class="flex items-center space-x-2 transition-all">
+      <div class="p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl flex items-center justify-center shadow-sm">
+        <i class="fas fa-user text-lg"></i>
+      </div>
+      <div class="relative z-0 w-full group">
+        <select 
+          id="responsable_id"
+          name="responsable_id"
+          [(ngModel)]="periferico.responsable_id"
+          required
+          class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                 outline-none transition-all"
+        >
+          <option *ngFor="let colab of colaboradores" [ngValue]="colab.id">
+            {{ colab.nombre }} {{ colab.apellido }}
+          </option>
+        </select>
+        <label for="responsable_id"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+                 peer-focus:text-blue-600 bg-white px-1">
+          Responsable
+        </label>
+      </div>
+    </div>
+
+    <div *ngIf="periferico.responsable.id && colaboradores.length" class="text-sm text-gray-600 ml-2">
+      Responsable seleccionado: {{ getNombreResponsable(periferico.responsable.id) }}
+    </div>
+
+    <!-- BOTONES -->
+    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-100 mt-4">
+      <button
+        type="button"
+        class="px-6 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-sm transition-all"
+        (click)="cancelar()"
+      >
+        Cancelar
+      </button>
+      <button 
+        type="button" 
+        class="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="create()"
+      >
+        Registrar
+      </button>
+    </div>
+  </form>
+</div>

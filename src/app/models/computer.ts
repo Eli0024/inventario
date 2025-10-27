@@ -1,4 +1,4 @@
-// models.ts
+
 export interface Responsable {
   id: number; 
   nombre: string;
@@ -6,11 +6,7 @@ export interface Responsable {
 }
 
 export interface Equipo {
-
-  responsable: Responsable;
-  // otros campos que puedan existir en tu modelo `RegistrarEquipo`
-  // por ejemplo:
-  id?: number;
+  id: number;
   marca: string;
   memoria: string;
   modelo: string;
@@ -20,7 +16,8 @@ export interface Equipo {
   sistema_operativo: string;
   fecha_adquisicion: string;
   estado: string;
+  responsable: Responsable;
+  responsable_id?: number;
   archivo: File | null;
-  // etc.
 }
 

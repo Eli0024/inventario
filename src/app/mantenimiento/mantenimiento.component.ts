@@ -8,69 +8,94 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormmanteComponent } from '../formmante/formmante.component';
 import { Router, RouterLink } from '@angular/router';
-
+import { Colaborador } from '../models/users';
+import { UsersService } from '../services/users.service';
+import { ComputersService } from '../services/computers.service';
+import { Equipo } from '../models/manten';
 
 @Component({
   selector: 'app-mantenimiento',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent, SidebarComponent, FormmanteComponent, RouterLink],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    NavbarComponent, 
+    SidebarComponent, 
+    FormmanteComponent, 
+    RouterLink
+  ],
   templateUrl: './mantenimiento.component.html',
   styleUrl: './mantenimiento.component.css'
 })
 export class MantenimientoComponent implements OnInit {
-
-  mantenimientos: Mantenimiento[] = []; // inicializa con un array vacío
+  mantenimientos: Mantenimiento[] = [];
+  equipos:  Equipo[] = [];
+  colaboradores: Colaborador[] = [];
+  modalAbierto: boolean = false;
   filter: any = { searchTerm: '' };
-  mantenimiento: Mantenimiento = {
-    responsable: { id:0 , nombre: '', apellido: '' },
-    id: 0,
-    equipo: '',
-    fecha: '',
-    tipo: '',
-    descripcion: '',
-  };
+
+  modalMantenimientoAbierto:boolean=false
+
 
   mantenimientoSeleccionado: Mantenimiento = {
-    responsable: { id:0, nombre: '', apellido: '' },
     id: 0,
-    equipo: '',
-    fecha: '',
-    tipo: '',
+    equipo:{ 
+    id: 0,
+    marca:'',
+    serial:'',
+    responsable:{
+      id:0,
+      nombre:'',
+      apellido:''
+    }
+
+  },
+    equipo_id: 0,
+    fecha_mantenimiento:'',
+    tipo_mantenimiento: 'preventivo',
+    tipo_servicio: 'software',
     descripcion: '',
-   };
-   
-  constructor(private mantenService: MantenService, private cdr: ChangeDetectorRef, private router: Router) {  }
+    realizado_por: '',
+  };
+
+  constructor(
+    private mantenService: MantenService,
+    private computersService: ComputersService, 
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private usersService: UsersService
+  ) { }
 
   ngOnInit(): void {
     this.loadMantenimientos();
-    }
+     this.loadEquipos();
+    this.loadColaboradores();
+  }
 
+  cargarMantenimientos(): void {
+    this.mantenService.getAll().subscribe({
+      next: (response) => this.mantenimientos = response,
+      error: (error) => console.error('Error al obtener mantenimientos', error)
+    });
+  }
+  
+  openMantenimientoModal(){
+    this.modalMantenimientoAbierto=true;
+  }
 
-    editarMantenimiento(mantenimiento: Mantenimiento): void {
-      this.mantenimientoSeleccionado = { ...mantenimiento };
-      
-      // Asegurar estructura del responsable
-      if (!this.mantenimientoSeleccionado.responsable) {
-        this.mantenimientoSeleccionado.responsable = {
-          id: 0,
-          nombre: '',
-          apellido: ''
-        };
-      }
-      
-      this.openModal();
-    }
-    
-    openModal(): void {
-      this.modalAbierto = true;
-    }
-    
-    closeModal(): void {
-      this.modalAbierto = false;
-    }
-    
+  closeMantenimientoModal(){
+    this.modalMantenimientoAbierto=false
+  }
 
-    modalAbierto: boolean = false; 
+  onMantenimientoCreado(): void {
+    this.modalMantenimientoAbierto = false; 
+    this.cargarMantenimientos(); 
+  }
+
+  // Evento cuando se cancela el formulario
+  onFormularioCancelado(): void {
+    this.modalMantenimientoAbierto = false;
+  }
 
   loadMantenimientos(): void {
     this.mantenService.getAll().subscribe(
@@ -78,106 +103,128 @@ export class MantenimientoComponent implements OnInit {
         this.mantenimientos = response;
       },
       (error: any) => {
-        console.error('Error al obtener los usuarios', error);
+        console.error('Error al obtener los mantenimientos', error);
       }
     );
   }
 
-  openModalAndEdit(equipo: any) {
-    this.mantenimientoSeleccionado = { ...equipo }; // Copia los valores del equipo seleccionado
-    this.modalAbierto = true;
-  }
-
-  // Actualizar el usuario
-  getEquipo(id: number): void {
-    this.mantenService.get(id).subscribe({
-      next: (mantenimiento) => {
-        this.mantenimientoSeleccionado = { ...mantenimiento };
-        
-        // Asegurar estructura del responsable
-        if (!this.mantenimientoSeleccionado.responsable || typeof this.mantenimientoSeleccionado.responsable === 'number') {
-          this.mantenimientoSeleccionado.responsable = {
-            id: typeof this.mantenimientoSeleccionado.responsable === 'number' 
-                 ? this.mantenimientoSeleccionado.responsable 
-                 : 0,
-            nombre: '',
-            apellido: ''
-          };
-        }
-        this.openModal(); // Abrir modal después de cargar
+  loadEquipos(): void {
+    this.computersService.getEquipos().subscribe({
+      next: (response: Equipo[]) => {
+        this.equipos = response;
       },
-      error: (err) => {
-        console.error('Error al cargar equipo:', err);
-        Swal.fire('Error', 'No se pudo cargar el mantenimiento', 'error');
-      }
+      error: (err) => console.error('Error al cargar equipos', err)
     });
   }
+
+  loadColaboradores(): void {
+    this.usersService.getAll().subscribe(
+      (response: Colaborador[]) => {
+        this.colaboradores = response;
+      },
+      (error: any) => {
+        console.error('Error al obtener los colaboradores', error);
+      }
+    );
+  }
+
+  verCalendario(){
+    this.router.navigate(['/calendario'])
+  }
+
+  openModalAndEdit(mantenimiento: Mantenimiento): void {
+     this.mantenimientoSeleccionado = {
+      ...mantenimiento,
+      equipo: mantenimiento.equipo
+        ? { ...mantenimiento.equipo }
+        : { id: 0, marca: '', serial: '', responsable: {id:0,nombre:'',apellido:''} },
+      equipo_id: mantenimiento.equipo?.id || 0
+    };
+    this.modalAbierto = true;
+  }
   
-  // Al actualizar
+  openModal(): void {
+    this.modalAbierto = true;
+  }
+  
+  closeModal(): void {
+    this.modalAbierto = false;
+  }
+
   update(): void {
-    if (!this.mantenimientoSeleccionado.responsable?.id) {
-      alert('Debe seleccionar un responsable válido');
+    if (!this.mantenimientoSeleccionado.equipo_id) {
+      Swal.fire('Error', 'Debe seleccionar un equipo', 'error');
       return;
     }
   
     this.mantenService.update(this.mantenimientoSeleccionado).subscribe({
       next: (response) => {
-        console.log('Actualización exitosa:', response);
-        this.loadMantenimientos(); // Recargar los equipos
-        this.closeModal(); // Cerrar el modal
+        Swal.fire({
+          title: "¡Actualizado!",
+          text: "El mantenimiento ha sido actualizado",
+          icon: "success"
+        });
+        this.loadMantenimientos();
+        this.closeModal();
       },
       error: (err) => {
-        console.error('Error completo:', err);
-        if (err.error) {
-          alert(JSON.stringify(err.error));
-        }
+        console.error('Error al actualizar:', err);
+        Swal.fire({
+          title: "Error",
+          text: "Hubo un problema al actualizar el mantenimiento",
+          icon: "error"
+        });
       }
     });
   }
-        
-   delete(id: number) {
-      console.log(id);
-      
-      Swal.fire({
-        title: "¿Desea eliminar este registro?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sí, ¡elimínalo!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.mantenService.delete(id).subscribe({
-            next: () => {
-              Swal.fire({
-                title: "¡Eliminado!",
-                text: "El registro ha sido eliminado.",
-                icon: "success"
-              });
-              this.ngOnInit(); // Actualiza la vista
-            },
-            error: (err) => {
-              console.error('Error:', err);
-              Swal.fire({
-                title: "Error",
-                text: "Hubo un problema al eliminar el registro.",
-                icon: "error"
-              });
-            }
-          });
-        }
-      });
-    }
-
-    filterMantenimientos(): Mantenimiento[] {
-      if (this.mantenimientos && this.mantenimientos.length) {
-        return this.mantenimientos.filter(Mantenimiento =>
-          Mantenimiento.equipo.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
-          Mantenimiento.tipo.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
-          Mantenimiento.descripcion.toLowerCase().includes(this.filter.searchTerm.toLowerCase())
-        );
+  
+  delete(id: number) {
+    Swal.fire({
+      title: "¿Desea eliminar este registro?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, ¡elimínalo!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.mantenService.delete(id).subscribe({
+          next: () => {
+            Swal.fire({
+              title: "¡Eliminado!",
+              text: "El registro ha sido eliminado.",
+              icon: "success"
+            });
+            this.loadMantenimientos();
+          },
+          error: (err) => {
+            console.error('Error:', err);
+            Swal.fire({
+              title: "Error",
+              text: "Hubo un problema al eliminar el registro.",
+              icon: "error"
+            });
+          }
+        });
       }
-      return [];
-    }
-}
+    });
+  }
 
+  filterMantenimientos(): Mantenimiento[] {
+    if (this.mantenimientos && this.mantenimientos.length) {
+       return this.mantenimientos.filter(m =>
+      m.equipo?.marca.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+      m.equipo?.serial.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+      m.descripcion.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+      m.tipo_mantenimiento.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ||
+      (m.equipo?.responsable?.nombre.toLowerCase().includes(this.filter.searchTerm.toLowerCase()) ?? false)
+    );
+    }
+    return [];
+  }
+
+  getNombreResponsable(id: number): string {
+    const colab = this.colaboradores.find(c => c.id === id);
+    return colab ? `${colab.nombre} ${colab.apellido}` : 'No asignado';
+  }
+}

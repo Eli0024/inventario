@@ -9,7 +9,10 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormcompComponent } from '../formcomp/formcomp.component';
 import { FormsModule } from '@angular/forms';
 import { Equipo } from '../models/computer';
-
+import { Colaborador } from '../models/users';
+import { UsersService } from '../services/users.service';
+import { LicenceService } from '../services/licence.service';
+import { Authservice } from '../auth.service';
 
 @Component({
   selector: 'app-info',
@@ -28,7 +31,8 @@ import { Equipo } from '../models/computer';
 })
 export class InfoComponent implements OnInit {
 
-  equipos: Equipo[] = []; // inicializa con un array vacío
+  equipos: Equipo[] = [];
+  colaboradores:Colaborador[]=[];
   isStaff = false;
   filter: any = { searchTerm: '' };
   equipo: Equipo ={
@@ -68,18 +72,114 @@ export class InfoComponent implements OnInit {
     }
   };
 
+  licenciasEquipo: any[] = [];
+  modalLicenciasAbierto = false;
+
+  modalRegistroAbierto: boolean = false;
+  mostrarTodos: boolean = false;
+empresaActualId: number | null = null;
+ 
+
+  openRegistroModal() {
+    this.modalRegistroAbierto = true;
+  }
+  closeRegistroModal() {
+    this.modalRegistroAbierto = false;
+  }
+
 
   constructor(
     private computersService: ComputersService,
+    private userService:UsersService,
+    private licenceService: LicenceService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: Authservice
   ) {}
 
   ngOnInit(): void {
-    this.cargar();
-    // this.getEquipos();
+    this.loadEmpresaActual();
     this.loadEquipos();
+    this.loadColaboradores();
+  }
+
+  loadEmpresaActual(): void {
+
+    this.empresaActualId = this.authService.getEmpresaId(); 
+  }
+
+  verLicenciasDeEquipo(equipoId: number) {
+  console.log('Cargando licencias del equipo con ID:', equipoId);
+
+  this.licenceService.getByEquipo(equipoId).subscribe({
+    next: (res) => {
+      console.log('Licencias cargadas:', res);
+      this.licenciasEquipo= res;
+      this.modalLicenciasAbierto = true;
+      console.log('Estado del modal:', this.modalLicenciasAbierto);
+    },
+    error: (err) => console.error('Error al cargar licencias:', err)
+  });
+ }
+
+ cerrarModalLicencias() {
+   this.modalLicenciasAbierto = false;
+   this.licenciasEquipo = [];
+ }
+
+
+  onEquipoCreado(nuevo: any): void {
+  this.loadEquipos(); 
+  this.closeRegistroModal(); 
+  }
+ 
+  get colaboradoresFiltrados() {
+    if (this.mostrarTodos || !this.empresaActualId) {
+      return this.colaboradores;
+    }
+    return this.colaboradores.filter(
+      c => c.empresa?.id === this.empresaActualId
+    );
+  }
+
+  toggleFiltroColaboradores(): void {
+    this.mostrarTodos = !this.mostrarTodos;
+  }
+
+  loadColaboradores(): void {
+    this.userService.getAllGlobal().subscribe({
+      next: (data) => {
+        this.colaboradores = data;
+      },
+      error: (err) => {console.error('Error al cargar colaboradores:', err);
+      }
+    });
+  }
+
+  getNombreResponsable(id: number): string {
+    const colab = this.colaboradores.find(c => c.id === id);
+    return colab ? `${colab.nombre} ${colab.apellido}` : 'No asignado';
+  }
+
+
+  onResponsableChange(event: any): void {
+    const selectedId = Number(event.target.value);
+    const selectedColaborador = this.colaboradores.find(c => c.id === selectedId);
+    
+    if (selectedColaborador) {
+      this.equipoSeleccionado.responsable = {
+        id: selectedColaborador.id,
+        nombre: selectedColaborador.nombre,
+        apellido: selectedColaborador.apellido
+      };
+    } else {
+      this.equipoSeleccionado.responsable = {
+        id: null,
+        nombre: '',
+        apellido: ''
+      };
+    }
   }
 
   cargar(): void {
@@ -197,8 +297,7 @@ update(): void {
       }
     }
   });
-}
-              
+ }       
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
@@ -255,18 +354,25 @@ update(): void {
 
 
   filterEquipos(): Equipo[] {
-    if (this.equipos && this.equipos.length) {
-      return this.equipos.filter(
-        (Equipo) =>
-          Equipo.marca
-            .toLowerCase()
-            .includes(this.filter.searchTerm.toLowerCase()) ||
-          Equipo.memoria
-            .toLowerCase()
-            .includes(this.filter.searchTerm.toLowerCase())
-             // No es necesario `toLowerCase` porque es un número
-      );
-    }
-    return [];
+  if (this.equipos && this.equipos.length) {
+    const term = this.filter.searchTerm.toLowerCase().trim();
+
+    return this.equipos.filter(equipo =>
+      equipo.marca?.toLowerCase().includes(term) ||
+      equipo.modelo?.toLowerCase().includes(term) ||
+      equipo.memoria?.toLowerCase().includes(term) ||
+      equipo.procesador?.toLowerCase().includes(term) ||
+      equipo.office?.toLowerCase().includes(term) ||
+      equipo.serial?.toLowerCase().includes(term) ||
+      equipo.sistema_operativo?.toLowerCase().includes(term) ||
+      equipo.fecha_adquisicion?.toLowerCase().includes(term) ||
+      equipo.estado?.toLowerCase().includes(term) ||
+      equipo.responsable && (equipo.responsable.nombre + '' + equipo.responsable.apellido).toLowerCase().includes(term)
+    );
   }
+  return [];
+}
+
+
+  
 }  

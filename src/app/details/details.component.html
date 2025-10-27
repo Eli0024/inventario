@@ -17,17 +17,17 @@
           <div class="bg-gray-800">
             <div class="bg-white p-3 shadow text-2xl text-gray-600">
               <i class="fa fa-tachometer-alt fa-x"></i>
-              <span> Panel de Administracion</span>
+              <span> Detalles</span>
             </div>
           </div>
           
           <div class="container mt-4">
-            <h3 class="text-center text-gray-600 mb-4">Detalles del Colaborador</h3>
+            <h3 class="text-center text-gray-600 mb-4">Detalles de Mantenimiento</h3>
             <div class="flex justify-center">
               <button
-                class="bg-green-500 hover:bg-green-600 text-xl py-2 px-2 m-2 rounded shadow"
+                class=" bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 text-xl py-2 px-2 m-2 rounded shadow"
                 type="button"
-                routerLink="/content"
+                routerLink="/impresoras"
               >
                 Volver
               </button>
@@ -36,27 +36,30 @@
             <!-- Tabla de información del colaborador -->
             <div class="card mb-4 m-4">
               <div class="card-header text-white">
-                Información del Mantenimiento
+                 Mantenimientos Registrados
               </div>
               <div class="card-body">
                 <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th>ID</th>
+                      <th>Impresora</th>
                       <th>Fecha</th>
                       <th>Descripcion</th>
                       <th>Realizado Por</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr *ngFor="let mantenimpre of mantenimientos">
                       <td>{{ mantenimpre.id }}</td>
+                      <td>{{mantenimpre.impresora.nombre}}-{{mantenimpre.impresora.direccion_ip}}</td>
                       <td>{{ mantenimpre.fecha }}</td>
                       <td>{{ mantenimpre.descripcion }}</td>
                       <td>{{ mantenimpre.realizado_por }}</td>
                     </tr>
                   </tbody>
                 </table>
+                <p *ngIf="mantenimientos.length === 0" class="text-center text-gray-600">No hay mantenimientos registrados para esta impresora.</p>
               </div>
             </div>
             </div> 

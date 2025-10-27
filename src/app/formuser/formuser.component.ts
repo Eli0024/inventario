@@ -1,106 +1,135 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,Output,EventEmitter, ViewChild,OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UsersService } from '../services/users.service';
 import { Colaborador } from '../models/users';
 import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-formuser',
   standalone: true,
-  imports: [NavbarComponent,  FormsModule, CommonModule, SidebarComponent],
+  imports: [NavbarComponent, ReactiveFormsModule, CommonModule, SidebarComponent],
   templateUrl: './formuser.component.html',
-  styleUrl: './formuser.component.css'
+  styleUrls: ['./formuser.component.css']
 })
-export class FormuserComponent {
+export class FormuserComponent implements OnInit {
+  
+  @Input() empresas: any[] = [];
+  @Output() usuarioCreado=new EventEmitter<Colaborador>();
+  @Output() formularioCancelado=new EventEmitter<void>();
+
+  userForm!: FormGroup;
+  isSubmitting: boolean = false;
 
   colaborador: Colaborador = {
     id: 0,
     nombre: '',
     apellido: '',
-    empresa: null,
+    empresa: {id:0,nombre:''},
+    empresa_id: 0,
     area: null,
     cargo: '',
   };
   
-  @Input() colaboradorSeleccionado: any;
 
-  colaboradores : Colaborador[] = [];
- 
-
-  constructor(private usersService: UsersService, private router: Router, private activatedRoute:ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder,
+    private usersService: UsersService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this.userForm = this.fb.group({
+      nombre: ['', [
+        Validators.required,
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]+$/)
+      ]],
+      apellido: ['', [
+        Validators.required,
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]+$/)
+      ]],
+      empresa_id: [0, [Validators.required, Validators.min(1)]],
+      area: ['', Validators.required],
+      cargo: ['', Validators.required],
+    });
+
     this.cargar();
-    this.loadColaboradores();
-   }
-
-  cargar():void{
-
-    this.activatedRoute.params.subscribe(
-      e=>{
-        let id=e['id'];
-        if(id){
-          this.usersService.get(id).subscribe(
-            colaborador => this.colaborador = colaborador
-          );
-        }
-      }
-    );
   }
 
-  loadColaboradores(): void {
-    this.usersService.getAll().subscribe(
-      (response: Colaborador[]) => {
-        this.colaboradores = response;
-      },
-      (error: any) => {
-        console.error('Error al obtener los usuarios', error);
+  cargar(): void {
+    this.activatedRoute.params.subscribe(e => {
+      let id = e['id'];
+      if (id) {
+        this.usersService.get(id).subscribe(
+          colaborador => this.colaborador = colaborador
+        );
       }
-    );
+    });
   }
-
 
   create(): void {
-    this.usersService.create(this.colaborador).subscribe(
-      () => {
+    if (this.userForm.invalid) {
+      this.userForm.markAllAsTouched();
+      Swal.fire({
+        title: "Formulario incompleto",
+        text: "Por favor complete todos los campos requeridos correctamente",
+        icon: "warning"
+      });
+      return;
+    }
+    this.isSubmitting = true;
+
+    const nuevoColaborador: Colaborador = this.userForm.value;
+    
+
+    this.usersService.create(nuevoColaborador).subscribe({
+      next: () => {
         Swal.fire({
-          title: "Registro Exitoso",
-          showClass: {
-            popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `
-          },
-          hideClass: {
-            popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `
-          }
+          title: "¡Registro Exitoso!",
+          text: "El usuario ha sido registrado correctamente",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500
         });
-        this.loadColaboradores(); // Recargar los equipos
-       
+        this.userForm.reset({
+          nombre: '',
+          apellido: '',
+          empresa_id: 0,
+          area: '',
+          cargo: ''
+        });
+        this.isSubmitting = false;
+        this.usuarioCreado.emit(nuevoColaborador);
       },
-      error => {
+      error: (error) => {
         Swal.fire({
           title: "Error al registrar",
-          text: error.message,
+          text: error.message || "Ocurrió un error al registrar el usuario",
           icon: "error"
         });
+        this.isSubmitting = false;
       }
-    );
+    });
   }
-  
+
+  cancelar(): void {
+    this.userForm.reset();
+    this.formularioCancelado.emit();
+  }
+
   update(): void {
-    this.usersService.update(this.colaborador).subscribe(
-      () => {
+    if (this.userForm.invalid) {
+      this.marcarCamposComoTocados();
+      return;
+    }
+
+    this.usersService.update(this.colaborador).subscribe({
+      next: () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -110,23 +139,21 @@ export class FormuserComponent {
         });
         this.router.navigate(['/usuarios']);
       },
-      error => {
+      error: (error) => {
         Swal.fire({
           title: "Error al actualizar",
           text: error.message,
           icon: "error"
         });
       }
-    );
+    });
   }
 
-  onEmpresaChange(event: any) {
-    console.log("Empresa seleccionada:", event);  // Aquí puedes realizar más acciones si lo deseas.
-    this.colaboradorSeleccionado.empresa = event;
+
+  private marcarCamposComoTocados(): void {
+    Object.keys(this.userForm.controls).forEach(key => {
+      this.userForm.controls[key].markAsTouched();
+    });
   }
-  
-  onAreaChange(event: any) {
-    console.log("Area seleccionada:", event);  // Aquí puedes realizar más acciones si lo deseas.
-    this.colaboradorSeleccionado.area = event;
-  }
+
 }

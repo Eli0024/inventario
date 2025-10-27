@@ -4,25 +4,18 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MantenimpreService } from '../services/mantenimpre.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [NavbarComponent, SidebarComponent, RouterLink ],
+  imports: [NavbarComponent, SidebarComponent, RouterLink, CommonModule],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
 export class DetailsComponent {
-
-   mantenimpre : Mantenimpre = {
-      impresora: { // Objeto Responsable por defecto
-        nombre: ''
-      },
-      id: 0,
-      fecha: '',
-      descripcion: '',
-      realizado_por: '',
-    }
+  impresora:any = { nombre: '',direccion_ip:'' };
+  mantenimientos:any[] = [];
 
     isLoading = true;
     error: string | null = null;
@@ -42,16 +35,17 @@ export class DetailsComponent {
       }
   
       const id = +idParam;
-      this.loadMantenimiento(id);
+      this.loadMantenimientos(id);
     }
   
-    loadMantenimiento(id: number): void {
+    loadMantenimientos(id_impresora: number): void {
       this.isLoading = true;
       this.error = null;
   
-      this.mantenimpreService.getById(id).subscribe({
+      this.mantenimpreService.getByImpresora(id_impresora).subscribe({
         next: (data) => {
-          this.mantenimpre = data;
+          this.impresora=data.impresora
+          this.mantenimientos = data.mantenimientos;
           this.isLoading = false;
         },
         error: (err) => {

@@ -1,32 +1,60 @@
-<div class="container">
-    <form id="registro-parametros-form">
-      <div class="input-container">
+<div class="modal-container bg-white p-6 rounded-2xl shadow-xl max-w-4xl mx-auto border border-gray-100">
+  <form id="registro-impresora-form" class="space-y-6">
+
+    <!-- FILA 1 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Nombre impresora -->
+      <div class="flex items-center space-x-2 transition-all">
         <div
-          class="icon-container bg-cyan-500 text-white"
-        >
-        <i class="fa fa-print fa-2x m-2 text-center"></i>
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-print text-lg"></i>
         </div>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre" [(ngModel)]="impresora.nombre" required />
+        <div class="relative z-0 w-full group">
+          <input type="text" id="nombre" name="nombre" placeholder=" "
+            [(ngModel)]="impresora.nombre" required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-transparent" />
+          <label for="nombre"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0] peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Nombre
+          </label>
+        </div>
       </div>
-      <div class="input-container">
+
+      <!-- Dirección IP -->
+      <div class="flex items-center space-x-2 transition-all">
         <div
-          class="icon-container bg-cyan-500 text-white"
-        >
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-square-fill" viewBox="0 0 16 16">
-          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.93 4.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-        </svg>
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fas fa-network-wired text-lg"></i>
         </div>
-        <input
-          type="text"
-          id="direccion_ip"
-          name="direccion_ip"
-          placeholder="Direccion IP"
-          [(ngModel)]="impresora.direccion_ip"
-          required
-        />
+        <div class="relative z-0 w-full group">
+          <input type="text" id="direccion_ip" name="direccion_ip" placeholder=" "
+            [(ngModel)]="impresora.direccion_ip" required
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-transparent" />
+          <label for="direccion_ip"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0] peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3 peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1">
+            Dirección IP
+          </label>
+        </div>
       </div>
-      <button class="btn btn-primary" type="button" (click)="create()">Registrar</button>
-    </form>
-  </div>
-  
-  
+    </div>
+
+    <!-- BOTONES -->
+    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 mt-4">
+      <button 
+       type="button" 
+       (click)="cancelar()"
+        class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg shadow-sm hover:bg-gray-200 transition-all">
+        Cancelar
+      </button>
+      <button 
+        type="button" 
+        (click)="create()"
+        [disabled]="!impresora.nombre || !impresora.direccion_ip || isSubmitting"
+        class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg shadow-md hover:shadow-lg hover:from-blue-700 hover:to-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+       <span *ngIf="!isSubmitting">Registrar</span>
+       <span *ngIf="isSubmitting" class="loading-spinner"></span>
+     </button>
+    </div>
+  </form>
+</div>

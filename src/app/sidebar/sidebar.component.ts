@@ -1,11 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, OnInit, output } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
-import { SidebarService } from '../services/sidebar.service';
-import { MatIconModule } from '@angular/material/icon';
+import { Component,ElementRef } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Authservice } from '../auth.service';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-sidebar',
@@ -15,11 +12,24 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent  {
+  showPasswords = false; 
 
-  constructor(private authService: Authservice, private router: Router) {}
+  constructor(
+    private authService: Authservice,
+    private router: Router,
+    private eRef:ElementRef
+  ) {}
+
+  
+
+ togglePasswords() {
+    this.showPasswords = !this.showPasswords; 
+  }
 
   logout() {
-    this.authService.logout();  // Llama al método logout del servicio
+    console.log('Cerrando sesión... ')
+    this.authService.logout(); 
     this.router.navigate(['/login']);
   }
+
 }

@@ -1,42 +1,190 @@
-<body class="bg-blue-900 flex justify-center items-center min-h-screen p-4">
-   
-   <div class="w-full max-w-sm md:w-1\2 bg-white rounded-lg shadow-lg p-6">       
-      <div class="flex justify-center mb-4">
-          <img
-             class="w-24 sm:w-32"
-             src="https://media.licdn.com/dms/image/v2/D560BAQEdnHQHKn47SQ/company-logo_200_200/company-logo_200_200/0/1712241924456/qumica_bsica_colombiana_sa_logo?e=2147483647&v=beta&t=8i-mYEIaerHVASLmUsZVPOFJVtbwkaujLoUHagQENWw"
-             alt="Logo"
-           />
-       </div>
-        <h2 class="text-center text-lg sm:text-lg writing-mode-vertical-lr  font-bold text-gray-700  mb-3 sm:mb-4">Registrarme</h2>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 flex justify-center items-center min-h-screen p-4">
 
-        <form id="registro-usuarios-form" usuarioForm="ngForm" class="space-y-3 sm:space-y-4">
-                    <input type="text" id="username" name="username" placeholder="Nombre de Usuario" [(ngModel)]="username" class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800 text-sm sm:text-base">                    
-                    <input type="password" id="password" [(ngModel)]="password" name="password"  placeholder="Contraseña" class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800 text-sm sm:text-base">                    
-                    
-                    <div class="form-group text-sm sm:text-base">
-                        <label class="custom-checkbox-label" for="is_staff">
-                            <input type="checkbox" id="is_staff" class="custom-checkbox" [(ngModel)]="is_staff" name="is_staff">
-                            <span class="custom-checkbox-box text-gray-700"> Es Administrador</span>
-                        </label>
-                    </div>
-                    <button type="submit" class="w-full bg-blue-500  text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-300 ease-in-out text-sm sm:text-base" (click)="register()">Crear Cuenta</button>
-        </form>
-                <div *ngIf="successMessage" class="message success text-sm sm:text-base">
-                    {{ successMessage }}
-                </div>
-                <div *ngIf="errorMessage" class="message error text-sm sm:text-base">
-                    {{ errorMessage }}
-                </div>
-                <div class="text-center mt-4">
-                    <span class="text-gray-500">¿Ya tienes cuenta?</span>
-                    <a
-                      class="text-blue-500 hover:underline ml-1"
-                      [routerLink]="['/login']"
-                    >
-                      Iniciar Sesion
-                    </a>
-                </div>
+  <div
+    class="w-full max-w-lg h-[630px] bg-blue-50/30 rounded-xl shadow-lg overflow-hidden p-0 border border-blue-100 backdrop-blur-sm flex flex-col justify-between"
+  >
+    <!-- ENCABEZADO -->
+    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6">
+      <h1 class="text-center text-2xl font-bold text-white">Crear Cuenta</h1>
     </div>
 
+    <!-- CUERPO -->
+    <div class="flex-1 px-8 py-8 flex flex-col justify-between overflow-y-auto">
+      <form
+        id="registro-usuarios-form"
+        usuarioForm="ngForm"
+        class="space-y-6"
+        autocomplete="off"
+      >
+        <!-- Grupo de Nombre de Usuario -->
+        <div class="flex items-center">
+          <span class="mr-3 text-blue-500">
+            <i class="fas fa-user text-2xl"></i>
+          </span>
+          <div class="relative w-full">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder=" "
+              [(ngModel)]="username"
+              class="py-3 px-4 w-full text-base text-gray-900 bg-white rounded-full border border-blue-200 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 peer"
+              required
+              autocomplete="new-username"
+            />
+            <label
+              for="username"
+              class="absolute text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-5 left-4"
+            >
+              Nombre de Usuario
+            </label>
+          </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="flex items-center">
+          <span class="mr-3 text-blue-500">
+            <i class="fas fa-lock text-2xl"></i>
+          </span>
+          <div class="relative w-full">
+            <input
+              [type]="isPasswordVisible ? 'text' : 'password'"
+              id="password"
+              name="password"
+              placeholder=" "
+              [(ngModel)]="password"
+              class="py-3 px-4 w-full text-base text-gray-900 bg-white rounded-full border border-blue-200 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 peer"
+              required
+              
+            />
+            <label
+              for="password"
+              class="absolute text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-5 left-4"
+            >
+              Contraseña
+            </label>
+            <span
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 
+               hover:text-gray-600 cursor-pointer transition"
+              (click)="togglePasswordVisibility()"
+            >
+              <i *ngIf="!isPasswordVisible" class="fas fa-eye"></i>
+              <i *ngIf="isPasswordVisible" class="fas fa-eye-slash"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Confirmar Contraseña -->
+        <div class="flex items-center">
+          <span class="mr-3 flex items-center text-blue-500">
+            <i class="fas fa-lock text-2xl"></i>
+          </span>
+          <div class="relative w-full">
+            <input
+              [type]="isConfirmPasswordVisible ? 'text' : 'password'"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder=" "
+              [(ngModel)]="confirmPassword"
+              class="py-3 px-4 w-full text-base text-gray-900 bg-white rounded-full border 
+                     border-blue-200 appearance-none focus:outline-none focus:ring-2 
+                     focus:ring-blue-300 focus:border-blue-500 peer"
+              required
+              autocomplete="off"
+            />
+            <label for="confirmPassword"
+              class="absolute text-base text-gray-500 duration-300 transform -translate-y-4 
+                     scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 
+                     peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 
+                     peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 
+                     peer-focus:-translate-y-5 left-4">
+              Confirmar Contraseña
+            </label>
+            <span
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 
+                     hover:text-gray-600 cursor-pointer transition"
+              (click)="toggleConfirmPasswordVisibility()"
+            >
+              <i *ngIf="!isConfirmPasswordVisible" class="fas fa-eye"></i>
+              <i *ngIf="isConfirmPasswordVisible" class="fas fa-eye-slash"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="flex items-center pt-2">
+          <input
+            type="checkbox"
+            id="is_staff"
+            class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500 border-blue-300"
+            [(ngModel)]="is_staff"
+            name="is_staff"
+          />
+          <label for="is_staff" class="ml-2 block text-base text-gray-700">
+            Es Administrador
+          </label>
+        </div>
+
+        <!-- Botón -->
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium py-3 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 transform hover:scale-[1.02] shadow-md disabled:opacity-70 disabled:cursor-not-allowed text-lg"
+          (click)="register()"
+        >
+          Registrarse
+        </button>
+      </form>
+
+      <!-- Mensajes y enlace inferior -->
+      <div class="mt-8 space-y-4 pb-4">
+        <div
+          *ngIf="successMessage"
+          class="p-3 bg-green-50 border border-green-200 text-green-700 rounded-lg text-sm flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          {{ successMessage }}
+        </div>
+
+        <div
+          *ngIf="errorMessage"
+          class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          {{ errorMessage }}
+        </div>
+
+        <div class="text-center text-lg mt-4">
+          <span class="text-gray-500 text-lg">¿Ya tienes una cuenta?</span>
+          <a
+            class="text-blue-600 hover:text-blue-800 font-medium ml-1 transition duration-200"
+            routerLink="/login"
+          >
+            Iniciar Sesión
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>

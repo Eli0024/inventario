@@ -1,202 +1,419 @@
 <div class="min-h-screen flex flex-col bg-white text-white">
   <!-- Navbar -->
-  <app-navbar></app-navbar>
+  <app-navbar class="fixed top-0 w-full z-50"></app-navbar>
 
-  <div class="flex flex-1">
+  <div class="flex flex-1 pt-16">
     <!-- Sidebar -->
-    <div class="w-full md:w-64 bg-gray-800 text-white">
+    <div class="w-64 fixed h-screen bg-gray-800 text-white z-40 overflow-y-auto">
       <app-sidebar></app-sidebar>
     </div>
 
     <!-- Main content area -->
-    <div class="flex flex-col w-full">
-      <!-- Main content header -->
-      <div id="main" class="main-content flex-1 bg-gray-200">
-        <div class="bg-gray-800">
-          <div class="bg-white p-3 shadow text-2xl text-gray-600">
-            <i class="fa fa-user-cog fa-x"></i>
+    <div class="flex-1 ml-64 bg-gray-100 text-gray-900 overflow-y-auto">
+      <div id="main" class="main-content flex-1 bg-gray-100">
+        <div class="bg-gray-800 shadow-md fixed z-30 w-[calc(100%-16rem)] h-18 top-16">
+          <div class="bg-white p-3 shadow text-2xl text-gray-600 sticky-top">
+            <i class="fa fa-list"></i>
             <span> Lista de Licencias</span>
           </div>
         </div>
 
-        <!-- Button trigger modal -->
-        <div class="flex justify-center items-center mt-16">
-          <div class="flex flex-wrap space-x-4">
-            <button
-              type="button"
-              class="bg-blue-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Registrar Licencia
-            </button>
-            <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1
-                    class="modal-title fs-5 text-2xl font-bold text-gray-900"
-                    id="exampleModalLabel"
-                  >
-                    Registrar Licencia
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <app-formoff></app-formoff>
-                </div>
-              </div>
-            </div>
-          </div>
+       <!-- CONTENEDOR DE BOTONES Y BUSCADOR -->
+      <div class="flex flex-col md:flex-row justify-between md:items-center items-stretch gap-3 p-4 sm:p-5 bg-white shadow-sm rounded-lg mx-2 sm:mx-4 mt-20 mb-6 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] overflow-hidden">
 
-            <button
-              class="bg-green-500 hover:bg-green-600 text-xl py-2 px-4 rounded shadow"
-              type="button"
-              routerLink="/content"
-            >
-              Volver
-            </button>
+       <div class="flex flex-wrap justify-center md:justify-start gap-3">
+      <button
+       type="button"
+       (click)="openRegistroModal()"
+       class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+      >
+      <i class="fas fa-plus"></i>
+       Registrar Licencia
+     </button>
 
-            <div class="col">
-              <input
-                class="rounded-full text-black border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none px-4 py-2 w-full"
-                type="search"
-                placeholder="Search"
-                [(ngModel)]="filter.searchTerm"
-                name="searchTerm"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Tabla de licencias -->
-        <div class="col-md-12">
-          <div class="card card-plain m-20">
-            <div class="card-header card-header-danger">
-              <h4 class="card-title text-center mt-0"></h4>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead class="">
-                    <th>ID</th>
-                    <th>CORREO</th>
-                    <th>CONTRASEÑA</th>
-                    <th>SERIAL</th>
-                    <th>EDITAR</th>
-                    <th>ELIMINAR</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let licence of filterLicences()">
-                      <td>{{ licence.id }}</td>
-                      <td>{{ licence.correo }}</td>
-                      <td>{{ licence.contrasena }}</td>
-                      <td>{{ licence.serial_office }}</td>
-                      <td class="py-2 px-3 text-center">
-                        <button
-                          type="button"
-                          class="text-xl py-2 px-4 text-center"
-                          (click)="openModalAndEdit(licence)"
-                        >
-                          <i class="fa fa-edit text-blue-500 text-center text-2xl"></i>
-                        </button>
-                      </td>
-                      <td class="py-2 px-3 text-center">
-                        <button
-                          type="button"
-                          name="button"
-                          class="text-center font-bold py-1 px-2"
-                          (click)="delete(licence.id)"
-                        >
-                          <i class="fa fa-trash text-red-600 text-center text-2xl"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <button
+      class="flex items-center gap-2 bg-gradient-to-r from-gray-600 to-gray-500 hover:from-gray-700 hover:to-gray-600 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+      type="button"
+      routerLink="/content"
+    >
+      <i class="fas fa-arrow-left"></i>
+      Volver
+    </button>
   </div>
 
-  <!-- Modal para editar/crear licencia -->
-  <div *ngIf="modalAbierto" class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1050;">
-    <div class="modal-dialog modal-dialog-centered" style="margin-top: 10%;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-gray-900">
-            {{ licenceSeleccionado.id ? 'Editar' : 'Crear' }} Licencia
-          </h5>
-          <button type="button" class="close" (click)="closeModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="input-container mb-3">
-              <div class="icon-container bg-cyan-500 text-white">
-                <i class="fas fa-envelope"></i>
-              </div>
+  <!-- BARRA DE BÚSQUEDA -->
+  <div class="relative w-full md:w-auto">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <i class="fas fa-search text-gray-400"></i>
+    </div>
+    <input
+      class="block w-full md:w-64 lg:w-80 pl-10 pr-4 py-2.5 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition duration-150 bg-gray-50"
+      type="search"
+      placeholder="Buscar licencias..."
+      name="searchTerm"
+      [(ngModel)]="filter.searchTerm"
+    />
+  </div>
+</div>
+
+<!-- MODAL DE REGISTRO DE LICENCIA -->
+<div
+  *ngIf="modalRegistroAbierto"
+  class="fixed inset-0 flex items-center justify-center z-50"
+>
+  <div
+    class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+    (click)="closeModal()"
+  ></div>
+
+  <div
+    class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-fadeIn z-50"
+  >
+
+    <div class="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4">
+      <h2 class="text-xl font-bold text-white flex items-center gap-2">
+        <i class="fas fa-plus text-white text-lg"></i>
+        Registrar Nueva Licencia
+      </h2>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="text-white hover:text-gray-200 transition"
+      >
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Cuerpo del modal -->
+    <div class="p-6 bg-gray-50 overflow-y-auto max-h-[80vh]">
+      <app-formoff
+        
+        (formularioCancelado)="closeModal()"
+        (licenceCreada)="onLicenceCreada($event)"
+      ></app-formoff>
+    </div>
+  </div>
+</div>
+
+
+        
+        <div class="w-full p-3">
+  <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="overflow-auto max-h-[calc(100vh-220px)]">
+      <table class="min-w-[1200px] w-full text-sm text-gray-700">
+        <thead class="sticky top-0 bg-gray-100 border-b border-gray-400 uppercase text-gray-800 text-xs z-10">
+          <tr>
+            <th class="p-3 text-center">ID</th>
+            <th class="p-3 text-center">Tipo de Licencia</th>
+            <th class="p-3 text-center">Correo</th>
+            <th class="p-3 text-center">Contraseña</th>
+            <th class="p-3 text-center">Clave del producto</th>
+            <th class="p-3 text-center">Fecha de Compra</th>
+            <th class="p-3 text-center">Marca del equipo</th>
+            <th class="p-3 text-center">Serial del equipo</th>
+            <th class="p-3 text-center">Responsable</th>
+            <th class="p-3 text-center">Editar</th>
+            <th class="p-3 text-center">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let licence of filterLicences(); let i = index" class="hover:bg-gray-50 border-b border-gray-100 transition">
+            <td class="p-3 text-center bg-white">{{i+1}}</td>
+            <td class="p-3 text-center">{{ licence?.tipo_licencia }}</td>
+            <td class="p-3 text-center">{{ licence?.correo ||  'N/A'}}</td>
+            <td class="p-3 text-center">{{ licence?.contrasena || 'N/A'}}</td>
+            <td class="p-3 text-center">{{ licence?.clave_producto }}</td>
+            <td class="p-3 text-center">{{ licence?.fecha_compra | date:'dd/MM/yyyy' }}</td>
+            <td class="p-3 text-center">{{ licence?.equipo?.marca || 'N/A'}}</td>
+            <td class="p-3 text-center">{{ licence?.equipo?.serial || 'N/A'}}</td>
+            <td class="p-3 text-center">{{ licence?.equipo?.responsable?.nombre||''}} {{licence.equipo?.responsable?.apellido||''}}</td>
+            <td class="p-3 text-center">
+              <button
+                type="button"
+                class="text-blue-500 hover:text-blue-700 transition"
+                (click)="openModalAndEdit(licence)"
+              >
+                <i class="fa fa-edit text-xl"></i>
+              </button>
+            </td>
+            <td class="p-3 text-center">
+              <button
+                *ngIf="licence.id !== undefined"
+                (click)="delete(licence.id!)"
+                class="text-red-500 hover:text-red-700 transition"
+              >
+                <i class="fa fa-trash text-xl"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   </div>
+   </div>
+   </div>
+   </div>
+  </div>
+
+<!-- MODAL DE EDICIÓN DE LICENCIAS -->
+<div *ngIf="modalAbierto" class="fixed inset-0 flex items-center justify-center z-50">
+  <!-- Fondo oscuro -->
+  <div
+    class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+    (click)="closeModal()"
+  ></div>
+
+  <div
+    class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-fadeIn z-50"
+  >
+    <div class="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4">
+      <h1 class="text-xl font-bold text-white flex items-center gap-2">
+        <i class="fas fa-edit"></i> Editar Licencia
+      </h1>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="text-white hover:text-gray-200 transition"
+      >
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="p-6 bg-gray-50 overflow-y-auto max-h-[80vh]">
+      <div class="modal-container bg-white p-6 rounded-2xl shadow-xl max-w-5xl mx-auto border border-gray-100">
+      <form id="registro-licencias-form" class="space-y-6" #licenciaForm="ngForm">
+
+        <!-- GRID 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Tipo licencia -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-list text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <select
+                [(ngModel)]="licenceSeleccionado.tipo_licencia"
+                name="tipo_licencia"
+                required
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-black"
+              >
+                <option [ngValue]="''">Seleccione un tipo de licencia</option>
+                <option value="office">Office</option>
+                <option value="project_1013">Project 2013</option>
+                <option value="project_1019">Project 2019</option>
+                <option value="visio">Visio</option>
+                <option value="antivirus">Antivirus</option>
+                <option value="windows">Windows</option>
+                <option value="adobe">Adobe</option>
+                <option value="autocad_2019">AutoCad</option>
+                <option value="autocad_2024">AutoCad 2024</option>
+                <option value="otro">Otro</option>
+              </select>
+              <label
+                for="tipo_licencia"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Tipo de Licencia
+              </label>
+            </div>
+          </div>
+
+          <!-- Correo -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-envelope text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
               <input
                 type="text"
-                class="form-control"
-                placeholder="Correo"
-                [(ngModel)]="licenceSeleccionado.correo"
+                id="correo"
                 name="correo"
+                placeholder=" "
+                [(ngModel)]="licenceSeleccionado.correo"
                 required
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none 
+                       transition-all placeholder-transparent text-black"
+                [disabled]="isProject2019"
+                [required]="!isProject2019"
               />
+              <label
+                for="correo"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600 
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Correo
+              </label>
             </div>
-            
-            <div class="input-container mb-3">
-              <div class="icon-container bg-cyan-500 text-white">
-                <i class="fas fa-lock"></i>
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Contraseña"
-                [(ngModel)]="licenceSeleccionado.contrasena"
-                name="contrasena"
-                required
-              />
-            </div>
-            
-            <div class="input-container mb-3">
-              <div class="icon-container bg-cyan-500 text-white">
-                <i class="fas fa-key"></i>
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Serial Office"
-                [(ngModel)]="licenceSeleccionado.serial_office"
-                name="serial_office"
-                required
-              />
-            </div>
-          </form>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">
+
+        <!-- GRID 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Contraseña -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-lock text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <input
+                type="text"
+                id="contrasena"
+                name="contrasena"
+                placeholder=" "
+                [(ngModel)]="licenceSeleccionado.contrasena"
+                required
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none 
+                       transition-all placeholder-transparent text-black"
+                [disabled]="isProject2019"
+                [required]="!isProject2019"
+              />
+              <label
+                for="contrasena"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600 
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Contraseña
+              </label>
+            </div>
+          </div>
+
+          <!-- Clave producto -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-key text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <input
+                type="text"
+                id="clave_producto"
+                name="clave_producto"
+                placeholder=" "
+                [(ngModel)]="licenceSeleccionado.clave_producto"
+                required
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none 
+                       transition-all placeholder-transparent text-black"
+              />
+              <label
+                for="clave_producto"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600 
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Clave de producto
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRID 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Fecha compra -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-calendar text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <input
+                type="date"
+                id="fecha_compra"
+                name="fecha_compra"
+                placeholder=" "
+                [(ngModel)]="licenceSeleccionado.fecha_compra"
+                required
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none 
+                       transition-all text-black"
+              />
+              <label
+                for="fecha_compra"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600 
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Fecha de compra
+              </label>
+            </div>
+          </div>
+
+          <!-- Equipo -->
+          <div class="flex items-center space-x-2 transition-all">
+            <div
+              class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+            >
+              <i class="fas fa-desktop text-lg"></i>
+            </div>
+            <div class="relative z-0 w-full group">
+              <select
+                [(ngModel)]="licenceSeleccionado.equipo_id"
+                name="equipo_id"
+                required
+                class="peer w-full p-3 rounded-xl bg-white border border-gray-200 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-black"
+              >
+                <option [ngValue]="null">Seleccione un equipo</option>
+                <option *ngFor="let eq of equipos" [ngValue]="eq.id">
+                  {{ eq.marca }} - {{ eq.serial }} ({{eq.responsable?.nombre}} {{eq.responsable?.apellido}})
+                </option>
+              </select>
+              <label
+                for="equipo_id"
+                class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 
+                       top-3 left-3 bg-white px-1 peer-focus:text-blue-600 
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                       peer-placeholder-shown:top-3"
+              >
+                Equipo asignado
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 mt-4">
+          <button
+            type="button"
+            class="px-6 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-all shadow-sm"
+            (click)="closeModal()"
+          >
             Cerrar
           </button>
-          <button type="button" class="btn btn-primary" (click)="update()">
-            {{ licenceSeleccionado.id ? 'Actualizar' : 'Guardar' }}
+          <button
+            type="button"
+            class="px-6 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold shadow-md hover:shadow-lg transition-all"
+            (click)="update()"
+          >
+            Actualizar
           </button>
         </div>
+
+      </form>
       </div>
     </div>
   </div>
+</div>
+
 </div>

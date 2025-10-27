@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContentComponent } from './content.component';
 
 const routes: Routes = [
-  { path:'', component: ContentComponent}
+  { path:'',
+  loadComponent:()=>
+    import('./content.component').then(m=> m.ContentComponent)
+  }
 ];
 
 @NgModule({

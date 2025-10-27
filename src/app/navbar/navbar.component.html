@@ -1,6 +1,19 @@
-<div class="header">
-  <div class="logo">INVENTARIO DE EQUIPOS</div>
-  <div class="user">
-  <img class="w-16 rounded-full"   src="https://media.licdn.com/dms/image/v2/D560BAQEdnHQHKn47SQ/company-logo_200_200/company-logo_200_200/0/1712241924456/qumica_bsica_colombiana_sa_logo?e=2147483647&v=beta&t=8i-mYEIaerHVASLmUsZVPOFJVtbwkaujLoUHagQENWw">
+<div class="header" [ngClass]="'bg-gradient-to-r ' + getNavarGradient()">
+  <div class="flex items-center justify-between w-90 h-30">
+    <div class="logo flex items-center gap-2">
+      <i class="fas fa-laptop text-white"></i>
+      <span class="text-white font-semibold text-lg">INVENTARIO DE EQUIPOS</span>
+    </div>
+    <div class="company-logo flex flex-col items-center" *ngIf="empresa">
+      <img 
+        [src]="getLogoPath()"
+        alt="Logo Empresa"
+        class="h-11 object-contain"
+      >
+      <span class="text-sm font-semibold text-white mt-1 text-center">
+        {{ empresa.nombre || 'Empresa' }}
+      </span>
+    </div>
   </div>
 </div>
+s

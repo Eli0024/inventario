@@ -14,7 +14,7 @@ import { VermasComponent } from '../vermas/vermas.component';
 import { MantenService } from '../services/manten.service';
 import { LicenceService } from '../services/licence.service';
 import { PerifeService } from '../services/perife.service';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-content',
@@ -85,7 +85,11 @@ export class ContentComponent implements OnInit{
     id: 0,
     nombre: '',
     apellido: '',
-    empresa: null,
+    empresa: {
+      id:0,
+      nombre:''
+    },
+    empresa_id:0,
     area: null,
     cargo: '',
     
@@ -93,13 +97,26 @@ export class ContentComponent implements OnInit{
 
   descargarReporte() {
     if (!this.area) {
-      alert('Por favor, selecciona un área.');
-      return;
-    }
+        Swal.fire({
+      icon: 'warning',
+      title: 'Área no seleccionada',
+      text: 'Por favor, selecciona un área antes de generar el reporte.',
+      confirmButtonColor: '#2563eb',
+    });
+    return;
+  }
   
     this.usersService.generarReporteUsuariosPorArea(this.area).subscribe(
       (data: Blob) => {
-        // Crear un enlace temporal para descargar el archivo
+        if (data.size === 0) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Sin datos disponibles',
+          text: 'No se encontraron usuarios ni equipos registrados en el área seleccionada.',
+          confirmButtonColor: '#2563eb',
+        });
+        return;
+      }
         const url = window.URL.createObjectURL(data);
         const a = document.createElement('a');
         a.href = url;
@@ -108,17 +125,34 @@ export class ContentComponent implements OnInit{
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
-      },
-      (error) => {
-        console.error('Error al descargar el reporte:', error);
-        if (error.status === 404) {
-          alert('No se encontró ningún usuario para el área especificada.');
-        } else {
-          alert('Ocurrió un error al descargar el reporte.');
-        }
+       Swal.fire({
+        icon: 'success',
+        title: 'Reporte generado',
+        text: `El reporte del área ${this.area} se ha descargado correctamente.`,
+        confirmButtonColor: '#2563eb',
+      });
+    },
+    (error) => {
+      console.error('Error al descargar el reporte:', error);
+
+      if (error.status === 404 || error.status === 204) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Sin datos disponibles',
+          text: 'No se encontraron usuarios ni equipos registrados en el área seleccionada.',
+          confirmButtonColor: '#2563eb',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al generar el reporte',
+          text: 'Ocurrió un error inesperado. Inténtalo nuevamente más tarde.',
+          confirmButtonColor: '#dc2626', 
+        });
       }
-    );
-  }
+    }
+  );
+}
 
   filter: any = { searchTerm: '' };
   
@@ -131,4 +165,5 @@ export class ContentComponent implements OnInit{
     }
     return [];
   }
+  
 }

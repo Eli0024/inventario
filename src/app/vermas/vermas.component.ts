@@ -27,7 +27,8 @@ export class VermasComponent implements OnInit {
     id: 0,
     nombre: '',
     apellido: '',
-    empresa: null,
+    empresa: {id:0,nombre:''},
+    empresa_id:0,
     area: null,
     cargo: '',
   };
@@ -52,41 +53,48 @@ export class VermasComponent implements OnInit {
   };
   
   licence : Licence = {
-    responsable: { // Objeto Responsable por defecto
-      id: 0,
-      nombre: '',
-      apellido: ''
-    },
     id: 0,
+    tipo_licencia:'',
     correo: '',
     contrasena: '',
-    serial_office: '',
+    clave_producto: '',
+    fecha_compra:'',
+    equipo:{
+      id:0,
+      marca:'',
+      serial:'',
+      responsable:{id:0,nombre:'',apellido:''}
+    }
   };
 
   mantenimiento : Mantenimiento = {
-    responsable: { // Objeto Responsable por defecto
-      id: 0,
-      nombre: '',
-      apellido: ''
-    },
     id: 0,
-    equipo: '',
-    fecha: '',
-    tipo: '',
+    equipo: {
+      id:0,
+      marca:'',
+      serial:'',
+      responsable:{id:0,nombre:'',apellido:''}
+    },
+    equipo_id:0,
+    fecha_mantenimiento: '',
+    tipo_mantenimiento: 'preventivo',
+    tipo_servicio:'software',
     descripcion: '',
+    realizado_por:''
   }
 
   periferico : Periferico = {
-    responsable: { // Objeto Responsable por defecto
-      id: 0,
-      nombre: '',
-      apellido: ''
-    },
     id: 0,
     nombre: '',
     modelo: '',
     numero_serie: '',
     fecha_adquisicion: '',
+    responsable:{
+      id:0,
+      nombre:'',
+      apellido:''
+    },
+    responsable_id:0
   }
 
   constructor(
@@ -124,12 +132,15 @@ export class VermasComponent implements OnInit {
 
   cargarDatosEquipoPorColaborador(idColaborador: string) {
     this.computersService.getEquipoPorColaborador(idColaborador).subscribe(
-      (data) => {
-        if (data) {
-          this.equipo = data;  // Asigna los datos del equipo
+      (data:Equipo[]) => {
+        if (data && data.length> 0) {
+          this.equipo = data[0]; 
+
+          
         } else {
           console.warn('No se encontró ningún equipo para este colaborador.');
           this.equipo = {
+            id:0,
             marca: '',
             memoria: '',
             modelo: '',

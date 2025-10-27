@@ -1,63 +1,154 @@
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="w-full max-w-sm  bg-white rounded-lg shadow-lg p-6">
-        <div class="flex justify-center mb-6">
-            <img
-                class="w-32"
-                src="https://media.licdn.com/dms/image/v2/D560BAQEdnHQHKn47SQ/company-logo_200_200/company-logo_200_200/0/1712241924456/qumica_bsica_colombiana_sa_logo?e=2147483647&v=beta&t=8i-mYEIaerHVASLmUsZVPOFJVtbwkaujLoUHagQENWw"
-                alt="Logo"
-            />
-        </div>
-        <h2 class="text-center text-2xl font-semibold text-gray-700 mb-4">Bienvenido</h2>
-        <h3 class="text-center text-lg text-gray-600 mb-6">Ingresar</h3>
-
-        <form id="loginform" class="space-y-4">
-            <div>
-                <input
-                    type="text"
-                    [(ngModel)]="username"
-                    name="username"
-                    placeholder="Usuario"
-                    required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                />
-            </div>
-            <div class="relative">
-                <input
-                    type="password"
-                    [(ngModel)]="password"
-                    placeholder="password"
-                    name="password"
-                    required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                />
-                <span
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
-                (click)="togglePasswordVisibility()"
-              >
-                <i class="fa fa-eye" [ngClass]="{'fa-eye-slash': isPasswordVisible}"></i>
-              </span>
-            </div>
-            <button
-                type="submit"
-                class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-                (click)="login()"
-            >
-                Login
-            </button>
-        </form>
-
-        <div class="text-center mt-4">
-         <span class="text-gray-600">¿No tienes Cuenta?</span>
-            <a
-                class="text-blue-500 hover:underline"
-                [routerLink]="['/register']"
-            >
-                Regístrate
-            </a>
-        </div>
-        
-        <!-- <div *ngIf="errorMessage" class="mt-4 p-2 bg-red-100 text-red-600 text-sm rounded-lg">
-            {{ errorMessage }}
-        </div> -->
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 flex justify-center items-center min-h-screen p-4">
+  <div
+    class="w-full max-w-lg h-[590px] bg-blue-50/30 rounded-xl shadow-lg overflow-hidden border border-blue-100 backdrop-blur-sm flex flex-col justify-between"
+  >
+    <!-- Encabezado -->
+    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6">
+      <div class="flex justify-center mb-2">
+        <span class="bg-white rounded-full p-2 border-4 border-white shadow-md">
+          <i *ngIf="!pasoLogin" class="fas fa-user text-blue-500 text-6xl"></i>
+          <i *ngIf="pasoLogin" class="fas fa-building text-blue-500 text-6xl"></i>
+        </span>
+      </div>
+      <h3 class="text-center text-2xl font-bold text-white mb-1">
+        {{ pasoLogin ? 'Selecciona la empresa en la que deseas trabajar ' : 'Bienvenido' }}
+      </h3>
     </div>
+
+    <!-- Contenido principal -->
+    <div class="px-8 py-10 flex flex-col justify-center flex-grow overflow-auto">
+      <!-- LOGIN -->
+      <form *ngIf="!pasoLogin" (submit)="login($event)" class="space-y-8">
+        <!-- Usuario -->
+        <div class="flex items-center">
+          <span class="mr-3 text-blue-500">
+            <i class="fas fa-user text-2xl"></i>
+          </span>
+          <div class="relative w-full">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder=" "
+              [(ngModel)]="username"
+              (input)="clearError()"
+              class="py-3 px-5 w-full text-base text-gray-900 bg-white rounded-full border border-blue-200 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 peer"
+              required
+            />
+            <label
+              for="username"
+              class="absolute text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-5 left-4"
+            >
+              Usuario
+            </label>
+          </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="flex items-center">
+          <span class="mr-3 text-blue-500">
+            <i class="fas fa-lock text-2xl"></i>
+          </span>
+          <div class="relative w-full">
+            <input
+              [type]="isPasswordVisible ? 'text' : 'password'"
+              id="password"
+              name="password"
+              placeholder=" "
+              [(ngModel)]="password"
+              (input)="clearError()"
+              class="py-3 px-5 w-full text-base text-gray-900 bg-white rounded-full border border-blue-200 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 peer"
+              required
+            
+            />
+            <label
+              for="password"
+              class="absolute text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-5 left-4"
+            >
+              Contraseña
+            </label>
+            <span
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 cursor-pointer transition"
+              (click)="togglePasswordVisibility()"
+            >
+              <i *ngIf="!isPasswordVisible" class="fas fa-eye"></i>
+              <i *ngIf="isPasswordVisible" class="fas fa-eye-slash"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="text-right text-2xl mt-2">
+          <a
+            routerLink="/recuperar-contra"
+            class="text-sm text-blue-600 hover:text-blue-800 font-medium transition duration-200"
+            >¿Olvidaste tu contraseña?</a
+          >
+        </div>
+
+        <!-- Botón -->
+        <button
+          type="submit"
+          [disabled]="isLoading"
+          class="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium py-3 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 transform hover:scale-[1.02] shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          <span *ngIf="!isLoading" class="text-lg">Iniciar Sesión</span>
+          <span *ngIf="isLoading">Verificando...</span>
+        </button>
+
+        <!-- Texto inferior -->
+        <div class="text-center text-lg mt-12">
+          <span class="text-gray-500">¿No tienes una cuenta?</span>
+          <a
+            class="text-blue-600 hover:text-blue-800 font-medium ml-1 transition duration-200"
+            routerLink="/register"
+          >
+            Regístrate
+          </a>
+        </div>
+      </form>
+
+      <!-- SELECCIÓN EMPRESA -->
+      <div *ngIf="pasoLogin" class="space-y-8">
+        <div class="relative w-full">
+          <select
+            id="empresa"
+            [(ngModel)]="empresaSeleccionada"
+            name="empresa"
+            class="py-3 px-5 w-full text-base text-gray-900 bg-white rounded-full border border-blue-200 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 peer"
+            required
+          >
+            <option value="" disabled selected hidden></option>
+            <option
+              *ngFor="let emp of empresas"
+              [value]="emp.id"
+              class="text-black"
+              >{{ emp.nombre }}</option
+            >
+          </select>
+          <label
+            for="empresa"
+            class="absolute text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-5 left-4"
+          >
+            Selecciona una empresa
+          </label>
+        </div>
+
+        <button
+          (click)="seleccionarEmpresa()"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-full transition duration-200 shadow-md"
+        >
+          Confirmar Empresa
+        </button>
+      </div>
+
+      <!-- Error -->
+      <div
+        *ngIf="errorMessage"
+        class="mt-6 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm flex items-start"
+      >
+        <i class="fas fa-exclamation-circle text-red-500 text-lg mr-2 mt-0.5"></i>
+        <span class="flex-1">{{ errorMessage }}</span>
+      </div>
+    </div>
+  </div>
 </body>

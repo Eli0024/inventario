@@ -1,0 +1,131 @@
+<div class="modal-container bg-white p-6 rounded-2xl shadow-xl max-w-5xl mx-auto border border-gray-100">
+  <form id="exampleModall" class="space-y-6" #siesaForm="ngForm">
+    <!-- GRID GENERAL -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Usuario -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+        >
+          <i class="fas fa-user text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="text"
+            id="usuario"
+            name="usuario"
+            placeholder=" "
+            [(ngModel)]="siesa.usuario"
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-transparent"
+            required
+            #usuarioInput="ngModel"
+            (blur)="usuarioInput.control.markAsTouched()"
+          />
+          <label
+            for="usuario"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+            peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+            peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3
+            peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1"
+          >
+            Usuario
+          </label>
+          <div
+            class="absolute -bottom-5 left-2 text-red-500 text-xs pointer-events-none"
+            *ngIf="usuarioInput.invalid && usuarioInput.touched"
+          >
+            <span *ngIf="usuarioInput.errors?.['required']">El usuario es obligatorio</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="flex items-center space-x-2 transition-all">
+        <div
+          class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+        >
+          <i class="fas fa-lock text-lg"></i>
+        </div>
+        <div class="relative z-0 w-full group">
+          <input
+            type="text"
+            id="contrasena"
+            name="contrasena"
+            placeholder=" "
+            [(ngModel)]="siesa.contrasena"
+            class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-transparent"
+            required
+            minlength="4"
+            #contrasenaInput="ngModel"
+            (blur)="contrasenaInput.control.markAsTouched()"
+          />
+          <label
+            for="contrasena"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+            peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+            peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3
+            peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1"
+          >
+            Contraseña
+          </label>
+          <div
+            class="absolute -bottom-5 left-2 text-red-500 text-xs pointer-events-none"
+            *ngIf="contrasenaInput.invalid && contrasenaInput.touched"
+          >
+            <span *ngIf="contrasenaInput.errors?.['required']">La contraseña es obligatoria</span>
+            <span *ngIf="contrasenaInput.errors?.['minlength']">Debe tener mínimo 4 caracteres</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHIVO -->
+    <div class="flex items-center space-x-2 transition-all">
+      <div
+        class="p-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-xl flex items-center justify-center shadow-sm"
+      >
+        <i class="fas fa-file-upload text-lg"></i>
+      </div>
+      <div class="relative z-0 w-full group">
+        <input
+          type="file"
+          id="archivo"
+          name="archivo"
+          class="peer w-full p-3 rounded-xl bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+          (change)="onFileSelected($event)"
+          accept="*"
+          required
+        />
+        <label
+          for="archivo"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0]
+      peer-focus:left-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+      peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-3
+      peer-focus:scale-75 peer-focus:-translate-y-6 bg-white px-1"
+        >
+          Subir Archivo
+        </label>
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 mt-4">
+      <button
+        type="button"
+        class="px-6 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm transition-all"
+        (click)="cancelar()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="create()"
+        [disabled]="!siesa.usuario || !siesa.contrasena || !siesa.archivo || isSubmitting"
+      >
+        <span *ngIf="!isSubmitting">Registrar</span>
+        <span *ngIf="isSubmitting" class="loading-spinner"></span>
+      </button>
+    </div>
+  </form>
+</div>
