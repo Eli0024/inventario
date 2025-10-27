@@ -123,7 +123,7 @@ export class FormcompComponent implements OnInit {
         return;
       }
       
-      // Validar tamaño (max 5MB)
+    
       if (file.size > 5 * 1024 * 1024) {
         this.fileError = 'El archivo no debe exceder 5MB';
         this.equipo.archivo = null;
@@ -141,7 +141,7 @@ export class FormcompComponent implements OnInit {
   }
 
   create(): void {
-    // Validar campos requeridos
+
     if (!this.validateForm()) {
       return;
     }
